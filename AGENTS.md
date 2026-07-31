@@ -85,6 +85,24 @@ const options: MultiSelectOption[] = [
 ถ้าไม่มีจริง ๆ ให้ประกอบจากของที่มีก่อน (compose) แล้วค่อยพิจารณาสร้างใหม่
 component ที่ประกอบขึ้นเองก็ต้องวางไว้ที่ `packages/ui/src/components/ui/` และทำตามกฎทุกข้อเหมือนกัน
 
+#### ปุ่มที่มีไอคอน / กำลังโหลด
+
+วางไอคอนเป็นลูกของ `Button` ตรง ๆ จะซ้ายหรือขวาก็ได้ — `Button` จัดขนาด (`size-4`)
+และระยะห่าง (`gap-2`) ให้เอง **ห้ามกำหนดขนาดไอคอนเองถ้าไม่จำเป็น**
+
+```tsx
+<Button><PlusIcon />เพิ่มรายการ</Button>        {/* ไอคอนซ้าย */}
+<Button>ถัดไป<ArrowRightIcon /></Button>        {/* ไอคอนขวา */}
+<Button size="icon" aria-label="ค้นหา"><SearchIcon /></Button>  {/* ไอคอนล้วน */}
+
+{/* กำลังโหลด — ใส่ disabled ด้วยเสมอเพื่อกันกดซ้ำ */}
+<Button disabled={loading}>
+  {loading ? <><Spinner />กำลังบันทึก…</> : "บันทึก"}
+</Button>
+```
+
+ปุ่มไอคอนล้วน **ต้องมี `aria-label`** เพราะไม่มีข้อความให้ screen reader อ่าน
+
 #### checkbox / radio แบบมีกรอบครอบ (box)
 
 ไม่มี component แยก — ประกอบด้วย `Field` + `FieldLabel` ที่มีอยู่แล้ว

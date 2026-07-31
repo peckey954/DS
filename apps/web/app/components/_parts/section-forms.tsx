@@ -6,11 +6,16 @@ import {
   AlignCenterIcon,
   AlignLeftIcon,
   AlignRightIcon,
+  ArrowRightIcon,
   BoldIcon,
   CopyIcon,
+  DownloadIcon,
   ItalicIcon,
   MailIcon,
+  PlusIcon,
   SearchIcon,
+  SettingsIcon,
+  Trash2Icon,
   UnderlineIcon,
 } from "lucide-react";
 
@@ -73,6 +78,7 @@ import {
   SelectValue,
 } from "@repo/ui/components/ui/select";
 import { Slider } from "@repo/ui/components/ui/slider";
+import { Spinner } from "@repo/ui/components/ui/spinner";
 import { Switch } from "@repo/ui/components/ui/switch";
 import { Textarea } from "@repo/ui/components/ui/textarea";
 import { Toggle } from "@repo/ui/components/ui/toggle";
@@ -89,6 +95,33 @@ function VariantTitle({ children }: { children: React.ReactNode }) {
     <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
       {children}
     </p>
+  );
+}
+
+/** ปุ่มที่กดแล้วเข้าสถานะกำลังโหลดจริง 2 วินาที */
+function LoadingButton() {
+  const [loading, setLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!loading) return;
+    const timer = setTimeout(() => setLoading(false), 2000);
+    return () => clearTimeout(timer);
+  }, [loading]);
+
+  return (
+    <Button disabled={loading} onClick={() => setLoading(true)}>
+      {loading ? (
+        <>
+          <Spinner />
+          กำลังบันทึก…
+        </>
+      ) : (
+        <>
+          <PlusIcon />
+          กดเพื่อลองดู
+        </>
+      )}
+    </Button>
   );
 }
 
@@ -149,25 +182,82 @@ export function SectionForms() {
       title="ฟอร์ม & อินพุต"
       hint="button · button-group · input · input-group · textarea · label · field · form · checkbox · radio-group · select · native-select · switch · slider · toggle · toggle-group · input-otp"
     >
-      <Demo name="button" hint="6 variant × 4 ขนาด" wide>
-        <div className="w-full space-y-3">
-          <div className="flex flex-wrap gap-2">
-            <Button>ปุ่มหลัก</Button>
-            <Button variant="secondary">รอง</Button>
-            <Button variant="outline">เส้นขอบ</Button>
-            <Button variant="ghost">โปร่ง</Button>
-            <Button variant="destructive">ลบ</Button>
-            <Button variant="link">ลิงก์</Button>
+      <Demo name="button" hint="variant · ขนาด · มีไอคอน · กำลังโหลด" wide>
+        <div className="w-full space-y-5">
+          <div className="space-y-3">
+            <VariantTitle>variant</VariantTitle>
+            <div className="flex flex-wrap gap-2">
+              <Button>ปุ่มหลัก</Button>
+              <Button variant="secondary">รอง</Button>
+              <Button variant="outline">เส้นขอบ</Button>
+              <Button variant="ghost">โปร่ง</Button>
+              <Button variant="destructive">ลบ</Button>
+              <Button variant="link">ลิงก์</Button>
+            </div>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <Button size="xs">xs</Button>
-            <Button size="sm">sm</Button>
-            <Button size="default">default</Button>
-            <Button size="lg">lg</Button>
-            <Button size="icon" aria-label="ค้นหา">
-              <SearchIcon />
-            </Button>
-            <Button disabled>ปิดใช้งาน</Button>
+
+          <div className="space-y-3">
+            <VariantTitle>ขนาด</VariantTitle>
+            <div className="flex flex-wrap items-center gap-2">
+              <Button size="xs">xs</Button>
+              <Button size="sm">sm</Button>
+              <Button size="default">default</Button>
+              <Button size="lg">lg</Button>
+              <Button disabled>ปิดใช้งาน</Button>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <VariantTitle>มีไอคอน — ซ้าย / ขวา / ไอคอนล้วน</VariantTitle>
+            <div className="flex flex-wrap items-center gap-2">
+              <Button>
+                <PlusIcon />
+                เพิ่มรายการ
+              </Button>
+              <Button variant="secondary">
+                ถัดไป
+                <ArrowRightIcon />
+              </Button>
+              <Button variant="outline">
+                <DownloadIcon />
+                ดาวน์โหลด
+              </Button>
+              <Button variant="destructive">
+                <Trash2Icon />
+                ลบทิ้ง
+              </Button>
+              <Button size="icon" aria-label="ค้นหา">
+                <SearchIcon />
+              </Button>
+              <Button variant="outline" size="icon-sm" aria-label="ตั้งค่า">
+                <SettingsIcon />
+              </Button>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              วางไอคอนเป็นลูกของ Button ได้เลย — ขนาดและระยะห่างถูกจัดให้อัตโนมัติ
+              ไอคอนล้วนต้องมี aria-label เสมอ
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <VariantTitle>กำลังโหลด (spinner)</VariantTitle>
+            <div className="flex flex-wrap items-center gap-2">
+              <LoadingButton />
+              <Button disabled>
+                <Spinner />
+                กำลังบันทึก…
+              </Button>
+              <Button variant="secondary" disabled>
+                <Spinner />
+                กรุณารอสักครู่
+              </Button>
+              <Button variant="outline" size="icon" disabled aria-label="กำลังโหลด">
+                <Spinner />
+              </Button>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              ปุ่มซ้ายสุดกดได้จริง — ระหว่างโหลดให้ใส่ disabled ด้วยเพื่อกันกดซ้ำ
+            </p>
           </div>
         </div>
       </Demo>

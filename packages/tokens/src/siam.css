@@ -31,10 +31,10 @@
 
   /* สถานะ hover — โหมดสว่างให้ "เข้มขึ้น" (ลดค่า L)
      อย่าใช้วิธีลด opacity แทน เพราะบนพื้นสว่างมันจะจางลงไม่ใช่เข้มขึ้น */
-  --primary-hover: hsl(221 83% 45%);
-  --secondary-hover: hsl(210 40% 90%);
-  --accent-hover: hsl(210 40% 90%);
-  --destructive-hover: hsl(0 72% 43%);
+  --primary-hover: hsl(221 83% 48%);
+  --secondary-hover: hsl(210 40% 93%);
+  --accent-hover: hsl(210 40% 93%);
+  --destructive-hover: hsl(0 72% 46%);
 
   --border: hsl(214 32% 91%);
   --input: hsl(214 32% 91%);
@@ -87,10 +87,10 @@
   --destructive-foreground: hsl(0 0% 98%);
 
   /* โหมดมืดกลับด้าน — hover ให้ "สว่างขึ้น" เพื่อให้เด่นขึ้นเหมือนกัน */
-  --primary-hover: hsl(217 91% 68%);
-  --secondary-hover: hsl(217 33% 26%);
-  --accent-hover: hsl(217 33% 26%);
-  --destructive-hover: hsl(0 63% 53%);
+  --primary-hover: hsl(217 91% 65%);
+  --secondary-hover: hsl(217 33% 22%);
+  --accent-hover: hsl(217 33% 22%);
+  --destructive-hover: hsl(0 63% 50%);
 
   --border: hsl(217 33% 20%);
   --input: hsl(217 33% 20%);

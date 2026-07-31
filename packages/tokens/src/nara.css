@@ -29,10 +29,10 @@
   --destructive-foreground: hsl(0 0% 100%);
 
   /* สถานะ hover — โหมดสว่างให้ "เข้มขึ้น" (ลดค่า L) */
-  --primary-hover: hsl(160 84% 31%);
-  --secondary-hover: hsl(150 30% 88%);
-  --accent-hover: hsl(150 40% 86%);
-  --destructive-hover: hsl(0 72% 43%);
+  --primary-hover: hsl(160 84% 34%);
+  --secondary-hover: hsl(150 30% 91%);
+  --accent-hover: hsl(150 40% 88%);
+  --destructive-hover: hsl(0 72% 46%);
 
   --border: hsl(150 20% 88%);
   --input: hsl(150 20% 88%);
@@ -84,10 +84,10 @@
   --destructive-foreground: hsl(0 0% 98%);
 
   /* โหมดมืดกลับด้าน — hover ให้ "สว่างขึ้น" */
-  --primary-hover: hsl(158 64% 60%);
-  --secondary-hover: hsl(165 20% 24%);
-  --accent-hover: hsl(165 22% 26%);
-  --destructive-hover: hsl(0 63% 53%);
+  --primary-hover: hsl(158 64% 57%);
+  --secondary-hover: hsl(165 20% 20%);
+  --accent-hover: hsl(165 22% 22%);
+  --destructive-hover: hsl(0 63% 50%);
 
   --border: hsl(165 18% 20%);
   --input: hsl(165 18% 20%);
