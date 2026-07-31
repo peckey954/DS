@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "@repo/ui/components/ui/sonner";
 
 export type Brand = "siam" | "nara";
 
@@ -41,7 +42,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
       enableSystem={false}
       disableTransitionOnChange
     >
-      <BrandProvider>{children}</BrandProvider>
+      <BrandProvider>
+        {children}
+        <Toaster />
+      </BrandProvider>
     </ThemeProvider>
   );
 }

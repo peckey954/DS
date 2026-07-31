@@ -20,7 +20,12 @@ pnpm install
 pnpm dev        # http://localhost:3000
 ```
 
-## Component ที่มีให้ (54)
+## Component ที่มีให้ (55)
+
+54 ตัวจาก shadcn + `multi-select` ที่ประกอบขึ้นเองในโปรเจกต์นี้
+(ดรอปดาวน์เลือกหลายรายการ พร้อมค้นหา · เลือกทั้งหมด · chip — ดูตัวอย่างที่
+`/components#multi-select`)
+
 
 accordion, alert, alert-dialog, aspect-ratio, avatar, badge, breadcrumb, button,
 button-group, calendar, card, carousel, chart, checkbox, collapsible, command,
@@ -28,7 +33,9 @@ context-menu, dialog, drawer, dropdown-menu, empty, field, form, hover-card,
 input, input-group, input-otp, item, kbd, label, menubar, native-select,
 navigation-menu, pagination, popover, progress, radio-group, resizable,
 scroll-area, select, separator, sheet, sidebar, skeleton, slider, sonner,
-spinner, switch, table, tabs, textarea, toggle, toggle-group, tooltip
+spinner, switch, table, tabs, textarea, toggle, toggle-group, tooltip, multi-select
+
+หน้าแกลเลอรีตัวอย่างการใช้งานครบทุกตัว: http://localhost:3000/components
 
 การใช้งาน (subpath import แบบ shadcn):
 

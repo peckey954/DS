@@ -1,5 +1,9 @@
 "use client";
 
+import Link from "next/link";
+import { ArrowRightIcon } from "lucide-react";
+
+import { cn } from "@repo/ui/lib/utils";
 import { Badge } from "@repo/ui/components/ui/badge";
 import { Button } from "@repo/ui/components/ui/button";
 import {
@@ -71,13 +75,29 @@ export default function Home() {
         </div>
       </header>
 
+      <section className="mb-10 flex flex-wrap items-center justify-between gap-4 rounded-lg border border-border bg-card p-5 text-card-foreground">
+        <div>
+          <h2 className="text-lg font-semibold">แกลเลอรี component ทั้งหมด</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            ดูตัวอย่างการใช้งาน component ทั้ง 54 ตัวใน @repo/ui จัดเป็นหมวด
+            พร้อมสลับแบรนด์และโหมดสว่าง/มืดได้ทันที
+          </p>
+        </div>
+        <Button asChild>
+          <Link href="/components">
+            เปิดแกลเลอรี
+            <ArrowRightIcon />
+          </Link>
+        </Button>
+      </section>
+
       {/* Swatches */}
       <section className="mb-10">
         <h2 className="mb-3 text-lg font-semibold">สีของแบรนด์ (tokens)</h2>
         <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
           {SWATCHES.map((s) => (
             <div key={s.name} className="space-y-2">
-              <div className={`h-16 w-full rounded-lg border ${s.className}`} />
+              <div className={cn("h-16 w-full rounded-lg border", s.className)} />
               <p className="text-center text-xs text-muted-foreground">{s.name}</p>
             </div>
           ))}
