@@ -31,6 +31,12 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
 
+  /* สีตอน hover ของพื้นผิวที่มีสี — ใช้แทนการลด opacity */
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-accent-hover: var(--accent-hover);
+  --color-destructive-hover: var(--destructive-hover);
+
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);

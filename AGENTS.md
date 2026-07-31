@@ -169,6 +169,7 @@ style={{ color: "#333" }}        // inline style สี
 | จาง | `bg-muted` `text-muted-foreground` |
 | เน้น | `bg-accent` `text-accent-foreground` |
 | อันตราย | `bg-destructive` `text-destructive-foreground` |
+| ตอน hover | `bg-primary-hover` `bg-secondary-hover` `bg-accent-hover` `bg-destructive-hover` |
 | เส้น/ช่องกรอก | `border-border` `bg-input` `ring-ring` |
 | กราฟ | `bg-chart-1` … `bg-chart-5` |
 | sidebar | `bg-sidebar` `text-sidebar-foreground` `bg-sidebar-primary` `bg-sidebar-accent` `border-sidebar-border` `ring-sidebar-ring` (+ `-foreground` คู่ของแต่ละตัว) |
@@ -176,6 +177,25 @@ style={{ color: "#333" }}        // inline style สี
 | ฟอนต์ | `font-sans` |
 
 ถ้าต้องการสีที่ไม่มีใน token → **เพิ่ม token ใหม่** (ดูข้อ 4) ไม่ใช่ hardcode
+
+#### สถานะ hover ของพื้นผิวที่มีสี
+
+**ห้ามทำ hover ด้วยการลด opacity** (`hover:bg-primary/90`, `hover:bg-secondary/80`)
+บนพื้นหลังสว่าง การลด opacity ทำให้สี **จางลง** ไม่ใช่เข้มขึ้น ผู้ใช้จะรู้สึกว่า
+ปุ่มไม่ตอบสนอง — ยิ่งถ้าแบรนด์ไหนตั้ง `--secondary` ไว้สว่างมาก จะแทบมองไม่เห็นเลย
+
+```tsx
+// ✅ ใช้ token คู่ hover
+<button className="bg-secondary hover:bg-secondary-hover">
+<button className="bg-primary hover:bg-primary-hover">
+
+// ❌ ลด opacity
+<button className="bg-secondary hover:bg-secondary/80">
+```
+
+ค่าของ token คู่นี้กำหนดไว้ต่อแบรนด์แล้ว — โหมดสว่างจะ **เข้มขึ้น** (ลดค่า L)
+โหมดมืดจะ **สว่างขึ้น** เพื่อให้เด่นขึ้นเหมือนกัน ตัวที่มีให้คือ
+`--primary-hover` `--secondary-hover` `--accent-hover` `--destructive-hover`
 
 ### 3. ต่อ className ด้วย `cn()` จาก `@repo/ui/lib/utils`
 
