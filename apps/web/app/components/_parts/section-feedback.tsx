@@ -28,14 +28,16 @@ import { Skeleton } from "@repo/ui/components/ui/skeleton";
 import { Spinner } from "@repo/ui/components/ui/spinner";
 
 import { Demo, Section } from "./showcase";
+import { useT } from "@/lib/i18n";
 
 export function SectionFeedback() {
+  const t = useT();
   const [progress, setProgress] = React.useState(35);
 
   return (
     <Section
       id="feedback"
-      title="สถานะ & การแจ้งเตือน"
+      title={t("section.feedback")}
       hint="alert · sonner (toast) · progress · skeleton · spinner · empty"
     >
       <Demo name="alert" hint="ข้อความแจ้งเตือนแบบอยู่กับที่" wide>

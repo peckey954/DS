@@ -88,6 +88,7 @@ import {
 } from "@repo/ui/components/ui/toggle-group";
 
 import { Demo, Section } from "./showcase";
+import { useT } from "@/lib/i18n";
 
 /** หัวข้อย่อยของแต่ละรูปแบบภายในกล่อง demo เดียวกัน */
 function VariantTitle({ children }: { children: React.ReactNode }) {
@@ -174,12 +175,13 @@ function FormDemo() {
 }
 
 export function SectionForms() {
+  const t = useT();
   const [otp, setOtp] = React.useState("");
 
   return (
     <Section
       id="forms"
-      title="ฟอร์ม & อินพุต"
+      title={t("section.forms")}
       hint="button · button-group · input · input-group · textarea · label · field · form · checkbox · radio-group · select · native-select · switch · slider · toggle · toggle-group · input-otp"
     >
       <Demo name="button" hint="variant · ขนาด · มีไอคอน · กำลังโหลด" wide>

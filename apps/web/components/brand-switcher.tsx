@@ -1,27 +1,32 @@
 "use client";
 
-import { Button } from "@repo/ui/components/ui/button";
-import { useBrand, type Brand } from "./providers";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@repo/ui/components/ui/select";
 
-const BRANDS: { id: Brand; label: string }[] = [
-  { id: "siam", label: "Siam" },
-  { id: "nara", label: "Nara" },
-];
+import { BRANDS, useBrand, type Brand } from "./providers";
+import { useT } from "@/lib/i18n";
 
 export function BrandSwitcher() {
   const { brand, setBrand } = useBrand();
+  const t = useT();
+
   return (
-    <div className="flex items-center gap-1 rounded-lg border p-1">
-      {BRANDS.map((b) => (
-        <Button
-          key={b.id}
-          size="sm"
-          variant={brand === b.id ? "default" : "ghost"}
-          onClick={() => setBrand(b.id)}
-        >
-          {b.label}
-        </Button>
-      ))}
-    </div>
+    <Select value={brand} onValueChange={(value) => setBrand(value as Brand)}>
+      <SelectTrigger size="sm" className="w-32" aria-label={t("brand.aria")}>
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        {BRANDS.map((b) => (
+          <SelectItem key={b.id} value={b.id}>
+            {b.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 }

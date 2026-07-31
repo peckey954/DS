@@ -98,12 +98,14 @@ import {
 } from "@repo/ui/components/ui/tooltip";
 
 import { Demo, Section } from "./showcase";
+import { useT } from "@/lib/i18n";
 
 export function SectionOverlays() {
+  const t = useT();
   return (
     <Section
       id="overlays"
-      title="Overlay & เมนู"
+      title={t("section.overlays")}
       hint="dialog · alert-dialog · sheet · drawer · popover · hover-card · tooltip · dropdown-menu · context-menu"
     >
       <Demo name="dialog" hint="กล่องโต้ตอบกลางจอ">

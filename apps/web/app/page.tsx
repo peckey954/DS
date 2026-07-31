@@ -43,6 +43,8 @@ import {
 import { BrandSwitcher } from "@/components/brand-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useBrand } from "@/components/providers";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { useT } from "@/lib/i18n";
 
 const SWATCHES = [
   { name: "primary", className: "bg-primary" },
@@ -55,21 +57,23 @@ const SWATCHES = [
 
 export default function Home() {
   const { brand } = useBrand();
+  const t = useT();
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-12">
       <header className="mb-10 flex flex-wrap items-center justify-between gap-4">
         <div>
-          <p className="text-sm text-muted-foreground">Design System · Multi-brand</p>
+          <p className="text-sm text-muted-foreground">{t("home.eyebrow")}</p>
           <h1 className="text-3xl font-bold tracking-tight">
-            สวัสดี นี่คือระบบดีไซน์กลาง
+            {t("home.title")}
           </h1>
           <p className="mt-1 text-muted-foreground">
-            แบรนด์ปัจจุบัน: <span className="font-semibold text-foreground">{brand}</span>{" "}
-            — สลับแบรนด์และโหมดดู สี/ฟอนต์เปลี่ยนทั้งหน้าโดยไม่แตะโค้ด component
+            {t("home.brandNow")} <span className="font-semibold text-foreground">{brand}</span>{" "}
+            {t("home.subtitle")}
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          <LanguageSwitcher />
           <BrandSwitcher />
           <ThemeToggle />
         </div>
@@ -77,15 +81,14 @@ export default function Home() {
 
       <section className="mb-10 flex flex-wrap items-center justify-between gap-4 rounded-lg border border-border bg-card p-5 text-card-foreground">
         <div>
-          <h2 className="text-lg font-semibold">แกลเลอรี component ทั้งหมด</h2>
+          <h2 className="text-lg font-semibold">{t("home.galleryTitle")}</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            ดูตัวอย่างการใช้งาน component ทั้ง 55 ตัวใน @repo/ui จัดเป็นหมวด
-            พร้อมสลับแบรนด์และโหมดสว่าง/มืดได้ทันที
+            {t("home.galleryDesc")}
           </p>
         </div>
         <Button asChild>
           <Link href="/components">
-            เปิดแกลเลอรี
+            {t("home.openGallery")}
             <ArrowRightIcon />
           </Link>
         </Button>
@@ -93,7 +96,7 @@ export default function Home() {
 
       {/* Swatches */}
       <section className="mb-10">
-        <h2 className="mb-3 text-lg font-semibold">สีของแบรนด์ (tokens)</h2>
+        <h2 className="mb-3 text-lg font-semibold">{t("home.swatches")}</h2>
         <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
           {SWATCHES.map((s) => (
             <div key={s.name} className="space-y-2">
@@ -106,7 +109,7 @@ export default function Home() {
 
       {/* Buttons */}
       <section className="mb-10">
-        <h2 className="mb-3 text-lg font-semibold">ปุ่ม</h2>
+        <h2 className="mb-3 text-lg font-semibold">{t("home.buttons")}</h2>
         <div className="flex flex-wrap gap-3">
           <Button>ปุ่มหลัก</Button>
           <Button variant="secondary">รอง</Button>
@@ -195,7 +198,7 @@ export default function Home() {
 
       {/* Accordion */}
       <section className="mb-10">
-        <h2 className="mb-3 text-lg font-semibold">คำถามที่พบบ่อย</h2>
+        <h2 className="mb-3 text-lg font-semibold">{t("home.faq")}</h2>
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="1">
             <AccordionTrigger>เปลี่ยนสีของแบรนด์ยังไง?</AccordionTrigger>

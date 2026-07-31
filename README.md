@@ -63,7 +63,7 @@ import { Card, CardHeader, CardTitle } from "@repo/ui/components/ui/card";
 ### เพิ่มแบรนด์ใหม่
 1. copy `packages/tokens/src/siam.css` เป็น `brandx.css` แก้ค่า + เปลี่ยน selector เป็น `[data-brand="brandx"]`
 2. `@import` ไฟล์นั้นใน `apps/web/app/globals.css`
-3. เพิ่มปุ่มใน `apps/web/components/brand-switcher.tsx`
+3. เพิ่ม 1 บรรทัดใน `BRANDS` ที่ `apps/web/components/providers.tsx` (ดรอปดาวน์เลือกแบรนด์อ่านจากรายการนี้)
 
 ### เพิ่ม component เพิ่มเติมภายหลัง
 โปรเจกต์ตั้งค่า `components.json` ให้แล้ว — เพิ่มด้วย shadcn CLI ได้เลย
@@ -112,7 +112,8 @@ git push -u origin main
 .
 ├── apps/web/                  # Next.js demo
 │   ├── app/{globals.css,layout.tsx,page.tsx}
-│   ├── components/            # providers, brand-switcher, theme-toggle
+│   ├── components/            # providers, brand-switcher, language-switcher, theme-toggle
+│   ├── lib/i18n.ts            # พจนานุกรม TH/EN ของแอปตัวอย่าง
 │   └── components.json        # ตั้งค่า shadcn CLI (แอป)
 ├── packages/ui/               # component library กลาง
 │   ├── components.json        # ตั้งค่า shadcn CLI (ไลบรารี)

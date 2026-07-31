@@ -13,6 +13,7 @@ import {
 } from "@repo/ui/components/ui/popover";
 
 import { Demo, Section } from "./showcase";
+import { useT } from "@/lib/i18n";
 
 type DayRange = { from: Date | undefined; to?: Date | undefined };
 
@@ -20,6 +21,7 @@ const thaiDate = (d: Date) =>
   d.toLocaleDateString("th-TH", { dateStyle: "medium" });
 
 export function SectionDate() {
+  const t = useT();
   const [single, setSingle] = React.useState<Date | undefined>(undefined);
   const [picked, setPicked] = React.useState<Date | undefined>(undefined);
   const [range, setRange] = React.useState<DayRange | undefined>(undefined);
@@ -27,7 +29,7 @@ export function SectionDate() {
   return (
     <Section
       id="date"
-      title="วันที่"
+      title={t("section.date")}
       hint="calendar · date picker (calendar + popover) · date range"
     >
       <Demo name="calendar" hint="ปฏิทินแบบฝังในหน้า">

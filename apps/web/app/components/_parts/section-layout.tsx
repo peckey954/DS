@@ -46,6 +46,7 @@ import { Badge } from "@repo/ui/components/ui/badge";
 import { Button } from "@repo/ui/components/ui/button";
 
 import { Demo, Section } from "./showcase";
+import { useT } from "@/lib/i18n";
 
 const SIDEBAR_ITEMS = [
   { label: "หน้าแรก", icon: HomeIcon, active: true },
@@ -54,12 +55,13 @@ const SIDEBAR_ITEMS = [
 ];
 
 export function SectionLayout() {
+  const t = useT();
   const [open, setOpen] = React.useState(false);
 
   return (
     <Section
       id="layout"
-      title="โครงสร้าง & เลย์เอาต์"
+      title={t("section.layout")}
       hint="aspect-ratio · card · separator · scroll-area · resizable · collapsible · sidebar"
     >
       <Demo name="card" hint="โครงกล่องเนื้อหามาตรฐาน">

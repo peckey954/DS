@@ -71,15 +71,17 @@ import {
 } from "@repo/ui/components/ui/tabs";
 
 import { Demo, Section } from "./showcase";
+import { useT } from "@/lib/i18n";
 
 export function SectionNavigation() {
+  const t = useT();
   const [cmdOpen, setCmdOpen] = React.useState(false);
   const [page, setPage] = React.useState(2);
 
   return (
     <Section
       id="navigation"
-      title="การนำทาง"
+      title={t("section.navigation")}
       hint="breadcrumb · tabs · navigation-menu · menubar · pagination · command"
     >
       <Demo name="breadcrumb" hint="เส้นทางของหน้าปัจจุบัน" wide>

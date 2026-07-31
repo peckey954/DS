@@ -4,7 +4,15 @@ import * as React from "react";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "@repo/ui/components/ui/sonner";
 
+/* ---------------------------------- แบรนด์ --------------------------------- */
+
 export type Brand = "siam" | "nara";
+
+/** เพิ่มแบรนด์ใหม่ = เพิ่ม 1 บรรทัดตรงนี้ (หลังสร้างไฟล์ token แล้ว) */
+export const BRANDS: { id: Brand; label: string }[] = [
+  { id: "siam", label: "Siam" },
+  { id: "nara", label: "Nara" },
+];
 
 type BrandContextValue = {
   brand: Brand;
@@ -34,6 +42,45 @@ function BrandProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+/* ---------------------------------- ภาษา ---------------------------------- */
+
+export type Lang = "th" | "en";
+
+export const LANGS: { id: Lang; short: string; label: string }[] = [
+  { id: "th", short: "TH", label: "ภาษาไทย" },
+  { id: "en", short: "EN", label: "English" },
+];
+
+type LangContextValue = {
+  lang: Lang;
+  setLang: (l: Lang) => void;
+};
+
+const LangContext = React.createContext<LangContextValue | null>(null);
+
+export function useLang() {
+  const ctx = React.useContext(LangContext);
+  if (!ctx) throw new Error("useLang ต้องอยู่ภายใน <Providers>");
+  return ctx;
+}
+
+function LangProvider({ children }: { children: React.ReactNode }) {
+  const [lang, setLang] = React.useState<Lang>("th");
+
+  React.useEffect(() => {
+    // มีผลกับการตัดคำ/การอ่านออกเสียงของ screen reader ด้วย ไม่ใช่แค่ข้อความ
+    document.documentElement.lang = lang;
+  }, [lang]);
+
+  return (
+    <LangContext.Provider value={{ lang, setLang }}>
+      {children}
+    </LangContext.Provider>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider
@@ -43,8 +90,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
       disableTransitionOnChange
     >
       <BrandProvider>
-        {children}
-        <Toaster />
+        <LangProvider>
+          {children}
+          <Toaster />
+        </LangProvider>
       </BrandProvider>
     </ThemeProvider>
   );

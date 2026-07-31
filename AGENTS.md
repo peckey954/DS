@@ -248,7 +248,7 @@ packages/tokens/src/nara.css   → [data-brand="nara"]  / .dark
   2. แมปชื่อใน `@theme inline` ที่ `packages/ui/src/styles/globals.css`
   3. ใช้งานผ่านชื่อ class กลางใน component
 - เพิ่มแบรนด์ใหม่: copy `siam.css` → `brandx.css`, เปลี่ยน selector เป็น `[data-brand="brandx"]`,
-  `@import` ใน `apps/web/app/globals.css`, เพิ่มปุ่มใน `apps/web/components/brand-switcher.tsx`
+  `@import` ใน `apps/web/app/globals.css`, เพิ่ม 1 บรรทัดใน `BRANDS` ที่ `apps/web/components/providers.tsx`
 
 ### 5. dark / light จัดการด้วย token — เขียนสีชุดเดียวพอ
 

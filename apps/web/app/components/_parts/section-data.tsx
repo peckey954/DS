@@ -56,6 +56,7 @@ import {
 } from "@repo/ui/components/ui/table";
 
 import { Demo, Section } from "./showcase";
+import { useT } from "@/lib/i18n";
 
 const CHART_DATA = [
   { month: "ม.ค.", web: 186, app: 80 },
@@ -84,10 +85,11 @@ const FILES = [
 ];
 
 export function SectionData() {
+  const t = useT();
   return (
     <Section
       id="data"
-      title="แสดงข้อมูล"
+      title={t("section.data")}
       hint="table · chart · accordion · carousel · avatar · badge · item · kbd"
     >
       <Demo name="table" hint="ตารางข้อมูล" wide>
@@ -215,9 +217,9 @@ export function SectionData() {
             </Avatar>
           </div>
           <AvatarGroup>
-            {["สม", "มน", "ปต"].map((t) => (
-              <Avatar key={t}>
-                <AvatarFallback>{t}</AvatarFallback>
+            {["สม", "มน", "ปต"].map((initials) => (
+              <Avatar key={initials}>
+                <AvatarFallback>{initials}</AvatarFallback>
               </Avatar>
             ))}
             <AvatarGroupCount>+9</AvatarGroupCount>

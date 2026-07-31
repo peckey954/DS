@@ -9,6 +9,8 @@ import {
 } from "@repo/ui/components/ui/multi-select";
 import { cn } from "@repo/ui/lib/utils";
 
+import { useT } from "@/lib/i18n";
+
 /** จำนวนคงเหลือชิดขวาของแถว — ต่ำกว่าเกณฑ์ให้ใช้สี destructive */
 function Remaining({ tons }: { tons: number }) {
   const low = tons < 10;
@@ -44,6 +46,7 @@ const PROVINCE_OPTIONS: MultiSelectOption[] = [
 ];
 
 export function SectionCustom() {
+  const t = useT();
   const [lots, setLots] = React.useState<string[]>(["lot-1", "lot-2"]);
   const [provinces, setProvinces] = React.useState<string[]>([]);
 
@@ -51,12 +54,10 @@ export function SectionCustom() {
     <section id="multi-select" className="scroll-mt-24">
       <div className="mb-4 border-b border-border pb-3">
         <h2 className="text-xl font-semibold tracking-tight">
-          multi-select (component เสริมของเรา)
+          {t("section.multiSelect")}
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          ดรอปดาวน์เลือกหลายรายการ พร้อมช่องค้นหา · เลือกทั้งหมด · chip
-          ของรายการที่เลือก — ประกอบจาก popover + command + checkbox + badge
-          ของ shadcn ทั้งหมด
+          {t("section.multiSelect.desc")}
         </p>
       </div>
 
