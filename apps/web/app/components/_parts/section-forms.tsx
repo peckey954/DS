@@ -7,6 +7,7 @@ import {
   AlignLeftIcon,
   AlignRightIcon,
   BoldIcon,
+  CopyIcon,
   ItalicIcon,
   MailIcon,
   SearchIcon,
@@ -206,7 +207,7 @@ export function SectionForms() {
         </div>
       </Demo>
 
-      <Demo name="input-group" hint="ไอคอน / ปุ่ม ในช่องเดียวกัน">
+      <Demo name="input-group" hint="ไอคอน / ข้อความ / ปุ่ม ในช่องเดียวกัน">
         <div className="w-full space-y-3">
           <InputGroup>
             <InputGroupAddon>
@@ -214,6 +215,7 @@ export function SectionForms() {
             </InputGroupAddon>
             <InputGroupInput placeholder="ค้นหา component…" />
           </InputGroup>
+
           <InputGroup>
             <InputGroupAddon>
               <MailIcon />
@@ -223,10 +225,25 @@ export function SectionForms() {
               <InputGroupText>@company.co.th</InputGroupText>
             </InputGroupAddon>
           </InputGroup>
+
+          {/* ปุ่มไอคอน: ghost — ไม่มีขอบ จึงไม่ตีเส้นซ้อนกับขอบของ InputGroup */}
+          <InputGroup>
+            <InputGroupInput
+              defaultValue="https://design.company.co.th"
+              readOnly
+            />
+            <InputGroupAddon align="inline-end">
+              <InputGroupButton size="icon-xs" aria-label="คัดลอกลิงก์">
+                <CopyIcon />
+              </InputGroupButton>
+            </InputGroupAddon>
+          </InputGroup>
+
+          {/* ปุ่มข้อความ: secondary — พื้นทึบ ไม่ใช้ outline ที่มีขอบ */}
           <InputGroup>
             <InputGroupInput placeholder="ใส่โค้ดส่วนลด" />
             <InputGroupAddon align="inline-end">
-              <InputGroupButton variant="outline" size="sm">
+              <InputGroupButton variant="secondary" size="sm">
                 ใช้โค้ด
               </InputGroupButton>
             </InputGroupAddon>

@@ -107,6 +107,28 @@ component ที่ประกอบขึ้นเองก็ต้องว�
   ไม่ต้องใส่ border/สี/opacity เพิ่ม
 - จะย้ายปุ่มไปขวาก็ได้โดยสลับลำดับ แต่ต้องมีเหตุผลเฉพาะหน้านั้น ไม่ใช่ค่าเริ่มต้น
 
+#### ปุ่มที่อยู่ใน input-group
+
+`InputGroup` มีขอบ 1px สี `border-input` อยู่แล้ว **ห้ามใช้ปุ่ม `variant="outline"` ข้างใน**
+เพราะปุ่มจะมีขอบสีเดียวกันอีกเส้น ห่างจากขอบกลุ่มแค่ ~5px กลายเป็นเส้นคู่ขนานที่ดูเพี้ยน
+
+```tsx
+// ✅ ปุ่มไอคอน — ghost (ค่าเริ่มต้นของ InputGroupButton) ไม่มีขอบ
+<InputGroupAddon align="inline-end">
+  <InputGroupButton size="icon-xs" aria-label="คัดลอกลิงก์">
+    <CopyIcon />
+  </InputGroupButton>
+</InputGroupAddon>
+
+// ✅ ปุ่มข้อความ — secondary พื้นทึบ ไม่มีขอบ
+<InputGroupButton variant="secondary" size="sm">ใช้โค้ด</InputGroupButton>
+
+// ❌ outline — ขอบซ้อนกับขอบของ InputGroup
+<InputGroupButton variant="outline" size="sm">ใช้โค้ด</InputGroupButton>
+```
+
+`size` ของ `InputGroupButton` รับเฉพาะ `xs` `sm` `icon-xs` `icon-sm` (คนละชุดกับ `Button`)
+
 ### 2. ใช้ token เท่านั้น — ห้าม hardcode สี
 
 ใช้ชื่อกลางเสมอ ห้ามใส่ค่าสีจริงลงใน component:
