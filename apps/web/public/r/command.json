@@ -7,7 +7,7 @@
     "lucide-react@^0.544.0"
   ],
   "registryDependencies": [
-    "http://localhost:3000/r/dialog.json"
+    "https://ds-web-iota.vercel.app/r/dialog.json"
   ],
   "files": [
     {

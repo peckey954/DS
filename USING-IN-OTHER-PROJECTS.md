@@ -142,7 +142,7 @@ pnpm add tw-animate-css
 ## 2. ติดตั้ง theme ก่อน
 
 ```bash
-pnpm dlx shadcn@latest add https://your-domain.com/r/theme.json
+pnpm dlx shadcn@latest add https://ds-web-iota.vercel.app/r/theme.json
 ```
 
 จะได้ 3 ไฟล์ลงมาที่ `styles/`:
@@ -167,14 +167,14 @@ pnpm dlx shadcn@latest add https://your-domain.com/r/theme.json
 ## 3. ติดตั้ง component ที่ต้องการ
 
 ```bash
-pnpm dlx shadcn@latest add https://your-domain.com/r/button.json
-pnpm dlx shadcn@latest add https://your-domain.com/r/multi-select.json
+pnpm dlx shadcn@latest add https://ds-web-iota.vercel.app/r/button.json
+pnpm dlx shadcn@latest add https://ds-web-iota.vercel.app/r/multi-select.json
 ```
 
 component ที่พึ่งพาตัวอื่นจะดึงตัวที่จำเป็นมาให้เอง เช่น `multi-select` จะลาก
 `popover` `command` `checkbox` `badge` มาด้วยอัตโนมัติ
 
-ดูรายชื่อทั้งหมดที่ `https://your-domain.com/r/index.json`
+ดูรายชื่อทั้งหมดที่ `https://ds-web-iota.vercel.app/r/index.json`
 
 ## 4. ใช้งาน
 
@@ -189,7 +189,7 @@ import { Button } from "@/components/ui/button";
 รันคำสั่ง add ซ้ำ แล้วตอบ overwrite:
 
 ```bash
-pnpm dlx shadcn@latest add https://your-domain.com/r/button.json --overwrite
+pnpm dlx shadcn@latest add https://ds-web-iota.vercel.app/r/button.json --overwrite
 ```
 
 **ระวัง** — ถ้าคุณแก้ไฟล์นั้นเองไว้ การ overwrite จะทับของคุณหาย

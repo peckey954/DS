@@ -7,7 +7,7 @@
     "react-hook-form@^7.83.0"
   ],
   "registryDependencies": [
-    "http://localhost:3000/r/label.json"
+    "https://ds-web-iota.vercel.app/r/label.json"
   ],
   "files": [
     {

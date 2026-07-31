@@ -8,13 +8,13 @@
     "radix-ui@^1.6.7"
   ],
   "registryDependencies": [
-    "http://localhost:3000/r/button.json",
-    "http://localhost:3000/r/input.json",
-    "http://localhost:3000/r/separator.json",
-    "http://localhost:3000/r/sheet.json",
-    "http://localhost:3000/r/skeleton.json",
-    "http://localhost:3000/r/tooltip.json",
-    "http://localhost:3000/r/use-mobile.json"
+    "https://ds-web-iota.vercel.app/r/button.json",
+    "https://ds-web-iota.vercel.app/r/input.json",
+    "https://ds-web-iota.vercel.app/r/separator.json",
+    "https://ds-web-iota.vercel.app/r/sheet.json",
+    "https://ds-web-iota.vercel.app/r/skeleton.json",
+    "https://ds-web-iota.vercel.app/r/tooltip.json",
+    "https://ds-web-iota.vercel.app/r/use-mobile.json"
   ],
   "files": [
     {

@@ -6,8 +6,8 @@
     "class-variance-authority@^0.7.1"
   ],
   "registryDependencies": [
-    "http://localhost:3000/r/label.json",
-    "http://localhost:3000/r/separator.json"
+    "https://ds-web-iota.vercel.app/r/label.json",
+    "https://ds-web-iota.vercel.app/r/separator.json"
   ],
   "files": [
     {

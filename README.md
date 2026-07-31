@@ -88,7 +88,7 @@ pnpm add @peckey954/ui @peckey954/tokens tw-animate-css
 **แนวทาง B — ก็อปโค้ดเข้าโปรเจกต์** (แก้ได้อิสระ เหมือน shadcn/ui)
 
 ```bash
-pnpm dlx shadcn@latest add https://your-domain.com/r/button.json
+pnpm dlx shadcn@latest add https://ds-web-iota.vercel.app/r/button.json
 ```
 
 - [USING-IN-OTHER-PROJECTS.md](USING-IN-OTHER-PROJECTS.md) — วิธีติดตั้งทั้งสองแนวทาง

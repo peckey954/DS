@@ -6,7 +6,7 @@
     "lucide-react@^0.544.0"
   ],
   "registryDependencies": [
-    "http://localhost:3000/r/button.json"
+    "https://ds-web-iota.vercel.app/r/button.json"
   ],
   "files": [
     {

@@ -126,7 +126,7 @@ tar tzf /tmp/peckey954-ui-0.1.0.tgz
 pnpm registry
 
 # ก่อน deploy จริง ต้องระบุโดเมนจริง
-REGISTRY_URL=https://your-domain.com/r pnpm registry
+REGISTRY_URL=https://ds-web-iota.vercel.app/r pnpm registry
 ```
 
 `REGISTRY_URL` **ต้องตั้งให้ถูกก่อน deploy** เพราะมันถูกฝังลงใน `registryDependencies`
@@ -137,7 +137,7 @@ REGISTRY_URL=https://your-domain.com/r pnpm registry
 registry คือไฟล์ static ธรรมดา deploy แอปตัวอย่างขึ้น Vercel ก็ได้ registry ไปด้วยเลย
 
 ```bash
-REGISTRY_URL=https://your-domain.com/r pnpm registry
+REGISTRY_URL=https://ds-web-iota.vercel.app/r pnpm registry
 git add apps/web/public/r
 git commit -m "chore: rebuild registry for production"
 git push
@@ -146,14 +146,14 @@ git push
 แล้วต่อ repo กับ Vercel (Root Directory = `apps/web`) จากนั้นเช็ค:
 
 ```
-https://your-domain.com/r/index.json     ← รายชื่อทั้งหมด
-https://your-domain.com/r/button.json    ← ตัว component
+https://ds-web-iota.vercel.app/r/index.json     ← รายชื่อทั้งหมด
+https://ds-web-iota.vercel.app/r/button.json    ← ตัว component
 ```
 
 ## อัปเดต registry เมื่อแก้ component
 
 ```bash
-REGISTRY_URL=https://your-domain.com/r pnpm registry
+REGISTRY_URL=https://ds-web-iota.vercel.app/r pnpm registry
 git add -A && git commit -m "chore: rebuild registry" && git push
 ```
 

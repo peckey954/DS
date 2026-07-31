@@ -6,10 +6,10 @@
     "lucide-react@^0.544.0"
   ],
   "registryDependencies": [
-    "http://localhost:3000/r/badge.json",
-    "http://localhost:3000/r/checkbox.json",
-    "http://localhost:3000/r/command.json",
-    "http://localhost:3000/r/popover.json"
+    "https://ds-web-iota.vercel.app/r/badge.json",
+    "https://ds-web-iota.vercel.app/r/checkbox.json",
+    "https://ds-web-iota.vercel.app/r/command.json",
+    "https://ds-web-iota.vercel.app/r/popover.json"
   ],
   "files": [
     {

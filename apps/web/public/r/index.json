@@ -6,287 +6,287 @@
     {
       "name": "use-mobile",
       "type": "registry:hook",
-      "url": "http://localhost:3000/r/use-mobile.json"
+      "url": "https://ds-web-iota.vercel.app/r/use-mobile.json"
     },
     {
       "name": "accordion",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/accordion.json"
+      "url": "https://ds-web-iota.vercel.app/r/accordion.json"
     },
     {
       "name": "alert-dialog",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/alert-dialog.json"
+      "url": "https://ds-web-iota.vercel.app/r/alert-dialog.json"
     },
     {
       "name": "alert",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/alert.json"
+      "url": "https://ds-web-iota.vercel.app/r/alert.json"
     },
     {
       "name": "aspect-ratio",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/aspect-ratio.json"
+      "url": "https://ds-web-iota.vercel.app/r/aspect-ratio.json"
     },
     {
       "name": "avatar",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/avatar.json"
+      "url": "https://ds-web-iota.vercel.app/r/avatar.json"
     },
     {
       "name": "badge",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/badge.json"
+      "url": "https://ds-web-iota.vercel.app/r/badge.json"
     },
     {
       "name": "breadcrumb",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/breadcrumb.json"
+      "url": "https://ds-web-iota.vercel.app/r/breadcrumb.json"
     },
     {
       "name": "button-group",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/button-group.json"
+      "url": "https://ds-web-iota.vercel.app/r/button-group.json"
     },
     {
       "name": "button",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/button.json"
+      "url": "https://ds-web-iota.vercel.app/r/button.json"
     },
     {
       "name": "calendar",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/calendar.json"
+      "url": "https://ds-web-iota.vercel.app/r/calendar.json"
     },
     {
       "name": "card",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/card.json"
+      "url": "https://ds-web-iota.vercel.app/r/card.json"
     },
     {
       "name": "carousel",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/carousel.json"
+      "url": "https://ds-web-iota.vercel.app/r/carousel.json"
     },
     {
       "name": "chart",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/chart.json"
+      "url": "https://ds-web-iota.vercel.app/r/chart.json"
     },
     {
       "name": "checkbox",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/checkbox.json"
+      "url": "https://ds-web-iota.vercel.app/r/checkbox.json"
     },
     {
       "name": "collapsible",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/collapsible.json"
+      "url": "https://ds-web-iota.vercel.app/r/collapsible.json"
     },
     {
       "name": "command",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/command.json"
+      "url": "https://ds-web-iota.vercel.app/r/command.json"
     },
     {
       "name": "context-menu",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/context-menu.json"
+      "url": "https://ds-web-iota.vercel.app/r/context-menu.json"
     },
     {
       "name": "dialog",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/dialog.json"
+      "url": "https://ds-web-iota.vercel.app/r/dialog.json"
     },
     {
       "name": "drawer",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/drawer.json"
+      "url": "https://ds-web-iota.vercel.app/r/drawer.json"
     },
     {
       "name": "dropdown-menu",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/dropdown-menu.json"
+      "url": "https://ds-web-iota.vercel.app/r/dropdown-menu.json"
     },
     {
       "name": "empty",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/empty.json"
+      "url": "https://ds-web-iota.vercel.app/r/empty.json"
     },
     {
       "name": "field",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/field.json"
+      "url": "https://ds-web-iota.vercel.app/r/field.json"
     },
     {
       "name": "form",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/form.json"
+      "url": "https://ds-web-iota.vercel.app/r/form.json"
     },
     {
       "name": "hover-card",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/hover-card.json"
+      "url": "https://ds-web-iota.vercel.app/r/hover-card.json"
     },
     {
       "name": "input-group",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/input-group.json"
+      "url": "https://ds-web-iota.vercel.app/r/input-group.json"
     },
     {
       "name": "input-otp",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/input-otp.json"
+      "url": "https://ds-web-iota.vercel.app/r/input-otp.json"
     },
     {
       "name": "input",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/input.json"
+      "url": "https://ds-web-iota.vercel.app/r/input.json"
     },
     {
       "name": "item",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/item.json"
+      "url": "https://ds-web-iota.vercel.app/r/item.json"
     },
     {
       "name": "kbd",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/kbd.json"
+      "url": "https://ds-web-iota.vercel.app/r/kbd.json"
     },
     {
       "name": "label",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/label.json"
+      "url": "https://ds-web-iota.vercel.app/r/label.json"
     },
     {
       "name": "menubar",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/menubar.json"
+      "url": "https://ds-web-iota.vercel.app/r/menubar.json"
     },
     {
       "name": "multi-select",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/multi-select.json"
+      "url": "https://ds-web-iota.vercel.app/r/multi-select.json"
     },
     {
       "name": "native-select",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/native-select.json"
+      "url": "https://ds-web-iota.vercel.app/r/native-select.json"
     },
     {
       "name": "navigation-menu",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/navigation-menu.json"
+      "url": "https://ds-web-iota.vercel.app/r/navigation-menu.json"
     },
     {
       "name": "pagination",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/pagination.json"
+      "url": "https://ds-web-iota.vercel.app/r/pagination.json"
     },
     {
       "name": "popover",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/popover.json"
+      "url": "https://ds-web-iota.vercel.app/r/popover.json"
     },
     {
       "name": "progress",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/progress.json"
+      "url": "https://ds-web-iota.vercel.app/r/progress.json"
     },
     {
       "name": "radio-group",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/radio-group.json"
+      "url": "https://ds-web-iota.vercel.app/r/radio-group.json"
     },
     {
       "name": "resizable",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/resizable.json"
+      "url": "https://ds-web-iota.vercel.app/r/resizable.json"
     },
     {
       "name": "scroll-area",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/scroll-area.json"
+      "url": "https://ds-web-iota.vercel.app/r/scroll-area.json"
     },
     {
       "name": "select",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/select.json"
+      "url": "https://ds-web-iota.vercel.app/r/select.json"
     },
     {
       "name": "separator",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/separator.json"
+      "url": "https://ds-web-iota.vercel.app/r/separator.json"
     },
     {
       "name": "sheet",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/sheet.json"
+      "url": "https://ds-web-iota.vercel.app/r/sheet.json"
     },
     {
       "name": "sidebar",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/sidebar.json"
+      "url": "https://ds-web-iota.vercel.app/r/sidebar.json"
     },
     {
       "name": "skeleton",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/skeleton.json"
+      "url": "https://ds-web-iota.vercel.app/r/skeleton.json"
     },
     {
       "name": "slider",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/slider.json"
+      "url": "https://ds-web-iota.vercel.app/r/slider.json"
     },
     {
       "name": "sonner",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/sonner.json"
+      "url": "https://ds-web-iota.vercel.app/r/sonner.json"
     },
     {
       "name": "spinner",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/spinner.json"
+      "url": "https://ds-web-iota.vercel.app/r/spinner.json"
     },
     {
       "name": "switch",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/switch.json"
+      "url": "https://ds-web-iota.vercel.app/r/switch.json"
     },
     {
       "name": "table",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/table.json"
+      "url": "https://ds-web-iota.vercel.app/r/table.json"
     },
     {
       "name": "tabs",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/tabs.json"
+      "url": "https://ds-web-iota.vercel.app/r/tabs.json"
     },
     {
       "name": "textarea",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/textarea.json"
+      "url": "https://ds-web-iota.vercel.app/r/textarea.json"
     },
     {
       "name": "toggle-group",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/toggle-group.json"
+      "url": "https://ds-web-iota.vercel.app/r/toggle-group.json"
     },
     {
       "name": "toggle",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/toggle.json"
+      "url": "https://ds-web-iota.vercel.app/r/toggle.json"
     },
     {
       "name": "tooltip",
       "type": "registry:ui",
-      "url": "http://localhost:3000/r/tooltip.json"
+      "url": "https://ds-web-iota.vercel.app/r/tooltip.json"
     },
     {
       "name": "theme",
       "type": "registry:file",
-      "url": "http://localhost:3000/r/theme.json"
+      "url": "https://ds-web-iota.vercel.app/r/theme.json"
     }
   ]
 }

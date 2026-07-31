@@ -7,7 +7,7 @@
     "radix-ui@^1.6.7"
   ],
   "registryDependencies": [
-    "http://localhost:3000/r/button.json"
+    "https://ds-web-iota.vercel.app/r/button.json"
   ],
   "files": [
     {
