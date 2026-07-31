@@ -275,7 +275,7 @@ export function SectionForms() {
           </div>
 
           <div className="space-y-3">
-            <VariantTitle>แบบกล่อง (มีกรอบครอบ)</VariantTitle>
+            <VariantTitle>แบบกล่อง — ค่าเริ่มต้น: ปุ่มอยู่ซ้าย</VariantTitle>
             <FieldGroup className="gap-3">
               {[
                 {
@@ -293,11 +293,11 @@ export function SectionForms() {
               ].map((o) => (
                 <FieldLabel key={o.id} htmlFor={o.id}>
                   <Field orientation="horizontal">
+                    <Checkbox id={o.id} defaultChecked={o.checked} />
                     <FieldContent>
                       <FieldTitle>{o.title}</FieldTitle>
                       <FieldDescription>{o.desc}</FieldDescription>
                     </FieldContent>
-                    <Checkbox id={o.id} defaultChecked={o.checked} />
                   </Field>
                 </FieldLabel>
               ))}
@@ -326,11 +326,11 @@ export function SectionForms() {
             </div>
             <FieldLabel htmlFor="cb-box-off">
               <Field orientation="horizontal">
+                <Checkbox id="cb-box-off" disabled defaultChecked />
                 <FieldContent>
                   <FieldTitle>แผนที่ปิดขายแล้ว</FieldTitle>
                   <FieldDescription>ไม่เปิดให้สมัครใหม่</FieldDescription>
                 </FieldContent>
-                <Checkbox id="cb-box-off" disabled defaultChecked />
               </Field>
             </FieldLabel>
           </div>
@@ -384,7 +384,7 @@ export function SectionForms() {
           </div>
 
           <div className="space-y-3">
-            <VariantTitle>แบบกล่อง (มีกรอบครอบ)</VariantTitle>
+            <VariantTitle>แบบกล่อง — ค่าเริ่มต้น: ปุ่มอยู่ซ้าย</VariantTitle>
             <RadioGroup defaultValue="card" className="gap-3">
               {[
                 {
@@ -400,11 +400,11 @@ export function SectionForms() {
               ].map((o) => (
                 <FieldLabel key={o.value} htmlFor={`rgb-${o.value}`}>
                   <Field orientation="horizontal">
+                    <RadioGroupItem value={o.value} id={`rgb-${o.value}`} />
                     <FieldContent>
                       <FieldTitle>{o.title}</FieldTitle>
                       <FieldDescription>{o.desc}</FieldDescription>
                     </FieldContent>
-                    <RadioGroupItem value={o.value} id={`rgb-${o.value}`} />
                   </Field>
                 </FieldLabel>
               ))}
@@ -430,11 +430,11 @@ export function SectionForms() {
             <RadioGroup defaultValue="sold-out" disabled className="gap-3">
               <FieldLabel htmlFor="rg-box-off">
                 <Field orientation="horizontal">
+                  <RadioGroupItem value="sold-out" id="rg-box-off" />
                   <FieldContent>
                     <FieldTitle>รอบที่เต็มแล้ว</FieldTitle>
                     <FieldDescription>ปิดรับสมัครรอบนี้</FieldDescription>
                   </FieldContent>
-                  <RadioGroupItem value="sold-out" id="rg-box-off" />
                 </Field>
               </FieldLabel>
             </RadioGroup>

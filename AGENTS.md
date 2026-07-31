@@ -85,6 +85,28 @@ const options: MultiSelectOption[] = [
 ถ้าไม่มีจริง ๆ ให้ประกอบจากของที่มีก่อน (compose) แล้วค่อยพิจารณาสร้างใหม่
 component ที่ประกอบขึ้นเองก็ต้องวางไว้ที่ `packages/ui/src/components/ui/` และทำตามกฎทุกข้อเหมือนกัน
 
+#### checkbox / radio แบบมีกรอบครอบ (box)
+
+ไม่มี component แยก — ประกอบด้วย `Field` + `FieldLabel` ที่มีอยู่แล้ว
+**ค่าเริ่มต้นคือวางปุ่มไว้ซ้ายเสมอ** แล้วตามด้วย `FieldContent`
+
+```tsx
+<FieldLabel htmlFor="plan-std">
+  <Field orientation="horizontal">
+    <Checkbox id="plan-std" />            {/* ปุ่มอยู่ซ้าย = ค่าเริ่มต้น */}
+    <FieldContent>
+      <FieldTitle>แผนมาตรฐาน</FieldTitle>
+      <FieldDescription>ผู้ใช้ 5 คน · พื้นที่ 20 GB</FieldDescription>
+    </FieldContent>
+  </Field>
+</FieldLabel>
+```
+
+- ใช้กับ `RadioGroupItem` ได้เหมือนกัน (ครอบด้วย `RadioGroup` อีกชั้น)
+- `FieldLabel` จัดการกรอบ · การไฮไลต์เมื่อติ๊ก · สถานะปิดใช้งาน ให้เองทั้งหมด
+  ไม่ต้องใส่ border/สี/opacity เพิ่ม
+- จะย้ายปุ่มไปขวาก็ได้โดยสลับลำดับ แต่ต้องมีเหตุผลเฉพาะหน้านั้น ไม่ใช่ค่าเริ่มต้น
+
 ### 2. ใช้ token เท่านั้น — ห้าม hardcode สี
 
 ใช้ชื่อกลางเสมอ ห้ามใส่ค่าสีจริงลงใน component:
