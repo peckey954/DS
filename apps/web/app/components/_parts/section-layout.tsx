@@ -8,7 +8,7 @@ import {
   SettingsIcon,
 } from "lucide-react";
 
-import { AspectRatio } from "@repo/ui/components/ui/aspect-ratio";
+import { AspectRatio } from "@peckey954/ui/components/ui/aspect-ratio";
 import {
   Card,
   CardAction,
@@ -17,19 +17,19 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@repo/ui/components/ui/card";
+} from "@peckey954/ui/components/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@repo/ui/components/ui/collapsible";
+} from "@peckey954/ui/components/ui/collapsible";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@repo/ui/components/ui/resizable";
-import { ScrollArea } from "@repo/ui/components/ui/scroll-area";
-import { Separator } from "@repo/ui/components/ui/separator";
+} from "@peckey954/ui/components/ui/resizable";
+import { ScrollArea } from "@peckey954/ui/components/ui/scroll-area";
+import { Separator } from "@peckey954/ui/components/ui/separator";
 import {
   Sidebar,
   SidebarContent,
@@ -41,9 +41,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
-} from "@repo/ui/components/ui/sidebar";
-import { Badge } from "@repo/ui/components/ui/badge";
-import { Button } from "@repo/ui/components/ui/button";
+} from "@peckey954/ui/components/ui/sidebar";
+import { Badge } from "@peckey954/ui/components/ui/badge";
+import { Button } from "@peckey954/ui/components/ui/button";
 
 import { Demo, Section } from "./showcase";
 import { defineCopy, useCopy, useT } from "@/lib/i18n";

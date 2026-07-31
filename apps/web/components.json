@@ -15,7 +15,7 @@
     "components": "@/components",
     "hooks": "@/hooks",
     "lib": "@/lib",
-    "utils": "@repo/ui/lib/utils",
-    "ui": "@repo/ui/components/ui"
+    "utils": "@peckey954/ui/lib/utils",
+    "ui": "@peckey954/ui/components/ui"
   }
 }

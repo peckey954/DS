@@ -13,8 +13,8 @@ import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "@repo/ui/components/ui/alert";
-import { Button } from "@repo/ui/components/ui/button";
+} from "@peckey954/ui/components/ui/alert";
+import { Button } from "@peckey954/ui/components/ui/button";
 import {
   Empty,
   EmptyContent,
@@ -22,10 +22,10 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@repo/ui/components/ui/empty";
-import { Progress } from "@repo/ui/components/ui/progress";
-import { Skeleton } from "@repo/ui/components/ui/skeleton";
-import { Spinner } from "@repo/ui/components/ui/spinner";
+} from "@peckey954/ui/components/ui/empty";
+import { Progress } from "@peckey954/ui/components/ui/progress";
+import { Skeleton } from "@peckey954/ui/components/ui/skeleton";
+import { Spinner } from "@peckey954/ui/components/ui/spinner";
 
 import { Demo, Section } from "./showcase";
 import { defineCopy, useCopy, useT } from "@/lib/i18n";

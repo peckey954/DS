@@ -8,23 +8,23 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@repo/ui/components/ui/accordion";
+} from "@peckey954/ui/components/ui/accordion";
 import {
   Avatar,
   AvatarBadge,
   AvatarFallback,
   AvatarGroup,
   AvatarGroupCount,
-} from "@repo/ui/components/ui/avatar";
-import { Badge } from "@repo/ui/components/ui/badge";
-import { Button } from "@repo/ui/components/ui/button";
+} from "@peckey954/ui/components/ui/avatar";
+import { Badge } from "@peckey954/ui/components/ui/badge";
+import { Button } from "@peckey954/ui/components/ui/button";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@repo/ui/components/ui/carousel";
+} from "@peckey954/ui/components/ui/carousel";
 import {
   ChartContainer,
   ChartLegend,
@@ -32,7 +32,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
-} from "@repo/ui/components/ui/chart";
+} from "@peckey954/ui/components/ui/chart";
 import {
   Item,
   ItemActions,
@@ -42,8 +42,8 @@ import {
   ItemMedia,
   ItemSeparator,
   ItemTitle,
-} from "@repo/ui/components/ui/item";
-import { Kbd, KbdGroup } from "@repo/ui/components/ui/kbd";
+} from "@peckey954/ui/components/ui/item";
+import { Kbd, KbdGroup } from "@peckey954/ui/components/ui/kbd";
 import {
   Table,
   TableBody,
@@ -53,7 +53,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@repo/ui/components/ui/table";
+} from "@peckey954/ui/components/ui/table";
 
 import { Demo, Section } from "./showcase";
 import { defineCopy, useCopy, useLocale, useT } from "@/lib/i18n";

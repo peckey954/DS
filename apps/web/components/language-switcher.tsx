@@ -1,6 +1,6 @@
 "use client";
 
-import { Tabs, TabsList, TabsTrigger } from "@repo/ui/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@peckey954/ui/components/ui/tabs";
 
 import { LANGS, useLang, type Lang } from "./providers";
 import { useT } from "@/lib/i18n";

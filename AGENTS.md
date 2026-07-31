@@ -22,12 +22,12 @@ Stack: Next.js 15 · React 19 · Tailwind CSS v4 · shadcn (new-york) · Radix U
 
 ## กฎ 6 ข้อ (ห้ามฝ่าฝืน)
 
-### 1. ใช้ component จาก `@repo/ui/components/ui/*` เสมอ — ห้ามเขียนเอง ถ้ามีอยู่แล้ว
+### 1. ใช้ component จาก `@peckey954/ui/components/ui/*` เสมอ — ห้ามเขียนเอง ถ้ามีอยู่แล้ว
 
 ```tsx
 // ✅ ถูก
-import { Button } from "@repo/ui/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@repo/ui/components/ui/card";
+import { Button } from "@peckey954/ui/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "@peckey954/ui/components/ui/card";
 
 // ❌ ผิด — เขียนปุ่มเองทั้งที่มี Button อยู่แล้ว
 <button className="rounded-md px-4 py-2 ...">บันทึก</button>
@@ -53,7 +53,7 @@ spinner, switch, table, tabs, textarea, toggle, toggle-group, tooltip
 ของรายการที่เลือก ประกอบจาก popover + command + checkbox + badge
 
 ```tsx
-import { MultiSelect, type MultiSelectOption } from "@repo/ui/components/ui/multi-select";
+import { MultiSelect, type MultiSelectOption } from "@peckey954/ui/components/ui/multi-select";
 
 const options: MultiSelectOption[] = [
   {
@@ -239,10 +239,10 @@ style={{ color: "#333" }}        // inline style สี
 โหมดมืดจะ **สว่างขึ้น** เพื่อให้เด่นขึ้นเหมือนกัน ตัวที่มีให้คือ
 `--primary-hover` `--secondary-hover` `--accent-hover` `--destructive-hover`
 
-### 3. ต่อ className ด้วย `cn()` จาก `@repo/ui/lib/utils`
+### 3. ต่อ className ด้วย `cn()` จาก `@peckey954/ui/lib/utils`
 
 ```tsx
-import { cn } from "@repo/ui/lib/utils";
+import { cn } from "@peckey954/ui/lib/utils";
 
 // ✅ ถูก
 <div className={cn("rounded-lg border p-4", isActive && "bg-accent", className)} />
@@ -310,7 +310,7 @@ pnpm dlx shadcn@latest add <name>
 - [ ] ไม่มี `#hex`, `rgb(`, `hsl(` หรือสี Tailwind (`bg-blue-500`, `text-gray-700`) ในโค้ด component
 - [ ] ไม่มี arbitrary color `bg-[...]` / `text-[...]`
 - [ ] ทุก className ที่ต่อกันแบบมีเงื่อนไข ใช้ `cn()`
-- [ ] component ที่ใช้ import จาก `@repo/ui/components/ui/*` ไม่ใช่เขียนเอง
+- [ ] component ที่ใช้ import จาก `@peckey954/ui/components/ui/*` ไม่ใช่เขียนเอง
 - [ ] สลับ Siam ↔ Nara และ light ↔ dark แล้วหน้าตายังถูกต้อง
 
 ตรวจเร็ว ๆ ด้วย:

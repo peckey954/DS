@@ -6,7 +6,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@repo/ui/components/ui/select";
+} from "@peckey954/ui/components/ui/select";
 
 import { BRANDS, useBrand, type Brand } from "./providers";
 import { useT } from "@/lib/i18n";

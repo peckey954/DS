@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 
-import { cn } from "@repo/ui/lib/utils";
-import { Badge } from "@repo/ui/components/ui/badge";
-import { Button } from "@repo/ui/components/ui/button";
+import { cn } from "@peckey954/ui/lib/utils";
+import { Badge } from "@peckey954/ui/components/ui/badge";
+import { Button } from "@peckey954/ui/components/ui/button";
 import {
   Card,
   CardContent,
@@ -13,33 +13,33 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@repo/ui/components/ui/card";
-import { Input } from "@repo/ui/components/ui/input";
-import { Label } from "@repo/ui/components/ui/label";
+} from "@peckey954/ui/components/ui/card";
+import { Input } from "@peckey954/ui/components/ui/input";
+import { Label } from "@peckey954/ui/components/ui/label";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@repo/ui/components/ui/tabs";
-import { Switch } from "@repo/ui/components/ui/switch";
-import { Checkbox } from "@repo/ui/components/ui/checkbox";
-import { Slider } from "@repo/ui/components/ui/slider";
-import { Progress } from "@repo/ui/components/ui/progress";
-import { Separator } from "@repo/ui/components/ui/separator";
+} from "@peckey954/ui/components/ui/tabs";
+import { Switch } from "@peckey954/ui/components/ui/switch";
+import { Checkbox } from "@peckey954/ui/components/ui/checkbox";
+import { Slider } from "@peckey954/ui/components/ui/slider";
+import { Progress } from "@peckey954/ui/components/ui/progress";
+import { Separator } from "@peckey954/ui/components/ui/separator";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@repo/ui/components/ui/select";
+} from "@peckey954/ui/components/ui/select";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@repo/ui/components/ui/accordion";
+} from "@peckey954/ui/components/ui/accordion";
 import { BrandSwitcher } from "@/components/brand-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useBrand } from "@/components/providers";

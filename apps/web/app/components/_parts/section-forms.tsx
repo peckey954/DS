@@ -19,13 +19,13 @@ import {
   UnderlineIcon,
 } from "lucide-react";
 
-import { Button } from "@repo/ui/components/ui/button";
+import { Button } from "@peckey954/ui/components/ui/button";
 import {
   ButtonGroup,
   ButtonGroupSeparator,
   ButtonGroupText,
-} from "@repo/ui/components/ui/button-group";
-import { Checkbox } from "@repo/ui/components/ui/checkbox";
+} from "@peckey954/ui/components/ui/button-group";
+import { Checkbox } from "@peckey954/ui/components/ui/checkbox";
 import {
   Field,
   FieldContent,
@@ -36,7 +36,7 @@ import {
   FieldSeparator,
   FieldSet,
   FieldTitle,
-} from "@repo/ui/components/ui/field";
+} from "@peckey954/ui/components/ui/field";
 import {
   Form,
   FormControl,
@@ -45,28 +45,28 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@repo/ui/components/ui/form";
-import { Input } from "@repo/ui/components/ui/input";
+} from "@peckey954/ui/components/ui/form";
+import { Input } from "@peckey954/ui/components/ui/input";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
   InputGroupText,
-} from "@repo/ui/components/ui/input-group";
+} from "@peckey954/ui/components/ui/input-group";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "@repo/ui/components/ui/input-otp";
-import { Label } from "@repo/ui/components/ui/label";
+} from "@peckey954/ui/components/ui/input-otp";
+import { Label } from "@peckey954/ui/components/ui/label";
 import {
   NativeSelect,
   NativeSelectOptGroup,
   NativeSelectOption,
-} from "@repo/ui/components/ui/native-select";
-import { RadioGroup, RadioGroupItem } from "@repo/ui/components/ui/radio-group";
+} from "@peckey954/ui/components/ui/native-select";
+import { RadioGroup, RadioGroupItem } from "@peckey954/ui/components/ui/radio-group";
 import {
   Select,
   SelectContent,
@@ -76,16 +76,16 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from "@repo/ui/components/ui/select";
-import { Slider } from "@repo/ui/components/ui/slider";
-import { Spinner } from "@repo/ui/components/ui/spinner";
-import { Switch } from "@repo/ui/components/ui/switch";
-import { Textarea } from "@repo/ui/components/ui/textarea";
-import { Toggle } from "@repo/ui/components/ui/toggle";
+} from "@peckey954/ui/components/ui/select";
+import { Slider } from "@peckey954/ui/components/ui/slider";
+import { Spinner } from "@peckey954/ui/components/ui/spinner";
+import { Switch } from "@peckey954/ui/components/ui/switch";
+import { Textarea } from "@peckey954/ui/components/ui/textarea";
+import { Toggle } from "@peckey954/ui/components/ui/toggle";
 import {
   ToggleGroup,
   ToggleGroupItem,
-} from "@repo/ui/components/ui/toggle-group";
+} from "@peckey954/ui/components/ui/toggle-group";
 
 import { Demo, Section } from "./showcase";
 import { defineCopy, useCopy, useT } from "@/lib/i18n";

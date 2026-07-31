@@ -3,14 +3,14 @@
 import * as React from "react";
 import { CalendarIcon } from "lucide-react";
 
-import { Button } from "@repo/ui/components/ui/button";
-import { Calendar } from "@repo/ui/components/ui/calendar";
-import { Label } from "@repo/ui/components/ui/label";
+import { Button } from "@peckey954/ui/components/ui/button";
+import { Calendar } from "@peckey954/ui/components/ui/calendar";
+import { Label } from "@peckey954/ui/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@repo/ui/components/ui/popover";
+} from "@peckey954/ui/components/ui/popover";
 
 import { Demo, Section } from "./showcase";
 import { defineCopy, useCopy, useLocale, useT } from "@/lib/i18n";

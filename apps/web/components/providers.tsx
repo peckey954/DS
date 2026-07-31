@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { ThemeProvider } from "next-themes";
-import { Toaster } from "@repo/ui/components/ui/sonner";
+import { Toaster } from "@peckey954/ui/components/ui/sonner";
 
 /* ---------------------------------- แบรนด์ --------------------------------- */
 

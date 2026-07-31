@@ -2,12 +2,12 @@
 
 import * as React from "react";
 
-import { Label } from "@repo/ui/components/ui/label";
+import { Label } from "@peckey954/ui/components/ui/label";
 import {
   MultiSelect,
   type MultiSelectOption,
-} from "@repo/ui/components/ui/multi-select";
-import { cn } from "@repo/ui/lib/utils";
+} from "@peckey954/ui/components/ui/multi-select";
+import { cn } from "@peckey954/ui/lib/utils";
 
 import { defineCopy, useCopy, useT } from "@/lib/i18n";
 

@@ -1,7 +1,17 @@
 {
-  "name": "@repo/tokens",
+  "name": "@peckey954/tokens",
   "version": "0.1.0",
-  "private": true,
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/peckey954/ds.git",
+    "directory": "packages/tokens"
+  },
+  "files": [
+    "src"
+  ],
   "exports": {
     "./siam.css": "./src/siam.css",
     "./nara.css": "./src/nara.css"

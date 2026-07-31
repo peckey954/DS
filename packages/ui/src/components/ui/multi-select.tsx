@@ -3,9 +3,9 @@
 import * as React from "react"
 import { ChevronDownIcon, XIcon } from "lucide-react"
 
-import { cn } from "@repo/ui/lib/utils"
-import { Badge } from "@repo/ui/components/ui/badge"
-import { Checkbox } from "@repo/ui/components/ui/checkbox"
+import { cn } from "@peckey954/ui/lib/utils"
+import { Badge } from "@peckey954/ui/components/ui/badge"
+import { Checkbox } from "@peckey954/ui/components/ui/checkbox"
 import {
   Command,
   CommandEmpty,
@@ -14,12 +14,12 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "@repo/ui/components/ui/command"
+} from "@peckey954/ui/components/ui/command"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@repo/ui/components/ui/popover"
+} from "@peckey954/ui/components/ui/popover"
 
 /** 1 ตัวเลือกในดรอปดาวน์ */
 export type MultiSelectOption = {

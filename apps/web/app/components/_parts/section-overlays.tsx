@@ -19,9 +19,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@repo/ui/components/ui/alert-dialog";
-import { Avatar, AvatarFallback } from "@repo/ui/components/ui/avatar";
-import { Button } from "@repo/ui/components/ui/button";
+} from "@peckey954/ui/components/ui/alert-dialog";
+import { Avatar, AvatarFallback } from "@peckey954/ui/components/ui/avatar";
+import { Button } from "@peckey954/ui/components/ui/button";
 import {
   ContextMenu,
   ContextMenuCheckboxItem,
@@ -33,7 +33,7 @@ import {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
   ContextMenuTrigger,
-} from "@repo/ui/components/ui/context-menu";
+} from "@peckey954/ui/components/ui/context-menu";
 import {
   Dialog,
   DialogClose,
@@ -43,7 +43,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@repo/ui/components/ui/dialog";
+} from "@peckey954/ui/components/ui/dialog";
 import {
   Drawer,
   DrawerClose,
@@ -53,7 +53,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@repo/ui/components/ui/drawer";
+} from "@peckey954/ui/components/ui/drawer";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -64,14 +64,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@repo/ui/components/ui/dropdown-menu";
+} from "@peckey954/ui/components/ui/dropdown-menu";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@repo/ui/components/ui/hover-card";
-import { Input } from "@repo/ui/components/ui/input";
-import { Label } from "@repo/ui/components/ui/label";
+} from "@peckey954/ui/components/ui/hover-card";
+import { Input } from "@peckey954/ui/components/ui/input";
+import { Label } from "@peckey954/ui/components/ui/label";
 import {
   Popover,
   PopoverContent,
@@ -79,7 +79,7 @@ import {
   PopoverHeader,
   PopoverTitle,
   PopoverTrigger,
-} from "@repo/ui/components/ui/popover";
+} from "@peckey954/ui/components/ui/popover";
 import {
   Sheet,
   SheetClose,
@@ -89,13 +89,13 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@repo/ui/components/ui/sheet";
+} from "@peckey954/ui/components/ui/sheet";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@repo/ui/components/ui/tooltip";
+} from "@peckey954/ui/components/ui/tooltip";
 
 import { Demo, Section } from "./showcase";
 import { defineCopy, useCopy, useT } from "@/lib/i18n";

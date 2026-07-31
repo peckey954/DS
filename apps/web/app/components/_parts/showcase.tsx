@@ -1,4 +1,4 @@
-import { cn } from "@repo/ui/lib/utils";
+import { cn } from "@peckey954/ui/lib/utils";
 
 /** หัวข้อหมวด + กริดของ demo ข้างใน */
 export function Section({
@@ -25,7 +25,7 @@ export function Section({
   );
 }
 
-/** กล่อง demo 1 component — หัวกล่องคือชื่อไฟล์ใน @repo/ui/components/ui */
+/** กล่อง demo 1 component — หัวกล่องคือชื่อไฟล์ใน @peckey954/ui/components/ui */
 export function Demo({
   name,
   hint,

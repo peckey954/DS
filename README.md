@@ -40,8 +40,8 @@ spinner, switch, table, tabs, textarea, toggle, toggle-group, tooltip, multi-sel
 การใช้งาน (subpath import แบบ shadcn):
 
 ```tsx
-import { Button } from "@repo/ui/components/ui/button";
-import { Card, CardHeader, CardTitle } from "@repo/ui/components/ui/card";
+import { Button } from "@peckey954/ui/components/ui/button";
+import { Card, CardHeader, CardTitle } from "@peckey954/ui/components/ui/card";
 ```
 
 > หมายเหตุ: component ทดลอง 2–3 ตัวที่ยังพึ่งแพ็กเกจ Base UI ที่ยังไม่ปล่อยตัวจริง
@@ -74,6 +74,21 @@ cd apps/web
 pnpm dlx shadcn@latest add <component>
 ```
 
+## เอาไปใช้กับโปรเจกต์อื่น (คนละ repo)
+
+repo นี้เป็น **ตัวกลาง** ตัวเดียว โปรเจกต์อื่นดึงไปใช้ผ่าน npm package ส่วนตัว
+บน GitHub Packages ไม่ต้องก็อปโค้ดไปซ้อนกันหลายที่
+
+- [PUBLISHING.md](PUBLISHING.md) — วิธี publish `@peckey954/ui` และ `@peckey954/tokens`
+  และวิธีขึ้นเวอร์ชันใหม่
+- [USING-IN-OTHER-PROJECTS.md](USING-IN-OTHER-PROJECTS.md) — วิธีติดตั้งในโปรเจกต์ใหม่
+  ปรับสี/ฟอนต์เป็นแบรนด์ของตัวเอง และอัปเดตเมื่อ DS มีของใหม่
+
+```bash
+# ในโปรเจกต์ปลายทาง
+pnpm add @peckey954/ui @peckey954/tokens tw-animate-css
+```
+
 ## เก็บไฟล์นี้ไว้ที่ไหน → GitHub
 
 repo นี้คือ "source of truth" ของทั้งดีไซน์และโค้ด สร้าง repo แล้ว push:
@@ -88,7 +103,7 @@ git push -u origin main
 ```
 
 แนะนำให้เป็น repo แยกต่างหาก (เช่น `design-system`) แล้วให้แอปจริง ๆ ดึงไปใช้ 2 แบบ:
-- **แบบ monorepo**: เอาแอปไปไว้ใน `apps/` ของ repo นี้ (ใช้ `@repo/ui` ตรง ๆ)
+- **แบบ monorepo**: เอาแอปไปไว้ใน `apps/` ของ repo นี้ (ใช้ `@peckey954/ui` ตรง ๆ)
 - **แบบ registry**: ทำ `packages/ui` เป็น shadcn registry (มี `registry.json`) deploy ขึ้น Vercel
   แล้วแอปอื่นดึงข้ามด้วย `pnpm dlx shadcn@latest add https://design.yourcompany.com/r/button`
 

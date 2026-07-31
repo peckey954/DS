@@ -17,8 +17,8 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@repo/ui/components/ui/breadcrumb";
-import { Button } from "@repo/ui/components/ui/button";
+} from "@peckey954/ui/components/ui/breadcrumb";
+import { Button } from "@peckey954/ui/components/ui/button";
 import {
   Command,
   CommandDialog,
@@ -29,7 +29,7 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from "@repo/ui/components/ui/command";
+} from "@peckey954/ui/components/ui/command";
 import {
   Menubar,
   MenubarCheckboxItem,
@@ -44,7 +44,7 @@ import {
   MenubarSubContent,
   MenubarSubTrigger,
   MenubarTrigger,
-} from "@repo/ui/components/ui/menubar";
+} from "@peckey954/ui/components/ui/menubar";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -53,7 +53,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@repo/ui/components/ui/navigation-menu";
+} from "@peckey954/ui/components/ui/navigation-menu";
 import {
   Pagination,
   PaginationContent,
@@ -62,13 +62,13 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@repo/ui/components/ui/pagination";
+} from "@peckey954/ui/components/ui/pagination";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@repo/ui/components/ui/tabs";
+} from "@peckey954/ui/components/ui/tabs";
 
 import { Demo, Section } from "./showcase";
 import { defineCopy, useCopy, useT } from "@/lib/i18n";

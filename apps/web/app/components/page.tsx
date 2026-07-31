@@ -16,7 +16,7 @@ import { SectionOverlays } from "./_parts/section-overlays";
 
 export const metadata: Metadata = {
   title: "แกลเลอรี component — Design System",
-  description: "ตัวอย่างการใช้งาน component ทั้ง 55 ตัวใน @repo/ui",
+  description: "ตัวอย่างการใช้งาน component ทั้ง 55 ตัวใน @peckey954/ui",
 };
 
 export default function ComponentsPage() {

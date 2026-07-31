@@ -4,11 +4,11 @@
 @import "tw-animate-css";
 
 /* 1) คำศัพท์กลาง: แมป token -> Tailwind + base layer */
-@import "../../../packages/ui/src/styles/globals.css";
+@import "@peckey954/ui/globals.css";
 
 /* 2) ค่าจริงของแต่ละแบรนด์ (โหลดทั้งคู่ แล้วสลับด้วย data-brand) */
-@import "../../../packages/tokens/src/siam.css";
-@import "../../../packages/tokens/src/nara.css";
+@import "@peckey954/tokens/siam.css";
+@import "@peckey954/tokens/nara.css";
 
 /* ให้ Tailwind สแกน class ที่ใช้ในไลบรารี UI */
-@source "../../../packages/ui/src";
+@source "../node_modules/@peckey954/ui/src";

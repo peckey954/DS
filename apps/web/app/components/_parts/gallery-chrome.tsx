@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { ArrowLeftIcon } from "lucide-react";
 
-import { Button } from "@repo/ui/components/ui/button";
-import { Separator } from "@repo/ui/components/ui/separator";
+import { Button } from "@peckey954/ui/components/ui/button";
+import { Separator } from "@peckey954/ui/components/ui/separator";
 
 import { BrandSwitcher } from "@/components/brand-switcher";
 import { LanguageSwitcher } from "@/components/language-switcher";
@@ -69,7 +69,7 @@ export function GalleryIntro() {
     <p className="text-sm text-muted-foreground">
       {t("page.intro.before")}{" "}
       <code className="rounded bg-muted px-1.5 py-0.5">
-        @repo/ui/components/ui/*
+        @peckey954/ui/components/ui/*
       </code>{" "}
       {t("page.intro.after")}
     </p>
