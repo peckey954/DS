@@ -1,9 +1,27 @@
 {
   "name": "@peckey954/ui",
   "version": "0.1.0",
+  "description": "Multi-brand design system built on shadcn/ui and Tailwind CSS v4, with first-class Thai font support. Swap colours and fonts per brand without touching component code.",
+  "keywords": [
+    "design-system",
+    "shadcn",
+    "shadcn-ui",
+    "tailwindcss",
+    "react",
+    "radix-ui",
+    "multi-brand",
+    "design-tokens",
+    "thai"
+  ],
+  "license": "MIT",
+  "author": "peckey954",
+  "homepage": "https://github.com/peckey954/ds#readme",
+  "bugs": {
+    "url": "https://github.com/peckey954/ds/issues"
+  },
   "type": "module",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
   },
   "repository": {
     "type": "git",

@@ -76,18 +76,25 @@ pnpm dlx shadcn@latest add <component>
 
 ## เอาไปใช้กับโปรเจกต์อื่น (คนละ repo)
 
-repo นี้เป็น **ตัวกลาง** ตัวเดียว โปรเจกต์อื่นดึงไปใช้ผ่าน npm package ส่วนตัว
-บน GitHub Packages ไม่ต้องก็อปโค้ดไปซ้อนกันหลายที่
+repo นี้เป็น **ตัวกลาง** ตัวเดียว ไม่ต้องก็อปโค้ดไปซ้อนกันหลายที่
+เป็น public ใช้ได้ฟรีภายใต้ MIT license ไม่ต้องมี token
 
-- [PUBLISHING.md](PUBLISHING.md) — วิธี publish `@peckey954/ui` และ `@peckey954/tokens`
-  และวิธีขึ้นเวอร์ชันใหม่
-- [USING-IN-OTHER-PROJECTS.md](USING-IN-OTHER-PROJECTS.md) — วิธีติดตั้งในโปรเจกต์ใหม่
-  ปรับสี/ฟอนต์เป็นแบรนด์ของตัวเอง และอัปเดตเมื่อ DS มีของใหม่
+**แนวทาง A — ติดตั้งเป็น dependency** (อัปเดตอัตโนมัติ)
 
 ```bash
-# ในโปรเจกต์ปลายทาง
 pnpm add @peckey954/ui @peckey954/tokens tw-animate-css
 ```
+
+**แนวทาง B — ก็อปโค้ดเข้าโปรเจกต์** (แก้ได้อิสระ เหมือน shadcn/ui)
+
+```bash
+pnpm dlx shadcn@latest add https://your-domain.com/r/button.json
+```
+
+- [USING-IN-OTHER-PROJECTS.md](USING-IN-OTHER-PROJECTS.md) — วิธีติดตั้งทั้งสองแนวทาง
+  ปรับสี/ฟอนต์เป็นแบรนด์ของตัวเอง และตารางแก้ปัญหาที่เจอบ่อย
+- [PUBLISHING.md](PUBLISHING.md) — สำหรับคนดูแล repo นี้: วิธี publish ขึ้น npm
+  สร้าง registry และขึ้นเวอร์ชันใหม่
 
 ## เก็บไฟล์นี้ไว้ที่ไหน → GitHub
 

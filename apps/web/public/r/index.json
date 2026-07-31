@@ -1,0 +1,292 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "peckey954-ds",
+  "homepage": "https://github.com/peckey954/ds",
+  "items": [
+    {
+      "name": "use-mobile",
+      "type": "registry:hook",
+      "url": "http://localhost:3000/r/use-mobile.json"
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/accordion.json"
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/alert-dialog.json"
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/alert.json"
+    },
+    {
+      "name": "aspect-ratio",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/aspect-ratio.json"
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/avatar.json"
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/badge.json"
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/breadcrumb.json"
+    },
+    {
+      "name": "button-group",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/button-group.json"
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/button.json"
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/calendar.json"
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/card.json"
+    },
+    {
+      "name": "carousel",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/carousel.json"
+    },
+    {
+      "name": "chart",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/chart.json"
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/checkbox.json"
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/collapsible.json"
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/command.json"
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/context-menu.json"
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/dialog.json"
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/drawer.json"
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/dropdown-menu.json"
+    },
+    {
+      "name": "empty",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/empty.json"
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/field.json"
+    },
+    {
+      "name": "form",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/form.json"
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/hover-card.json"
+    },
+    {
+      "name": "input-group",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/input-group.json"
+    },
+    {
+      "name": "input-otp",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/input-otp.json"
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/input.json"
+    },
+    {
+      "name": "item",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/item.json"
+    },
+    {
+      "name": "kbd",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/kbd.json"
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/label.json"
+    },
+    {
+      "name": "menubar",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/menubar.json"
+    },
+    {
+      "name": "multi-select",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/multi-select.json"
+    },
+    {
+      "name": "native-select",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/native-select.json"
+    },
+    {
+      "name": "navigation-menu",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/navigation-menu.json"
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/pagination.json"
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/popover.json"
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/progress.json"
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/radio-group.json"
+    },
+    {
+      "name": "resizable",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/resizable.json"
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/scroll-area.json"
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/select.json"
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/separator.json"
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/sheet.json"
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/sidebar.json"
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/skeleton.json"
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/slider.json"
+    },
+    {
+      "name": "sonner",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/sonner.json"
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/spinner.json"
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/switch.json"
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/table.json"
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/tabs.json"
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/textarea.json"
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/toggle-group.json"
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/toggle.json"
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "url": "http://localhost:3000/r/tooltip.json"
+    },
+    {
+      "name": "theme",
+      "type": "registry:file",
+      "url": "http://localhost:3000/r/theme.json"
+    }
+  ]
+}

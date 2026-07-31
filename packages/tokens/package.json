@@ -1,8 +1,23 @@
 {
   "name": "@peckey954/tokens",
   "version": "0.1.0",
+  "description": "Brand design tokens (colours, fonts, radius) for @peckey954/ui — one CSS file per brand, light and dark included.",
+  "keywords": [
+    "design-tokens",
+    "design-system",
+    "tailwindcss",
+    "css-variables",
+    "theming",
+    "multi-brand"
+  ],
+  "license": "MIT",
+  "author": "peckey954",
+  "homepage": "https://github.com/peckey954/ds#readme",
+  "bugs": {
+    "url": "https://github.com/peckey954/ds/issues"
+  },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
   },
   "repository": {
     "type": "git",

@@ -1,12 +1,24 @@
 # เอา design system ไปใช้ในโปรเจกต์อื่น
 
-คู่มือนี้สำหรับโปรเจกต์ที่อยู่ **คนละ repo** กับ design system
-ปลายทางจะได้ component ครบทั้ง 55 ตัว และปรับสี/ฟอนต์เป็นแบรนด์ของตัวเองได้
-โดยไม่ต้องก็อปโค้ด component ไปเลยสักไฟล์
+design system นี้เป็น **public** ใช้ได้ฟรีภายใต้ MIT license
+ไม่ต้องมี token ไม่ต้องขอสิทธิ์ ติดตั้งได้ทันที
 
-> ถ้าจะแก้ตัว design system เอง ให้ดู [PUBLISHING.md](PUBLISHING.md)
+เลือกได้ 2 แนวทาง:
+
+| | **แนวทาง A — npm** | **แนวทาง B — shadcn registry** |
+|---|---|---|
+| ติดตั้ง | `pnpm add @peckey954/ui` | `pnpm dlx shadcn@latest add <url>` |
+| โค้ดอยู่ไหน | ใน `node_modules` | ก็อปเข้าโปรเจกต์คุณ แก้ได้เลย |
+| อัปเดต | `pnpm update @peckey954/ui` | ต้องรันคำสั่ง add ซ้ำเอง |
+| แก้ component | ทำไม่ได้ (แต่ override ด้วย `className` ได้) | ทำได้ทุกอย่าง |
+| เหมาะกับ | อยากได้ของใหม่อัตโนมัติ ไม่อยากดูแลโค้ดเอง | อยากเป็นเจ้าของโค้ด ปรับได้อิสระ |
+
+**ไม่แน่ใจให้เลือกแนวทาง A** — เริ่มง่ายกว่าและได้ของใหม่ฟรี ถ้าวันหนึ่งต้องแก้
+component จริง ๆ ค่อยย้ายมาแนวทาง B เฉพาะตัวนั้นก็ได้ ใช้ปนกันได้
 
 ---
+
+# แนวทาง A — ติดตั้งผ่าน npm
 
 ## 1. สร้างโปรเจกต์ใหม่
 
@@ -17,45 +29,21 @@ cd my-app
 
 ตัวติดตั้งจะให้ Tailwind v4 มาแล้ว ซึ่งเป็นเวอร์ชันที่ design system นี้ต้องใช้
 
----
-
-## 2. ตั้งค่า registry + token
-
-สร้าง `.npmrc` ที่ root ของโปรเจกต์ใหม่:
-
-```
-@peckey954:registry=https://npm.pkg.github.com
-```
-
-**ห้ามใส่ token ในไฟล์นี้** เพราะจะถูก commit ขึ้น git — ให้เก็บ token ไว้ที่ `~/.npmrc` แทน:
+## 2. ติดตั้งแพ็กเกจ
 
 ```bash
-echo "//npm.pkg.github.com/:_authToken=ใส่_TOKEN_ตรงนี้" >> ~/.npmrc
-chmod 600 ~/.npmrc
-```
-
-token ต้องมีสิทธิ์ **`read:packages`** (วิธีสร้างอยู่ใน [PUBLISHING.md](PUBLISHING.md))
-
----
-
-## 3. ติดตั้งแพ็กเกจ
-
-```bash
-pnpm add @peckey954/ui @peckey954/tokens
-pnpm add tw-animate-css
+pnpm add @peckey954/ui @peckey954/tokens tw-animate-css
 ```
 
 `tw-animate-css` **จำเป็นต้องมี** — component 12 ตัว (dialog, sheet, popover, tooltip …)
 ใช้ utility อย่าง `animate-in` `fade-in-0` `zoom-in-95` จากแพ็กเกจนี้
 ถ้าไม่ติดตั้ง component จะยังทำงานได้แต่จะไม่มีอนิเมชันตอนเปิด/ปิด
 
----
-
-## 4. ตั้ง `transpilePackages`
+## 3. ตั้ง `transpilePackages`
 
 เรา ship เป็น TypeScript source ไม่ได้ build ล่วงหน้า Next.js จึงต้องคอมไพล์ให้
 
-`next.config.mjs` (หรือ `.ts`):
+`next.config.mjs`:
 
 ```js
 /** @type {import('next').NextConfig} */
@@ -66,14 +54,12 @@ const nextConfig = {
 export default nextConfig;
 ```
 
-ข้ามขั้นนี้จะเจอ error ประมาณ `Unexpected token 'export'` หรือ
+ข้ามขั้นนี้จะเจอ `Unexpected token 'export'` หรือ
 `Cannot use import statement outside a module`
 
----
+## 4. ตั้งค่า CSS
 
-## 5. ตั้งค่า CSS
-
-แทนที่เนื้อหาทั้งหมดใน `app/globals.css` ด้วย:
+แทนที่เนื้อหาทั้งหมดใน `app/globals.css`:
 
 ```css
 @import "tailwindcss";
@@ -96,12 +82,10 @@ export default nextConfig;
 - **ลำดับสำคัญ** — `@peckey954/ui/globals.css` ต้องมาก่อนไฟล์ token ของแบรนด์
 - **`@source` ขาดไม่ได้** — Tailwind v4 สร้าง CSS จาก class ที่เจอในไฟล์จริงเท่านั้น
   ถ้าไม่ชี้ไปที่ source ของไลบรารี component จะออกมาไม่มีสไตล์เลย
-- path ใน `@source` นับจากตำแหน่งของไฟล์ CSS ตัวเอง ถ้าไฟล์อยู่ที่ `app/globals.css`
+- path ใน `@source` นับจากตำแหน่งของไฟล์ CSS เอง ถ้าไฟล์อยู่ที่ `app/globals.css`
   ก็ถอยขึ้น 1 ชั้นเป็น `../node_modules/...`
 
----
-
-## 6. ตั้ง `data-brand` บน `<html>`
+## 5. ตั้ง `data-brand` บน `<html>`
 
 `app/layout.tsx`:
 
@@ -119,38 +103,108 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 `data-brand` คือสิ่งที่บอกว่าให้ใช้ค่าสีชุดไหน — ต้องตรงกับ selector ในไฟล์ token
 
----
-
-## 7. ใช้งาน
+## 6. ใช้งาน
 
 ```tsx
 import { Button } from "@peckey954/ui/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@peckey954/ui/components/ui/card";
 import { cn } from "@peckey954/ui/lib/utils";
-
-export default function Page() {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>สวัสดี</CardTitle>
-      </CardHeader>
-      <Button>กดเลย</Button>
-    </Card>
-  );
-}
 ```
 
-รายชื่อ component ทั้งหมดและกฎการใช้งานอยู่ใน [AGENTS.md](AGENTS.md)
+## อัปเดต
+
+```bash
+pnpm update @peckey954/ui @peckey954/tokens
+```
+
+ข้ามไปเวอร์ชันใหญ่ (0.x → 1.x) ต้องระบุเอง: `pnpm add @peckey954/ui@latest`
+**อ่านหมายเหตุของเวอร์ชันก่อน** ถ้าเป็น major แปลว่ามีอะไรที่เปลี่ยนแล้วโค้ดเดิมอาจพัง
+หลังอัปเดตให้รัน `pnpm build` เช็คว่าไม่มีอะไรหลุด
 
 ---
 
-## ปรับสี / ฟอนต์เป็นแบรนด์ของโปรเจกต์นี้
+# แนวทาง B — ก็อปโค้ดผ่าน shadcn CLI
 
-ไม่ต้องแก้โค้ด component เลย สร้างไฟล์ token ของตัวเองในโปรเจกต์ปลายทาง
+ได้โค้ดจริงเข้ามาอยู่ในโปรเจกต์ แก้ได้ทุกบรรทัด เหมือนใช้ shadcn/ui ทางการ
 
-### 1. สร้าง `app/brand.css`
+## 1. เตรียมโปรเจกต์
 
-ก็อปโครงจาก `@peckey954/tokens/siam.css` มาแล้วเปลี่ยนค่า:
+```bash
+pnpm create next-app@latest my-app --ts --tailwind --app --no-src-dir --import-alias "@/*"
+cd my-app
+pnpm dlx shadcn@latest init
+pnpm add tw-animate-css
+```
+
+`shadcn init` จะสร้าง `components.json` และ `lib/utils.ts` (ตัว `cn`) ให้ ซึ่ง component
+ของเราเรียกใช้
+
+## 2. ติดตั้ง theme ก่อน
+
+```bash
+pnpm dlx shadcn@latest add https://your-domain.com/r/theme.json
+```
+
+จะได้ 3 ไฟล์ลงมาที่ `styles/`:
+
+| ไฟล์ | คืออะไร |
+|---|---|
+| `ds-theme.css` | คำศัพท์กลาง แมป token เข้า Tailwind — **ต้องมี** |
+| `brand-siam.css` | ค่าสีแบรนด์ Siam |
+| `brand-nara.css` | ค่าสีแบรนด์ Nara |
+
+แล้วแก้ `app/globals.css`:
+
+```css
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "../styles/ds-theme.css";
+@import "../styles/brand-siam.css";
+```
+
+พร้อมตั้ง `data-brand="siam"` บน `<html>` เหมือนแนวทาง A
+
+## 3. ติดตั้ง component ที่ต้องการ
+
+```bash
+pnpm dlx shadcn@latest add https://your-domain.com/r/button.json
+pnpm dlx shadcn@latest add https://your-domain.com/r/multi-select.json
+```
+
+component ที่พึ่งพาตัวอื่นจะดึงตัวที่จำเป็นมาให้เอง เช่น `multi-select` จะลาก
+`popover` `command` `checkbox` `badge` มาด้วยอัตโนมัติ
+
+ดูรายชื่อทั้งหมดที่ `https://your-domain.com/r/index.json`
+
+## 4. ใช้งาน
+
+```tsx
+import { Button } from "@/components/ui/button";
+```
+
+สังเกตว่าเป็น `@/components/...` ไม่ใช่ `@peckey954/...` เพราะโค้ดอยู่ในโปรเจกต์คุณแล้ว
+
+## อัปเดต
+
+รันคำสั่ง add ซ้ำ แล้วตอบ overwrite:
+
+```bash
+pnpm dlx shadcn@latest add https://your-domain.com/r/button.json --overwrite
+```
+
+**ระวัง** — ถ้าคุณแก้ไฟล์นั้นเองไว้ การ overwrite จะทับของคุณหาย
+ควร commit ก่อนแล้วดู diff
+
+---
+
+# ปรับสี / ฟอนต์เป็นแบรนด์ของโปรเจกต์นี้
+
+ไม่ต้องแก้โค้ด component เลย ทั้งสองแนวทางทำเหมือนกัน
+
+## 1. สร้างไฟล์ token ของตัวเอง
+
+ก็อป `@peckey954/tokens/siam.css` (หรือ `styles/brand-siam.css` ถ้าใช้แนวทาง B)
+มาเป็น `app/brand.css` แล้วเปลี่ยนค่า:
 
 ```css
 [data-brand="acme"] {
@@ -178,7 +232,7 @@ export default function Page() {
   --destructive: hsl(0 72% 51%);
   --destructive-foreground: hsl(0 0% 100%);
 
-  /* สี hover — สว่างให้เข้มขึ้น, มืดให้สว่างขึ้น */
+  /* สี hover — โหมดสว่างให้เข้มขึ้น, โหมดมืดให้สว่างขึ้น */
   --primary-hover: hsl(280 70% 45%);
   --secondary-hover: hsl(280 20% 93%);
   --accent-hover: hsl(280 20% 93%);
@@ -217,21 +271,19 @@ export default function Page() {
 ```
 
 **ต้องประกาศให้ครบทุกตัว** เพราะ component อ้างชื่อพวกนี้ตรง ๆ ถ้าขาดตัวไหน
-ตรงนั้นจะไม่มีสี วิธีที่ปลอดภัยที่สุดคือก็อปไฟล์ `siam.css` ทั้งไฟล์มาแก้ค่า
+ตรงนั้นจะไม่มีสี วิธีที่ปลอดภัยที่สุดคือก็อปไฟล์เดิมทั้งไฟล์มาแก้ค่า
 
-### 2. เปลี่ยน `globals.css` ให้ใช้ไฟล์ของเรา
+## 2. ชี้ globals.css มาที่ไฟล์ของเรา แล้วเปลี่ยน `data-brand` เป็น `"acme"`
 
 ```css
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "@peckey954/ui/globals.css";
-@import "./brand.css";                 /* แทนที่ token ของ siam */
-@source "../node_modules/@peckey954/ui/src";
+@import "@peckey954/ui/globals.css";   /* หรือ ../styles/ds-theme.css ถ้าใช้แนวทาง B */
+@import "./brand.css";
+@source "../node_modules/@peckey954/ui/src";   /* บรรทัดนี้เฉพาะแนวทาง A */
 ```
 
-### 3. เปลี่ยน `data-brand` ใน layout เป็น `"acme"`
-
-### 4. เปลี่ยนฟอนต์
+## 3. เปลี่ยนฟอนต์
 
 โหลดใน `app/layout.tsx` แล้วชี้ `--font-sans` ของแบรนด์มาที่ variable นั้น:
 
@@ -248,54 +300,31 @@ const brandFont = Kanit({
 // แล้วใส่ className={brandFont.variable} ที่ <html>
 ```
 
-ใน `brand.css` ก็ชี้ไปที่ variable เดียวกัน:
-
-```css
---font-sans: var(--font-brand), ui-sans-serif, system-ui, sans-serif;
-```
-
-### รองรับ dark mode
-
-ติดตั้ง `next-themes` แล้วครอบด้วย `ThemeProvider` ที่ตั้ง `attribute="class"`
-ตัว token จะสลับให้เองผ่าน selector `.dark` ที่เขียนไว้ในไฟล์แบรนด์
+## รองรับ dark mode
 
 ```bash
 pnpm add next-themes
 ```
 
----
-
-## อัปเดตเมื่อ design system มีของใหม่
-
-```bash
-pnpm update @peckey954/ui @peckey954/tokens
-```
-
-ถ้าอยากข้ามไปเวอร์ชันใหญ่ (เช่น 0.x → 1.x) ต้องระบุเอง:
-
-```bash
-pnpm add @peckey954/ui@latest
-```
-
-**ก่อนอัปเดตควรอ่านหมายเหตุของเวอร์ชันนั้นก่อน** — ถ้าเป็นการขึ้น major
-แปลว่ามีอะไรที่เปลี่ยนแล้วโค้ดเดิมอาจพัง
-
-หลังอัปเดตให้รัน build เพื่อเช็คว่าไม่มีอะไรหลุด:
-
-```bash
-pnpm build
-```
+ครอบด้วย `ThemeProvider` ที่ตั้ง `attribute="class"` — token จะสลับให้เองผ่าน
+selector `.dark` ที่เขียนไว้ในไฟล์แบรนด์
 
 ---
 
-## แก้ปัญหาที่เจอบ่อย
+# แก้ปัญหาที่เจอบ่อย
 
 | อาการ | สาเหตุ / วิธีแก้ |
 |---|---|
-| `401 Unauthorized` ตอน `pnpm add` | token ใน `~/.npmrc` หมดอายุ หรือไม่มีสิทธิ์ `read:packages` |
-| `404 Not Found` ตอน `pnpm add` | ลืมสร้าง `.npmrc` ที่ root ที่ชี้ `@peckey954:registry` |
-| `Unexpected token 'export'` | ลืมตั้ง `transpilePackages: ["@peckey954/ui"]` |
-| component ขึ้นมาแต่ไม่มีสไตล์เลย | ลืมบรรทัด `@source` หรือชี้ path ผิด |
+| `Unexpected token 'export'` | ลืมตั้ง `transpilePackages: ["@peckey954/ui"]` (แนวทาง A) |
+| component ขึ้นมาแต่ไม่มีสไตล์เลย | ลืมบรรทัด `@source` หรือชี้ path ผิด (แนวทาง A) / ลืม import `ds-theme.css` (แนวทาง B) |
 | ไม่มีอนิเมชันตอนเปิด dialog / sheet | ลืมติดตั้งหรือ `@import "tw-animate-css"` |
 | สีไม่เปลี่ยนตามแบรนด์ | ลืมใส่ `data-brand` บน `<html>` หรือชื่อไม่ตรงกับ selector ในไฟล์ token |
+| `bg-primary` ไม่มีสี | ลืม import ไฟล์คำศัพท์กลาง หรือ import หลังไฟล์แบรนด์ (ลำดับสลับ) |
 | ฟอนต์ไทยขึ้นเป็นฟอนต์สำรอง | ลืมใส่ `subsets: ["thai", "latin"]` ตอนโหลดฟอนต์ |
+| `cn is not defined` (แนวทาง B) | ยังไม่ได้รัน `shadcn init` ซึ่งเป็นตัวสร้าง `lib/utils.ts` |
+| shadcn ดึง component ผิดตัว (แนวทาง B) | registry ถูก build ด้วย `REGISTRY_URL` ผิด — แจ้งเจ้าของ repo ให้ rebuild |
+
+---
+
+รายชื่อ component ทั้งหมดและกฎการเขียน UI อยู่ใน [AGENTS.md](AGENTS.md)
+ดูตัวอย่างจริงทุกตัวได้ที่หน้า `/components` ของแอปตัวอย่างใน repo นี้
