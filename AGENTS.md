@@ -120,14 +120,25 @@ component ที่ประกอบขึ้นเองก็ต้องว�
   </InputGroupButton>
 </InputGroupAddon>
 
-// ✅ ปุ่มข้อความ — secondary พื้นทึบ ไม่มีขอบ
-<InputGroupButton variant="secondary" size="sm">ใช้โค้ด</InputGroupButton>
+// ✅ ปุ่มข้อความ — secondary พื้นทึบ ไม่มีขอบ ใช้ขนาดเริ่มต้น (ไม่ต้องใส่ size)
+<InputGroupButton variant="secondary">ใช้โค้ด</InputGroupButton>
 
 // ❌ outline — ขอบซ้อนกับขอบของ InputGroup
-<InputGroupButton variant="outline" size="sm">ใช้โค้ด</InputGroupButton>
+<InputGroupButton variant="outline">ใช้โค้ด</InputGroupButton>
+
+// ❌ size="sm" — สูง 32px และ rounded-md เท่ากับกรอบพอดี เห็นเป็นมุมโค้งซ้อนกัน
+<InputGroupButton variant="secondary" size="sm">ใช้โค้ด</InputGroupButton>
 ```
 
 `size` ของ `InputGroupButton` รับเฉพาะ `xs` `sm` `icon-xs` `icon-sm` (คนละชุดกับ `Button`)
+และ **ปกติไม่ต้องส่ง `size` เลย** ค่าเริ่มต้น `xs` ถูกออกแบบมาให้พอดีกับกรอบอยู่แล้ว:
+
+| size | ความสูง | มุมโค้ง | ผลลัพธ์ |
+|---|---|---|---|
+| `xs` (ค่าเริ่มต้น) | 24px | `--radius` − 5px = 5px | ซ้อนในกรอบพอดี ✅ |
+| `sm` | 32px | `rounded-md` = 8px | เท่ากับกรอบ ดูเป็นกรอบซ้อนกรอบ ❌ |
+
+ใช้ `icon-xs` สำหรับปุ่มไอคอนล้วน (24×24)
 
 ### 2. ใช้ token เท่านั้น — ห้าม hardcode สี
 

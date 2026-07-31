@@ -239,13 +239,13 @@ export function SectionForms() {
             </InputGroupAddon>
           </InputGroup>
 
-          {/* ปุ่มข้อความ: secondary — พื้นทึบ ไม่ใช้ outline ที่มีขอบ */}
+          {/* ปุ่มข้อความ: secondary + ขนาดเริ่มต้น (xs)
+              อย่าใส่ size="sm" — มันสูง 32px และใช้ rounded-md เท่ากับกรอบของ
+              InputGroup พอดี จะเห็นเป็นมุมโค้งซ้อนกัน */}
           <InputGroup>
             <InputGroupInput placeholder="ใส่โค้ดส่วนลด" />
             <InputGroupAddon align="inline-end">
-              <InputGroupButton variant="secondary" size="sm">
-                ใช้โค้ด
-              </InputGroupButton>
+              <InputGroupButton variant="secondary">ใช้โค้ด</InputGroupButton>
             </InputGroupAddon>
           </InputGroup>
         </div>
