@@ -107,8 +107,42 @@ const en: Record<TranslationKey, string> = {
 
 const DICT = { th, en } as const;
 
-/** คืนฟังก์ชันแปลของภาษาปัจจุบัน */
+/** คืนฟังก์ชันแปลของภาษาปัจจุบัน (ใช้กับข้อความส่วนกลางของแอป) */
 export function useT() {
   const { lang } = useLang();
   return useCallback((key: TranslationKey) => DICT[lang][key], [lang]);
+}
+
+/* --------------------------- คำแปลเฉพาะแต่ละไฟล์ --------------------------- */
+
+/**
+ * ประกาศคำแปลไว้ข้างที่ใช้จริง — ฝั่ง th เป็นตัวตั้ง ถ้า en ขาดคีย์ tsc จะฟ้องทันที
+ *
+ * ```ts
+ * const COPY = defineCopy({
+ *   th: { save: "บันทึก" },
+ *   en: { save: "Save" },
+ * });
+ * ```
+ */
+export function defineCopy<T extends Record<string, string>>(dict: {
+  th: T;
+  en: Record<keyof T, string>;
+}) {
+  return dict;
+}
+
+/** หยิบชุดคำแปลของภาษาปัจจุบันจาก defineCopy */
+export function useCopy<T extends Record<string, string>>(dict: {
+  th: T;
+  en: Record<keyof T, string>;
+}): T {
+  const { lang } = useLang();
+  return dict[lang] as T;
+}
+
+/** locale สำหรับ toLocaleDateString / toLocaleString ตามภาษาปัจจุบัน */
+export function useLocale() {
+  const { lang } = useLang();
+  return lang === "th" ? "th-TH" : "en-US";
 }

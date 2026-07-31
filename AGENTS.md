@@ -158,6 +158,30 @@ component ที่ประกอบขึ้นเองก็ต้องว�
 
 ใช้ `icon-xs` สำหรับปุ่มไอคอนล้วน (24×24)
 
+#### ข้อความในแอปตัวอย่าง ต้องมีทั้งไทยและอังกฤษ
+
+แอปตัวอย่างสลับภาษาได้ (TH / EN) **ห้ามเขียนข้อความตรง ๆ ลงใน JSX**
+ประกาศคำแปลไว้บนสุดของไฟล์เดียวกันด้วย `defineCopy` แล้วหยิบด้วย `useCopy`
+
+```tsx
+import { defineCopy, useCopy } from "@/lib/i18n";
+
+const COPY = defineCopy({
+  th: { save: "บันทึก", cancel: "ยกเลิก" },
+  en: { save: "Save", cancel: "Cancel" },   // ขาดคีย์ไหน tsc ฟ้องทันที
+});
+
+export function Example() {
+  const c = useCopy(COPY);
+  return <Button>{c.save}</Button>;
+}
+```
+
+- ข้อความส่วนกลาง (เมนู · หัวข้อหมวด) อยู่ใน `apps/web/lib/i18n.ts` ใช้ผ่าน `useT()`
+- วันที่/ตัวเลข ให้ดึง locale ด้วย `useLocale()` แล้วส่งเข้า `toLocaleDateString` /
+  `toLocaleString` — อย่า hardcode `"th-TH"`
+- `aria-label` และ `placeholder` ก็ต้องแปลด้วย ไม่ใช่แค่ข้อความที่มองเห็น
+
 ### 2. ใช้ token เท่านั้น — ห้าม hardcode สี
 
 ใช้ชื่อกลางเสมอ ห้ามใส่ค่าสีจริงลงใน component:

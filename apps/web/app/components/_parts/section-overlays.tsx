@@ -98,68 +98,172 @@ import {
 } from "@repo/ui/components/ui/tooltip";
 
 import { Demo, Section } from "./showcase";
-import { useT } from "@/lib/i18n";
+import { defineCopy, useCopy, useT } from "@/lib/i18n";
+
+const COPY = defineCopy({
+  th: {
+    dialogHint: "กล่องโต้ตอบกลางจอ",
+    editProfile: "แก้ไขโปรไฟล์",
+    editProfileDesc: "เปลี่ยนข้อมูลของคุณแล้วกดบันทึกเมื่อเสร็จ",
+    displayName: "ชื่อที่แสดง",
+    sampleName: "สมชาย ใจดี",
+    cancel: "ยกเลิก",
+    save: "บันทึก",
+    alertHint: "ยืนยันก่อนทำสิ่งที่ย้อนกลับไม่ได้",
+    deleteAccount: "ลบบัญชี",
+    confirmDelete: "ยืนยันการลบบัญชี?",
+    confirmDeleteDesc: "การลบบัญชีจะลบข้อมูลทั้งหมดอย่างถาวรและไม่สามารถย้อนกลับได้",
+    confirm: "ยืนยันลบ",
+    sheetHint: "แผงเลื่อนจากขอบจอ",
+    quickSettings: "ตั้งค่าอย่างเร็ว",
+    sheetDescPrefix: "แผงนี้เลื่อนออกมาจากด้าน",
+    projectName: "ชื่อโปรเจกต์",
+    drawerHint: "ลิ้นชักเลื่อนขึ้นจากด้านล่าง",
+    openDrawer: "เปิดลิ้นชัก",
+    confirmOrder: "ยืนยันคำสั่งซื้อ",
+    confirmOrderDesc: "ตรวจสอบรายการอีกครั้งก่อนกดยืนยัน",
+    submit: "ยืนยัน",
+    close: "ปิด",
+    popoverHint: "แผงลอยผูกกับปุ่ม",
+    setSize: "ตั้งค่าขนาด",
+    boxSize: "ขนาดกล่อง",
+    boxSizeDesc: "กำหนดความกว้างและความสูงที่ต้องการ",
+    width: "กว้าง",
+    height: "สูง",
+    hoverHint: "แสดงรายละเอียดเมื่อชี้เมาส์",
+    hoverBody: "ระบบดีไซน์กลางหลายแบรนด์ สร้างบน shadcn + Tailwind v4",
+    tooltipHint: "คำอธิบายสั้นเมื่อชี้เมาส์",
+    tooltipSidePrefix: "คำอธิบายด้าน",
+    info: "ข้อมูล",
+    tooltipMore: "ข้อมูลเพิ่มเติมเกี่ยวกับฟีเจอร์นี้",
+    dropdownHint: "เมนูจากปุ่ม",
+    myAccount: "บัญชีของฉัน",
+    profile: "โปรไฟล์",
+    copyLink: "คัดลอกลิงก์",
+    showStatusBar: "แสดงแถบสถานะ",
+    signOut: "ออกจากระบบ",
+    contextHint: "คลิกขวาบนพื้นที่ด้านล่าง",
+    rightClickHere: "คลิกขวาที่นี่",
+    copy: "คัดลอก",
+    cut: "ตัด",
+    more: "เพิ่มเติม",
+    rename: "เปลี่ยนชื่อ",
+    moveTo: "ย้ายไปโฟลเดอร์…",
+    showHidden: "แสดงไฟล์ที่ซ่อน",
+  },
+  en: {
+    dialogHint: "Centred modal dialog",
+    editProfile: "Edit profile",
+    editProfileDesc: "Change your details, then save when you are done",
+    displayName: "Display name",
+    sampleName: "Somchai Jaidee",
+    cancel: "Cancel",
+    save: "Save",
+    alertHint: "Confirm before an irreversible action",
+    deleteAccount: "Delete account",
+    confirmDelete: "Delete this account?",
+    confirmDeleteDesc: "Deleting the account removes all data permanently and cannot be undone.",
+    confirm: "Yes, delete",
+    sheetHint: "Panel that slides in from an edge",
+    quickSettings: "Quick settings",
+    sheetDescPrefix: "This panel slides in from the",
+    projectName: "Project name",
+    drawerHint: "Drawer that slides up from the bottom",
+    openDrawer: "Open drawer",
+    confirmOrder: "Confirm order",
+    confirmOrderDesc: "Check the items once more before confirming",
+    submit: "Confirm",
+    close: "Close",
+    popoverHint: "Floating panel anchored to a button",
+    setSize: "Set size",
+    boxSize: "Box size",
+    boxSizeDesc: "Set the width and height you want",
+    width: "Width",
+    height: "Height",
+    hoverHint: "Show details on hover",
+    hoverBody: "A shared multi-brand design system built on shadcn + Tailwind v4",
+    tooltipHint: "Short hint on hover",
+    tooltipSidePrefix: "Tooltip on the",
+    info: "Information",
+    tooltipMore: "More information about this feature",
+    dropdownHint: "Menu opened from a button",
+    myAccount: "My account",
+    profile: "Profile",
+    copyLink: "Copy link",
+    showStatusBar: "Show status bar",
+    signOut: "Sign out",
+    contextHint: "Right-click the area below",
+    rightClickHere: "Right-click here",
+    copy: "Copy",
+    cut: "Cut",
+    more: "More",
+    rename: "Rename",
+    moveTo: "Move to folder…",
+    showHidden: "Show hidden files",
+  },
+});
 
 export function SectionOverlays() {
   const t = useT();
+  const c = useCopy(COPY);
   return (
     <Section
       id="overlays"
       title={t("section.overlays")}
       hint="dialog · alert-dialog · sheet · drawer · popover · hover-card · tooltip · dropdown-menu · context-menu"
     >
-      <Demo name="dialog" hint="กล่องโต้ตอบกลางจอ">
+      <Demo name="dialog" hint={c.dialogHint}>
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="outline">แก้ไขโปรไฟล์</Button>
+            <Button variant="outline">{c.editProfile}</Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>แก้ไขโปรไฟล์</DialogTitle>
+              <DialogTitle>{c.editProfile}</DialogTitle>
               <DialogDescription>
-                เปลี่ยนข้อมูลของคุณแล้วกดบันทึกเมื่อเสร็จ
+                {c.editProfileDesc}
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-2">
-              <Label htmlFor="dlg-name">ชื่อที่แสดง</Label>
-              <Input id="dlg-name" defaultValue="สมชาย ใจดี" />
+              <Label htmlFor="dlg-name">{c.displayName}</Label>
+              <Input id="dlg-name" defaultValue={c.sampleName} />
             </div>
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">ยกเลิก</Button>
+                <Button variant="outline">{c.cancel}</Button>
               </DialogClose>
               <DialogClose asChild>
-                <Button>บันทึก</Button>
+                <Button>{c.save}</Button>
               </DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>
       </Demo>
 
-      <Demo name="alert-dialog" hint="ยืนยันก่อนทำสิ่งที่ย้อนกลับไม่ได้">
+      <Demo name="alert-dialog" hint={c.alertHint}>
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="destructive">
               <Trash2Icon />
-              ลบบัญชี
+              {c.deleteAccount}
             </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>ยืนยันการลบบัญชี?</AlertDialogTitle>
+              <AlertDialogTitle>{c.confirmDelete}</AlertDialogTitle>
               <AlertDialogDescription>
-                การลบบัญชีจะลบข้อมูลทั้งหมดอย่างถาวรและไม่สามารถย้อนกลับได้
+                {c.confirmDeleteDesc}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
-              <AlertDialogAction>ยืนยันลบ</AlertDialogAction>
+              <AlertDialogCancel>{c.cancel}</AlertDialogCancel>
+              <AlertDialogAction>{c.confirm}</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
       </Demo>
 
-      <Demo name="sheet" hint="แผงเลื่อนจากขอบจอ">
+      <Demo name="sheet" hint={c.sheetHint}>
         <div className="flex flex-wrap gap-2">
           {(["right", "left", "top", "bottom"] as const).map((side) => (
             <Sheet key={side}>
@@ -170,18 +274,18 @@ export function SectionOverlays() {
               </SheetTrigger>
               <SheetContent side={side}>
                 <SheetHeader>
-                  <SheetTitle>ตั้งค่าอย่างเร็ว</SheetTitle>
+                  <SheetTitle>{c.quickSettings}</SheetTitle>
                   <SheetDescription>
-                    แผงนี้เลื่อนออกมาจากด้าน {side}
+                    {c.sheetDescPrefix} {side}
                   </SheetDescription>
                 </SheetHeader>
                 <div className="space-y-2 px-4">
-                  <Label htmlFor={`sheet-${side}`}>ชื่อโปรเจกต์</Label>
+                  <Label htmlFor={`sheet-${side}`}>{c.projectName}</Label>
                   <Input id={`sheet-${side}`} defaultValue="Design System" />
                 </div>
                 <SheetFooter>
                   <SheetClose asChild>
-                    <Button>บันทึก</Button>
+                    <Button>{c.save}</Button>
                   </SheetClose>
                 </SheetFooter>
               </SheetContent>
@@ -190,23 +294,23 @@ export function SectionOverlays() {
         </div>
       </Demo>
 
-      <Demo name="drawer" hint="ลิ้นชักเลื่อนขึ้นจากด้านล่าง">
+      <Demo name="drawer" hint={c.drawerHint}>
         <Drawer>
           <DrawerTrigger asChild>
-            <Button variant="outline">เปิดลิ้นชัก</Button>
+            <Button variant="outline">{c.openDrawer}</Button>
           </DrawerTrigger>
           <DrawerContent>
             <div className="mx-auto w-full max-w-sm">
               <DrawerHeader>
-                <DrawerTitle>ยืนยันคำสั่งซื้อ</DrawerTitle>
+                <DrawerTitle>{c.confirmOrder}</DrawerTitle>
                 <DrawerDescription>
-                  ตรวจสอบรายการอีกครั้งก่อนกดยืนยัน
+                  {c.confirmOrderDesc}
                 </DrawerDescription>
               </DrawerHeader>
               <DrawerFooter>
-                <Button>ยืนยัน</Button>
+                <Button>{c.submit}</Button>
                 <DrawerClose asChild>
-                  <Button variant="outline">ปิด</Button>
+                  <Button variant="outline">{c.close}</Button>
                 </DrawerClose>
               </DrawerFooter>
             </div>
@@ -214,29 +318,29 @@ export function SectionOverlays() {
         </Drawer>
       </Demo>
 
-      <Demo name="popover" hint="แผงลอยผูกกับปุ่ม">
+      <Demo name="popover" hint={c.popoverHint}>
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline">ตั้งค่าขนาด</Button>
+            <Button variant="outline">{c.setSize}</Button>
           </PopoverTrigger>
           <PopoverContent className="w-72">
             <PopoverHeader>
-              <PopoverTitle>ขนาดกล่อง</PopoverTitle>
+              <PopoverTitle>{c.boxSize}</PopoverTitle>
               <PopoverDescription>
-                กำหนดความกว้างและความสูงที่ต้องการ
+                {c.boxSizeDesc}
               </PopoverDescription>
             </PopoverHeader>
             <div className="mt-3 grid grid-cols-3 items-center gap-3">
-              <Label htmlFor="pop-w">กว้าง</Label>
+              <Label htmlFor="pop-w">{c.width}</Label>
               <Input id="pop-w" defaultValue="320" className="col-span-2" />
-              <Label htmlFor="pop-h">สูง</Label>
+              <Label htmlFor="pop-h">{c.height}</Label>
               <Input id="pop-h" defaultValue="200" className="col-span-2" />
             </div>
           </PopoverContent>
         </Popover>
       </Demo>
 
-      <Demo name="hover-card" hint="แสดงรายละเอียดเมื่อชี้เมาส์">
+      <Demo name="hover-card" hint={c.hoverHint}>
         <HoverCard>
           <HoverCardTrigger asChild>
             <Button variant="link">@design-system</Button>
@@ -249,7 +353,7 @@ export function SectionOverlays() {
               <div className="space-y-1">
                 <p className="text-sm font-semibold">Design System</p>
                 <p className="text-sm text-muted-foreground">
-                  ระบบดีไซน์กลางหลายแบรนด์ สร้างบน shadcn + Tailwind v4
+                  {c.hoverBody}
                 </p>
               </div>
             </div>
@@ -257,7 +361,7 @@ export function SectionOverlays() {
         </HoverCard>
       </Demo>
 
-      <Demo name="tooltip" hint="คำอธิบายสั้นเมื่อชี้เมาส์">
+      <Demo name="tooltip" hint={c.tooltipHint}>
         <TooltipProvider>
           <div className="flex flex-wrap gap-2">
             {(["top", "right", "bottom", "left"] as const).map((side) => (
@@ -268,83 +372,83 @@ export function SectionOverlays() {
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent side={side}>
-                  <p>คำอธิบายด้าน {side}</p>
+                  <p>{c.tooltipSidePrefix} {side}</p>
                 </TooltipContent>
               </Tooltip>
             ))}
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon-sm" aria-label="ข้อมูล">
+                <Button variant="ghost" size="icon-sm" aria-label={c.info}>
                   <InfoIcon />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>ข้อมูลเพิ่มเติมเกี่ยวกับฟีเจอร์นี้</p>
+                <p>{c.tooltipMore}</p>
               </TooltipContent>
             </Tooltip>
           </div>
         </TooltipProvider>
       </Demo>
 
-      <Demo name="dropdown-menu" hint="เมนูจากปุ่ม">
+      <Demo name="dropdown-menu" hint={c.dropdownHint}>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline">บัญชีของฉัน</Button>
+            <Button variant="outline">{c.myAccount}</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-56">
-            <DropdownMenuLabel>บัญชีของฉัน</DropdownMenuLabel>
+            <DropdownMenuLabel>{c.myAccount}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <UserIcon />
-                โปรไฟล์
+                {c.profile}
                 <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <CopyIcon />
-                คัดลอกลิงก์
+                {c.copyLink}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuCheckboxItem checked>
-              แสดงแถบสถานะ
+              {c.showStatusBar}
             </DropdownMenuCheckboxItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem variant="destructive">
               <LogOutIcon />
-              ออกจากระบบ
+              {c.signOut}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </Demo>
 
-      <Demo name="context-menu" hint="คลิกขวาบนพื้นที่ด้านล่าง" wide>
+      <Demo name="context-menu" hint={c.contextHint} wide>
         <ContextMenu>
           <ContextMenuTrigger className="flex h-28 w-full items-center justify-center rounded-md border border-dashed border-border text-sm text-muted-foreground">
-            คลิกขวาที่นี่
+            {c.rightClickHere}
           </ContextMenuTrigger>
           <ContextMenuContent className="w-56">
             <ContextMenuItem>
               <CopyIcon />
-              คัดลอก
+              {c.copy}
               <ContextMenuShortcut>⌘C</ContextMenuShortcut>
             </ContextMenuItem>
             <ContextMenuItem>
               <ScissorsIcon />
-              ตัด
+              {c.cut}
               <ContextMenuShortcut>⌘X</ContextMenuShortcut>
             </ContextMenuItem>
             <ContextMenuSeparator />
             <ContextMenuSub>
-              <ContextMenuSubTrigger>เพิ่มเติม</ContextMenuSubTrigger>
+              <ContextMenuSubTrigger>{c.more}</ContextMenuSubTrigger>
               <ContextMenuSubContent>
-                <ContextMenuItem>เปลี่ยนชื่อ</ContextMenuItem>
-                <ContextMenuItem>ย้ายไปโฟลเดอร์…</ContextMenuItem>
+                <ContextMenuItem>{c.rename}</ContextMenuItem>
+                <ContextMenuItem>{c.moveTo}</ContextMenuItem>
               </ContextMenuSubContent>
             </ContextMenuSub>
             <ContextMenuSeparator />
             <ContextMenuCheckboxItem checked>
-              แสดงไฟล์ที่ซ่อน
+              {c.showHidden}
             </ContextMenuCheckboxItem>
           </ContextMenuContent>
         </ContextMenu>

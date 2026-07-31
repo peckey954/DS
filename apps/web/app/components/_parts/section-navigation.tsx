@@ -71,10 +71,120 @@ import {
 } from "@repo/ui/components/ui/tabs";
 
 import { Demo, Section } from "./showcase";
-import { useT } from "@/lib/i18n";
+import { defineCopy, useCopy, useT } from "@/lib/i18n";
+
+const COPY = defineCopy({
+  th: {
+    breadcrumbHint: "เส้นทางของหน้าปัจจุบัน",
+    home: "หน้าแรก",
+    designSystem: "ดีไซน์ซิสเต็ม",
+    gallery: "แกลเลอรี component",
+    tabsHint: "สลับเนื้อหาในที่เดียว",
+    account: "บัญชี",
+    password: "รหัสผ่าน",
+    team: "ทีม",
+    accountBody: "จัดการชื่อที่แสดงและอีเมลของคุณ",
+    passwordBody: "เปลี่ยนรหัสผ่านและเปิดยืนยันสองชั้น",
+    teamBody: "เชิญเพื่อนร่วมทีมและกำหนดสิทธิ์",
+    paginationHint: "แบ่งหน้ารายการ",
+    currentPage: "หน้าปัจจุบัน:",
+    menubarHint: "แถบเมนูแบบแอปเดสก์ท็อป",
+    file: "ไฟล์",
+    newFile: "สร้างใหม่",
+    openFile: "เปิด…",
+    exportAs: "ส่งออกเป็น",
+    view: "มุมมอง",
+    showToolbar: "แสดงแถบเครื่องมือ",
+    showGrid: "แสดงเส้นตาราง",
+    compact: "แน่น",
+    comfortable: "สบายตา",
+    navMenuHint: "เมนูหลักพร้อมแผงย่อย",
+    products: "สินค้า",
+    itemDs: "ดีไซน์ซิสเต็ม",
+    itemDsDesc: "token + component กลาง",
+    itemDash: "แดชบอร์ด",
+    itemDashDesc: "ดูตัวเลขสำคัญแบบเรียลไทม์",
+    itemReport: "รายงาน",
+    itemReportDesc: "สรุปผลรายเดือน",
+    itemUsers: "ผู้ใช้งาน",
+    itemUsersDesc: "จัดการสิทธิ์และทีม",
+    pricing: "ราคา",
+    contact: "ติดต่อเรา",
+    commandHint: "ค้นหาคำสั่งแบบ command palette",
+    searchCommand: "พิมพ์เพื่อค้นหาคำสั่ง…",
+    noCommand: "ไม่พบคำสั่งที่ค้นหา",
+    groupGeneral: "ทั่วไป",
+    emoji: "เปิดอีโมจิ",
+    calculator: "เครื่องคิดเลข",
+    groupAccount: "บัญชี",
+    profile: "โปรไฟล์",
+    billing: "การชำระเงิน",
+    settings: "ตั้งค่า",
+    openDialog: "เปิดแบบ CommandDialog",
+    dialogTitle: "ค้นหาคำสั่ง",
+    dialogDesc: "พิมพ์ชื่อคำสั่งที่ต้องการเรียกใช้",
+    groupShortcut: "ลัด",
+    goProfile: "ไปที่โปรไฟล์",
+    goSettings: "ไปที่ตั้งค่า",
+  },
+  en: {
+    breadcrumbHint: "Path to the current page",
+    home: "Home",
+    designSystem: "Design system",
+    gallery: "Component gallery",
+    tabsHint: "Swap content in place",
+    account: "Account",
+    password: "Password",
+    team: "Team",
+    accountBody: "Manage your display name and email address",
+    passwordBody: "Change your password and turn on two-factor auth",
+    teamBody: "Invite teammates and set their permissions",
+    paginationHint: "Split a list into pages",
+    currentPage: "Current page:",
+    menubarHint: "Desktop-app style menu bar",
+    file: "File",
+    newFile: "New",
+    openFile: "Open…",
+    exportAs: "Export as",
+    view: "View",
+    showToolbar: "Show toolbar",
+    showGrid: "Show grid",
+    compact: "Compact",
+    comfortable: "Comfortable",
+    navMenuHint: "Primary menu with a sub panel",
+    products: "Products",
+    itemDs: "Design system",
+    itemDsDesc: "Shared tokens + components",
+    itemDash: "Dashboard",
+    itemDashDesc: "Watch key numbers in real time",
+    itemReport: "Reports",
+    itemReportDesc: "Monthly summaries",
+    itemUsers: "Users",
+    itemUsersDesc: "Manage permissions and teams",
+    pricing: "Pricing",
+    contact: "Contact us",
+    commandHint: "Command palette search",
+    searchCommand: "Type to search commands…",
+    noCommand: "No matching command",
+    groupGeneral: "General",
+    emoji: "Open emoji picker",
+    calculator: "Calculator",
+    groupAccount: "Account",
+    profile: "Profile",
+    billing: "Billing",
+    settings: "Settings",
+    openDialog: "Open as CommandDialog",
+    dialogTitle: "Search commands",
+    dialogDesc: "Type the name of the command you want to run",
+    groupShortcut: "Shortcuts",
+    goProfile: "Go to profile",
+    goSettings: "Go to settings",
+  },
+});
 
 export function SectionNavigation() {
   const t = useT();
+  const c = useCopy(COPY);
   const [cmdOpen, setCmdOpen] = React.useState(false);
   const [page, setPage] = React.useState(2);
 
@@ -84,11 +194,11 @@ export function SectionNavigation() {
       title={t("section.navigation")}
       hint="breadcrumb · tabs · navigation-menu · menubar · pagination · command"
     >
-      <Demo name="breadcrumb" hint="เส้นทางของหน้าปัจจุบัน" wide>
+      <Demo name="breadcrumb" hint={c.breadcrumbHint} wide>
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="#">หน้าแรก</BreadcrumbLink>
+              <BreadcrumbLink href="#">{c.home}</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
@@ -96,36 +206,36 @@ export function SectionNavigation() {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink href="#">ดีไซน์ซิสเต็ม</BreadcrumbLink>
+              <BreadcrumbLink href="#">{c.designSystem}</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>แกลเลอรี component</BreadcrumbPage>
+              <BreadcrumbPage>{c.gallery}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
       </Demo>
 
-      <Demo name="tabs" hint="สลับเนื้อหาในที่เดียว">
+      <Demo name="tabs" hint={c.tabsHint}>
         <Tabs defaultValue="account" className="w-full">
           <TabsList>
-            <TabsTrigger value="account">บัญชี</TabsTrigger>
-            <TabsTrigger value="password">รหัสผ่าน</TabsTrigger>
-            <TabsTrigger value="team">ทีม</TabsTrigger>
+            <TabsTrigger value="account">{c.account}</TabsTrigger>
+            <TabsTrigger value="password">{c.password}</TabsTrigger>
+            <TabsTrigger value="team">{c.team}</TabsTrigger>
           </TabsList>
           <TabsContent value="account" className="pt-3 text-sm text-muted-foreground">
-            จัดการชื่อที่แสดงและอีเมลของคุณ
+            {c.accountBody}
           </TabsContent>
           <TabsContent value="password" className="pt-3 text-sm text-muted-foreground">
-            เปลี่ยนรหัสผ่านและเปิดยืนยันสองชั้น
+            {c.passwordBody}
           </TabsContent>
           <TabsContent value="team" className="pt-3 text-sm text-muted-foreground">
-            เชิญเพื่อนร่วมทีมและกำหนดสิทธิ์
+            {c.teamBody}
           </TabsContent>
         </Tabs>
       </Demo>
 
-      <Demo name="pagination" hint="แบ่งหน้ารายการ">
+      <Demo name="pagination" hint={c.paginationHint}>
         <div className="w-full space-y-2">
           <Pagination>
             <PaginationContent>
@@ -167,25 +277,25 @@ export function SectionNavigation() {
             </PaginationContent>
           </Pagination>
           <p className="text-center text-sm text-muted-foreground">
-            หน้าปัจจุบัน: {page}
+            {c.currentPage} {page}
           </p>
         </div>
       </Demo>
 
-      <Demo name="menubar" hint="แถบเมนูแบบแอปเดสก์ท็อป">
+      <Demo name="menubar" hint={c.menubarHint}>
         <Menubar>
           <MenubarMenu>
-            <MenubarTrigger>ไฟล์</MenubarTrigger>
+            <MenubarTrigger>{c.file}</MenubarTrigger>
             <MenubarContent>
               <MenubarItem>
-                สร้างใหม่ <MenubarShortcut>⌘N</MenubarShortcut>
+                {c.newFile} <MenubarShortcut>⌘N</MenubarShortcut>
               </MenubarItem>
               <MenubarItem>
-                เปิด… <MenubarShortcut>⌘O</MenubarShortcut>
+                {c.openFile} <MenubarShortcut>⌘O</MenubarShortcut>
               </MenubarItem>
               <MenubarSeparator />
               <MenubarSub>
-                <MenubarSubTrigger>ส่งออกเป็น</MenubarSubTrigger>
+                <MenubarSubTrigger>{c.exportAs}</MenubarSubTrigger>
                 <MenubarSubContent>
                   <MenubarItem>PDF</MenubarItem>
                   <MenubarItem>PNG</MenubarItem>
@@ -194,32 +304,32 @@ export function SectionNavigation() {
             </MenubarContent>
           </MenubarMenu>
           <MenubarMenu>
-            <MenubarTrigger>มุมมอง</MenubarTrigger>
+            <MenubarTrigger>{c.view}</MenubarTrigger>
             <MenubarContent>
-              <MenubarCheckboxItem checked>แสดงแถบเครื่องมือ</MenubarCheckboxItem>
-              <MenubarCheckboxItem>แสดงเส้นตาราง</MenubarCheckboxItem>
+              <MenubarCheckboxItem checked>{c.showToolbar}</MenubarCheckboxItem>
+              <MenubarCheckboxItem>{c.showGrid}</MenubarCheckboxItem>
               <MenubarSeparator />
               <MenubarRadioGroup value="comfortable">
-                <MenubarRadioItem value="compact">แน่น</MenubarRadioItem>
-                <MenubarRadioItem value="comfortable">สบายตา</MenubarRadioItem>
+                <MenubarRadioItem value="compact">{c.compact}</MenubarRadioItem>
+                <MenubarRadioItem value="comfortable">{c.comfortable}</MenubarRadioItem>
               </MenubarRadioGroup>
             </MenubarContent>
           </MenubarMenu>
         </Menubar>
       </Demo>
 
-      <Demo name="navigation-menu" hint="เมนูหลักพร้อมแผงย่อย" wide>
+      <Demo name="navigation-menu" hint={c.navMenuHint} wide>
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>สินค้า</NavigationMenuTrigger>
+              <NavigationMenuTrigger>{c.products}</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[22rem] gap-2 p-3 md:w-[26rem] md:grid-cols-2">
                   {[
-                    { title: "ดีไซน์ซิสเต็ม", desc: "token + component กลาง" },
-                    { title: "แดชบอร์ด", desc: "ดูตัวเลขสำคัญแบบเรียลไทม์" },
-                    { title: "รายงาน", desc: "สรุปผลรายเดือน" },
-                    { title: "ผู้ใช้งาน", desc: "จัดการสิทธิ์และทีม" },
+                    { title: c.itemDs, desc: c.itemDsDesc },
+                    { title: c.itemDash, desc: c.itemDashDesc },
+                    { title: c.itemReport, desc: c.itemReportDesc },
+                    { title: c.itemUsers, desc: c.itemUsersDesc },
                   ].map((item) => (
                     <li key={item.title}>
                       <NavigationMenuLink
@@ -241,7 +351,7 @@ export function SectionNavigation() {
                 href="#"
                 className={navigationMenuTriggerStyle()}
               >
-                ราคา
+                {c.pricing}
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
@@ -249,44 +359,44 @@ export function SectionNavigation() {
                 href="#"
                 className={navigationMenuTriggerStyle()}
               >
-                ติดต่อเรา
+                {c.contact}
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
       </Demo>
 
-      <Demo name="command" hint="ค้นหาคำสั่งแบบ command palette" wide>
+      <Demo name="command" hint={c.commandHint} wide>
         <div className="w-full space-y-3">
           <Command className="rounded-lg border border-border">
-            <CommandInput placeholder="พิมพ์เพื่อค้นหาคำสั่ง…" />
+            <CommandInput placeholder={c.searchCommand} />
             <CommandList>
-              <CommandEmpty>ไม่พบคำสั่งที่ค้นหา</CommandEmpty>
-              <CommandGroup heading="ทั่วไป">
+              <CommandEmpty>{c.noCommand}</CommandEmpty>
+              <CommandGroup heading={c.groupGeneral}>
                 <CommandItem>
                   <SmileIcon />
-                  <span>เปิดอีโมจิ</span>
+                  <span>{c.emoji}</span>
                 </CommandItem>
                 <CommandItem>
                   <CalculatorIcon />
-                  <span>เครื่องคิดเลข</span>
+                  <span>{c.calculator}</span>
                 </CommandItem>
               </CommandGroup>
               <CommandSeparator />
-              <CommandGroup heading="บัญชี">
+              <CommandGroup heading={c.groupAccount}>
                 <CommandItem>
                   <UserIcon />
-                  <span>โปรไฟล์</span>
+                  <span>{c.profile}</span>
                   <CommandShortcut>⌘P</CommandShortcut>
                 </CommandItem>
                 <CommandItem>
                   <CreditCardIcon />
-                  <span>การชำระเงิน</span>
+                  <span>{c.billing}</span>
                   <CommandShortcut>⌘B</CommandShortcut>
                 </CommandItem>
                 <CommandItem>
                   <SettingsIcon />
-                  <span>ตั้งค่า</span>
+                  <span>{c.settings}</span>
                   <CommandShortcut>⌘S</CommandShortcut>
                 </CommandItem>
               </CommandGroup>
@@ -294,25 +404,25 @@ export function SectionNavigation() {
           </Command>
 
           <Button variant="outline" size="sm" onClick={() => setCmdOpen(true)}>
-            เปิดแบบ CommandDialog
+            {c.openDialog}
           </Button>
           <CommandDialog
             open={cmdOpen}
             onOpenChange={setCmdOpen}
-            title="ค้นหาคำสั่ง"
-            description="พิมพ์ชื่อคำสั่งที่ต้องการเรียกใช้"
+            title={c.dialogTitle}
+            description={c.dialogDesc}
           >
-            <CommandInput placeholder="พิมพ์เพื่อค้นหาคำสั่ง…" />
+            <CommandInput placeholder={c.searchCommand} />
             <CommandList>
-              <CommandEmpty>ไม่พบคำสั่งที่ค้นหา</CommandEmpty>
-              <CommandGroup heading="ลัด">
+              <CommandEmpty>{c.noCommand}</CommandEmpty>
+              <CommandGroup heading={c.groupShortcut}>
                 <CommandItem onSelect={() => setCmdOpen(false)}>
                   <UserIcon />
-                  <span>ไปที่โปรไฟล์</span>
+                  <span>{c.goProfile}</span>
                 </CommandItem>
                 <CommandItem onSelect={() => setCmdOpen(false)}>
                   <SettingsIcon />
-                  <span>ไปที่ตั้งค่า</span>
+                  <span>{c.goSettings}</span>
                 </CommandItem>
               </CommandGroup>
             </CommandList>

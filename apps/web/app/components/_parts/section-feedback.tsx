@@ -28,10 +28,68 @@ import { Skeleton } from "@repo/ui/components/ui/skeleton";
 import { Spinner } from "@repo/ui/components/ui/spinner";
 
 import { Demo, Section } from "./showcase";
-import { useT } from "@/lib/i18n";
+import { defineCopy, useCopy, useT } from "@/lib/i18n";
+
+const COPY = defineCopy({
+  th: {
+    alertHint: "ข้อความแจ้งเตือนแบบอยู่กับที่",
+    installOk: "ติดตั้งสำเร็จแล้ว",
+    installOkDesc: "เพิ่ม component ใหม่ได้ด้วยคำสั่ง pnpm dlx shadcn@latest add",
+    saveFail: "บันทึกไม่สำเร็จ",
+    saveFailDesc: "การเชื่อมต่อขาดหาย กรุณาลองใหม่อีกครั้ง",
+    toastHint: "แจ้งเตือนแบบ toast",
+    toastPlain: "บันทึกร่างเรียบร้อยแล้ว",
+    plain: "ปกติ",
+    toastSuccess: "อัปโหลดไฟล์สำเร็จ",
+    success: "สำเร็จ",
+    toastError: "ลบไม่สำเร็จ",
+    toastErrorDesc: "คุณไม่มีสิทธิ์ลบรายการนี้",
+    error: "ผิดพลาด",
+    toastAction: "ยกเลิกคำสั่งซื้อแล้ว",
+    undo: "เลิกทำ",
+    undone: "เลิกทำแล้ว",
+    withAction: "มีปุ่มกด",
+    progressHint: "แถบความคืบหน้า",
+    skeletonHint: "โครงร่างระหว่างโหลดข้อมูล",
+    spinnerHint: "ตัวหมุนระหว่างรอ",
+    saving: "กำลังบันทึก…",
+    emptyHint: "สถานะไม่มีข้อมูล",
+    emptyTitle: "ยังไม่มีรายการ",
+    emptyDesc: "เมื่อมีคำสั่งซื้อเข้ามา รายการจะแสดงที่นี่",
+    createFirst: "สร้างรายการแรก",
+  },
+  en: {
+    alertHint: "Inline notification message",
+    installOk: "Installed successfully",
+    installOkDesc: "Add new components with pnpm dlx shadcn@latest add",
+    saveFail: "Could not save",
+    saveFailDesc: "The connection dropped. Please try again.",
+    toastHint: "Toast notifications",
+    toastPlain: "Draft saved",
+    plain: "Plain",
+    toastSuccess: "File uploaded successfully",
+    success: "Success",
+    toastError: "Delete failed",
+    toastErrorDesc: "You do not have permission to delete this item",
+    error: "Error",
+    toastAction: "Order cancelled",
+    undo: "Undo",
+    undone: "Restored",
+    withAction: "With action",
+    progressHint: "Progress bar",
+    skeletonHint: "Placeholder while data loads",
+    spinnerHint: "Spinner while waiting",
+    saving: "Saving…",
+    emptyHint: "Empty state",
+    emptyTitle: "Nothing here yet",
+    emptyDesc: "Orders will appear here once they come in",
+    createFirst: "Create the first one",
+  },
+});
 
 export function SectionFeedback() {
   const t = useT();
+  const c = useCopy(COPY);
   const [progress, setProgress] = React.useState(35);
 
   return (
@@ -40,67 +98,67 @@ export function SectionFeedback() {
       title={t("section.feedback")}
       hint="alert · sonner (toast) · progress · skeleton · spinner · empty"
     >
-      <Demo name="alert" hint="ข้อความแจ้งเตือนแบบอยู่กับที่" wide>
+      <Demo name="alert" hint={c.alertHint} wide>
         <div className="w-full space-y-3">
           <Alert>
             <TerminalIcon />
-            <AlertTitle>ติดตั้งสำเร็จแล้ว</AlertTitle>
+            <AlertTitle>{c.installOk}</AlertTitle>
             <AlertDescription>
-              เพิ่ม component ใหม่ได้ด้วยคำสั่ง pnpm dlx shadcn@latest add
+              {c.installOkDesc}
             </AlertDescription>
           </Alert>
           <Alert variant="destructive">
             <CircleAlertIcon />
-            <AlertTitle>บันทึกไม่สำเร็จ</AlertTitle>
+            <AlertTitle>{c.saveFail}</AlertTitle>
             <AlertDescription>
-              การเชื่อมต่อขาดหาย กรุณาลองใหม่อีกครั้ง
+              {c.saveFailDesc}
             </AlertDescription>
           </Alert>
         </div>
       </Demo>
 
-      <Demo name="sonner" hint="แจ้งเตือนแบบ toast">
+      <Demo name="sonner" hint={c.toastHint}>
         <div className="flex flex-wrap gap-2">
           <Button
             variant="outline"
             size="sm"
-            onClick={() => toast("บันทึกร่างเรียบร้อยแล้ว")}
+            onClick={() => toast(c.toastPlain)}
           >
-            ปกติ
+            {c.plain}
           </Button>
           <Button
             variant="outline"
             size="sm"
-            onClick={() => toast.success("อัปโหลดไฟล์สำเร็จ")}
+            onClick={() => toast.success(c.toastSuccess)}
           >
-            สำเร็จ
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() =>
-              toast.error("ลบไม่สำเร็จ", {
-                description: "คุณไม่มีสิทธิ์ลบรายการนี้",
-              })
-            }
-          >
-            ผิดพลาด
+            {c.success}
           </Button>
           <Button
             variant="outline"
             size="sm"
             onClick={() =>
-              toast("ยกเลิกคำสั่งซื้อแล้ว", {
-                action: { label: "เลิกทำ", onClick: () => toast("เลิกทำแล้ว") },
+              toast.error(c.toastError, {
+                description: c.toastErrorDesc,
               })
             }
           >
-            มีปุ่มกด
+            {c.error}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() =>
+              toast(c.toastAction, {
+                action: { label: c.undo, onClick: () => toast(c.undone) },
+              })
+            }
+          >
+            {c.withAction}
           </Button>
         </div>
       </Demo>
 
-      <Demo name="progress" hint="แถบความคืบหน้า">
+      <Demo name="progress" hint={c.progressHint}>
         <div className="w-full space-y-3">
           <Progress value={progress} />
           <div className="flex items-center justify-between">
@@ -125,7 +183,7 @@ export function SectionFeedback() {
         </div>
       </Demo>
 
-      <Demo name="skeleton" hint="โครงร่างระหว่างโหลดข้อมูล">
+      <Demo name="skeleton" hint={c.skeletonHint}>
         <div className="w-full space-y-3">
           <div className="flex items-center gap-3">
             <Skeleton className="size-10 rounded-full" />
@@ -138,33 +196,33 @@ export function SectionFeedback() {
         </div>
       </Demo>
 
-      <Demo name="spinner" hint="ตัวหมุนระหว่างรอ">
+      <Demo name="spinner" hint={c.spinnerHint}>
         <div className="flex w-full flex-wrap items-center gap-4">
           <Spinner />
           <Spinner className="size-6" />
           <Spinner className="size-8 text-muted-foreground" />
           <Button disabled size="sm">
             <Spinner />
-            กำลังบันทึก…
+            {c.saving}
           </Button>
         </div>
       </Demo>
 
-      <Demo name="empty" hint="สถานะไม่มีข้อมูล">
+      <Demo name="empty" hint={c.emptyHint}>
         <Empty className="w-full border border-dashed border-border">
           <EmptyHeader>
             <EmptyMedia variant="icon">
               <InboxIcon />
             </EmptyMedia>
-            <EmptyTitle>ยังไม่มีรายการ</EmptyTitle>
+            <EmptyTitle>{c.emptyTitle}</EmptyTitle>
             <EmptyDescription>
-              เมื่อมีคำสั่งซื้อเข้ามา รายการจะแสดงที่นี่
+              {c.emptyDesc}
             </EmptyDescription>
           </EmptyHeader>
           <EmptyContent>
             <Button size="sm">
               <RocketIcon />
-              สร้างรายการแรก
+              {c.createFirst}
             </Button>
           </EmptyContent>
         </Empty>
