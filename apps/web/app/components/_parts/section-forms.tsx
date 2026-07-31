@@ -82,6 +82,15 @@ import {
 
 import { Demo, Section } from "./showcase";
 
+/** หัวข้อย่อยของแต่ละรูปแบบภายในกล่อง demo เดียวกัน */
+function VariantTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+      {children}
+    </p>
+  );
+}
+
 type ProfileValues = { displayName: string };
 
 function FormDemo() {
@@ -236,42 +245,201 @@ export function SectionForms() {
         </div>
       </Demo>
 
-      <Demo name="checkbox" hint="เลือกได้หลายข้อ">
-        <div className="w-full space-y-3">
-          {["รับข่าวสารทางอีเมล", "แจ้งเตือนบนมือถือ", "สรุปรายสัปดาห์"].map(
-            (label, i) => (
-              <div key={label} className="flex items-center gap-2">
-                <Checkbox id={`cb-${i}`} defaultChecked={i === 0} />
-                <Label htmlFor={`cb-${i}`} className="font-normal">
-                  {label}
-                </Label>
-              </div>
-            )
-          )}
-          <div className="flex items-center gap-2">
-            <Checkbox id="cb-disabled" disabled />
-            <Label htmlFor="cb-disabled" className="font-normal opacity-50">
-              ปิดใช้งาน
-            </Label>
+      <Demo name="checkbox" hint="พื้นฐาน · มีคำอธิบาย · แบบกล่อง · ปิดใช้งาน" wide>
+        <div className="grid w-full gap-6 sm:grid-cols-2">
+          <div className="space-y-3">
+            <VariantTitle>พื้นฐาน</VariantTitle>
+            {["รับข่าวสารทางอีเมล", "แจ้งเตือนบนมือถือ", "สรุปรายสัปดาห์"].map(
+              (label, i) => (
+                <div key={label} className="flex items-center gap-2">
+                  <Checkbox id={`cb-${i}`} defaultChecked={i === 0} />
+                  <Label htmlFor={`cb-${i}`} className="font-normal">
+                    {label}
+                  </Label>
+                </div>
+              )
+            )}
+          </div>
+
+          <div className="space-y-3">
+            <VariantTitle>มีคำอธิบายใต้หัวข้อ</VariantTitle>
+            <Field orientation="horizontal">
+              <Checkbox id="cb-desc" defaultChecked />
+              <FieldContent>
+                <FieldLabel htmlFor="cb-desc">เก็บฉันไว้ในระบบ</FieldLabel>
+                <FieldDescription>
+                  ไม่ต้องเข้าสู่ระบบใหม่บนอุปกรณ์นี้เป็นเวลา 30 วัน
+                </FieldDescription>
+              </FieldContent>
+            </Field>
+          </div>
+
+          <div className="space-y-3">
+            <VariantTitle>แบบกล่อง (มีกรอบครอบ)</VariantTitle>
+            <FieldGroup className="gap-3">
+              {[
+                {
+                  id: "cb-box-1",
+                  title: "แผนมาตรฐาน",
+                  desc: "ผู้ใช้ 5 คน · พื้นที่ 20 GB",
+                  checked: true,
+                },
+                {
+                  id: "cb-box-2",
+                  title: "แผนองค์กร",
+                  desc: "ผู้ใช้ไม่จำกัด · พื้นที่ 1 TB",
+                  checked: false,
+                },
+              ].map((o) => (
+                <FieldLabel key={o.id} htmlFor={o.id}>
+                  <Field orientation="horizontal">
+                    <FieldContent>
+                      <FieldTitle>{o.title}</FieldTitle>
+                      <FieldDescription>{o.desc}</FieldDescription>
+                    </FieldContent>
+                    <Checkbox id={o.id} defaultChecked={o.checked} />
+                  </Field>
+                </FieldLabel>
+              ))}
+            </FieldGroup>
+          </div>
+
+          <div className="space-y-3">
+            <VariantTitle>ปิดใช้งาน (กดไม่ได้)</VariantTitle>
+            <div className="flex items-center gap-2">
+              <Checkbox id="cb-off-1" disabled />
+              <Label htmlFor="cb-off-1" className="font-normal text-muted-foreground">
+                ยังไม่ได้เลือก
+              </Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <Checkbox id="cb-off-2" disabled defaultChecked />
+              <Label htmlFor="cb-off-2" className="font-normal text-muted-foreground">
+                เลือกไว้แล้ว
+              </Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <Checkbox id="cb-off-3" disabled checked="indeterminate" />
+              <Label htmlFor="cb-off-3" className="font-normal text-muted-foreground">
+                เลือกบางส่วน
+              </Label>
+            </div>
+            <FieldLabel htmlFor="cb-box-off">
+              <Field orientation="horizontal">
+                <FieldContent>
+                  <FieldTitle>แผนที่ปิดขายแล้ว</FieldTitle>
+                  <FieldDescription>ไม่เปิดให้สมัครใหม่</FieldDescription>
+                </FieldContent>
+                <Checkbox id="cb-box-off" disabled defaultChecked />
+              </Field>
+            </FieldLabel>
           </div>
         </div>
       </Demo>
 
-      <Demo name="radio-group" hint="เลือกได้ข้อเดียว">
-        <RadioGroup defaultValue="standard" className="w-full space-y-1">
-          {[
-            { value: "standard", label: "จัดส่งมาตรฐาน (3–5 วัน)" },
-            { value: "express", label: "จัดส่งด่วน (1–2 วัน)" },
-            { value: "pickup", label: "รับเองที่สาขา" },
-          ].map((o) => (
-            <div key={o.value} className="flex items-center gap-2">
-              <RadioGroupItem value={o.value} id={`rg-${o.value}`} />
-              <Label htmlFor={`rg-${o.value}`} className="font-normal">
-                {o.label}
-              </Label>
-            </div>
-          ))}
-        </RadioGroup>
+      <Demo name="radio-group" hint="พื้นฐาน · มีคำอธิบาย · แบบกล่อง · ปิดใช้งาน" wide>
+        <div className="grid w-full gap-6 sm:grid-cols-2">
+          <div className="space-y-3">
+            <VariantTitle>พื้นฐาน</VariantTitle>
+            <RadioGroup defaultValue="standard">
+              {[
+                { value: "standard", label: "จัดส่งมาตรฐาน (3–5 วัน)" },
+                { value: "express", label: "จัดส่งด่วน (1–2 วัน)" },
+                { value: "pickup", label: "รับเองที่สาขา" },
+              ].map((o) => (
+                <div key={o.value} className="flex items-center gap-2">
+                  <RadioGroupItem value={o.value} id={`rg-${o.value}`} />
+                  <Label htmlFor={`rg-${o.value}`} className="font-normal">
+                    {o.label}
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          </div>
+
+          <div className="space-y-3">
+            <VariantTitle>มีคำอธิบายใต้หัวข้อ</VariantTitle>
+            <RadioGroup defaultValue="monthly">
+              {[
+                {
+                  value: "monthly",
+                  title: "รายเดือน",
+                  desc: "฿390 / เดือน ยกเลิกได้ทุกเมื่อ",
+                },
+                {
+                  value: "yearly",
+                  title: "รายปี",
+                  desc: "฿3,900 / ปี ประหยัดกว่า 2 เดือน",
+                },
+              ].map((o) => (
+                <Field key={o.value} orientation="horizontal">
+                  <RadioGroupItem value={o.value} id={`rgd-${o.value}`} />
+                  <FieldContent>
+                    <FieldLabel htmlFor={`rgd-${o.value}`}>{o.title}</FieldLabel>
+                    <FieldDescription>{o.desc}</FieldDescription>
+                  </FieldContent>
+                </Field>
+              ))}
+            </RadioGroup>
+          </div>
+
+          <div className="space-y-3">
+            <VariantTitle>แบบกล่อง (มีกรอบครอบ)</VariantTitle>
+            <RadioGroup defaultValue="card" className="gap-3">
+              {[
+                {
+                  value: "card",
+                  title: "บัตรเครดิต / เดบิต",
+                  desc: "ตัดเงินทันที รองรับทุกธนาคาร",
+                },
+                {
+                  value: "promptpay",
+                  title: "พร้อมเพย์",
+                  desc: "สแกน QR ผ่านแอปธนาคาร",
+                },
+              ].map((o) => (
+                <FieldLabel key={o.value} htmlFor={`rgb-${o.value}`}>
+                  <Field orientation="horizontal">
+                    <FieldContent>
+                      <FieldTitle>{o.title}</FieldTitle>
+                      <FieldDescription>{o.desc}</FieldDescription>
+                    </FieldContent>
+                    <RadioGroupItem value={o.value} id={`rgb-${o.value}`} />
+                  </Field>
+                </FieldLabel>
+              ))}
+            </RadioGroup>
+          </div>
+
+          <div className="space-y-3">
+            <VariantTitle>ปิดใช้งาน (กดไม่ได้)</VariantTitle>
+            <RadioGroup defaultValue="off-selected">
+              <div className="flex items-center gap-2">
+                <RadioGroupItem value="off-selected" id="rg-off-1" disabled />
+                <Label htmlFor="rg-off-1" className="font-normal text-muted-foreground">
+                  เลือกไว้แล้ว
+                </Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <RadioGroupItem value="off-empty" id="rg-off-2" disabled />
+                <Label htmlFor="rg-off-2" className="font-normal text-muted-foreground">
+                  ยังไม่ได้เลือก
+                </Label>
+              </div>
+            </RadioGroup>
+            <RadioGroup defaultValue="sold-out" disabled className="gap-3">
+              <FieldLabel htmlFor="rg-box-off">
+                <Field orientation="horizontal">
+                  <FieldContent>
+                    <FieldTitle>รอบที่เต็มแล้ว</FieldTitle>
+                    <FieldDescription>ปิดรับสมัครรอบนี้</FieldDescription>
+                  </FieldContent>
+                  <RadioGroupItem value="sold-out" id="rg-box-off" />
+                </Field>
+              </FieldLabel>
+            </RadioGroup>
+          </div>
+        </div>
       </Demo>
 
       <Demo name="select" hint="ดรอปดาวน์แบบ custom">

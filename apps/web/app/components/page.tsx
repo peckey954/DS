@@ -19,7 +19,7 @@ import { SectionOverlays } from "./_parts/section-overlays";
 
 export const metadata: Metadata = {
   title: "แกลเลอรี component — Design System",
-  description: "ตัวอย่างการใช้งาน component ทั้ง 54 ตัวใน @repo/ui",
+  description: "ตัวอย่างการใช้งาน component ทั้ง 55 ตัวใน @repo/ui",
 };
 
 const NAV = [
@@ -50,7 +50,7 @@ export default function ComponentsPage() {
               <div>
                 <h1 className="text-sm font-semibold">แกลเลอรี component</h1>
                 <p className="text-xs text-muted-foreground">
-                  ครบทั้ง 54 ตัวจาก @repo/ui
+                  ครบทั้ง 55 ตัวจาก @repo/ui
                 </p>
               </div>
             </div>

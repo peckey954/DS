@@ -79,7 +79,7 @@ export default function Home() {
         <div>
           <h2 className="text-lg font-semibold">แกลเลอรี component ทั้งหมด</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            ดูตัวอย่างการใช้งาน component ทั้ง 54 ตัวใน @repo/ui จัดเป็นหมวด
+            ดูตัวอย่างการใช้งาน component ทั้ง 55 ตัวใน @repo/ui จัดเป็นหมวด
             พร้อมสลับแบรนด์และโหมดสว่าง/มืดได้ทันที
           </p>
         </div>
