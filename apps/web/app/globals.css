@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+/* animate-in / fade / zoom utilities ที่ shadcn ใช้ (Tailwind v4) */
+@import "tw-animate-css";
+
+/* 1) คำศัพท์กลาง: แมป token -> Tailwind + base layer */
+@import "../../../packages/ui/src/styles/globals.css";
+
+/* 2) ค่าจริงของแต่ละแบรนด์ (โหลดทั้งคู่ แล้วสลับด้วย data-brand) */
+@import "../../../packages/tokens/src/siam.css";
+@import "../../../packages/tokens/src/nara.css";
+
+/* ให้ Tailwind สแกน class ที่ใช้ในไลบรารี UI */
+@source "../../../packages/ui/src";

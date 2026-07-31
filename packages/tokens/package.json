@@ -1,0 +1,9 @@
+{
+  "name": "@repo/tokens",
+  "version": "0.1.0",
+  "private": true,
+  "exports": {
+    "./siam.css": "./src/siam.css",
+    "./nara.css": "./src/nara.css"
+  }
+}
