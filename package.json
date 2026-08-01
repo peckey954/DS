@@ -7,7 +7,8 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "lint": "turbo run lint",
-    "registry": "node scripts/build-registry.mjs"
+    "registry": "node scripts/build-registry.mjs",
+    "tokens:figma": "node scripts/build-figma-tokens.mjs"
   },
   "devDependencies": {
     "turbo": "^2.5.8",

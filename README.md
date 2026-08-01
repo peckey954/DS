@@ -118,6 +118,9 @@ git push -u origin main
 
 ## ดูใน Figma ต่อยังไง
 
+> คู่มือฉบับเต็มพร้อมสคริปต์ยิงสีเข้า Figma อัตโนมัติอยู่ที่ [FIGMA.md](FIGMA.md)
+> — `pnpm tokens:figma` แปลง token ทุกแบรนด์เป็นไฟล์ที่ import เข้า Figma ได้ทันที
+
 1. เปิดไฟล์ Figma community "shadcn/ui components with variables"
    (Menu → Duplicate to your drafts) — เป็นชุด component ที่ตรงกับโค้ด shadcn
 2. ใน Figma สร้าง **Variables** (สี/ฟอนต์/radius) ให้ **ชื่อตรงกับ token ในโค้ด**

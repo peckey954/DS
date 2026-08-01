@@ -1,0 +1,169 @@
+/**
+ * แปลง token CSS ของแต่ละแบรนด์ -> JSON ที่ import เข้า Figma ได้ผ่าน Tokens Studio
+ *
+ *   node scripts/build-figma-tokens.mjs
+ *
+ * ผลลัพธ์: figma-tokens.json ที่ root
+ *
+ * ทำไมต้องมี: Figma MCP อ่านอย่างเดียว เขียน variables เข้า Figma ไม่ได้
+ * แต่ปลั๊กอิน Tokens Studio เขียนได้ ไฟล์นี้คือสะพานระหว่างสองฝั่ง
+ * แก้สีใน packages/tokens ที่เดียว แล้วรันสคริปต์นี้ push เข้า Figma ได้เลย
+ */
+import { readFileSync, writeFileSync, readdirSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const TOKENS_SRC = join(ROOT, "packages/tokens/src");
+
+/** hsl(221 83% 53%) -> #2563eb  (Figma variables รับเป็น hex) */
+function hslToHex(input) {
+  const m = input.match(
+    /hsl\(\s*([\d.]+)\s+([\d.]+)%\s+([\d.]+)%\s*(?:\/\s*([\d.]+%?))?\s*\)/
+  );
+  if (!m) return null;
+  const h = parseFloat(m[1]);
+  const s = parseFloat(m[2]) / 100;
+  const l = parseFloat(m[3]) / 100;
+
+  const c = (1 - Math.abs(2 * l - 1)) * s;
+  const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+  const mm = l - c / 2;
+  const seg = Math.floor(h / 60) % 6;
+  const [r, g, b] = [
+    [c, x, 0],
+    [x, c, 0],
+    [0, c, x],
+    [0, x, c],
+    [x, 0, c],
+    [c, 0, x],
+  ][seg];
+  const hex = (v) =>
+    Math.round((v + mm) * 255)
+      .toString(16)
+      .padStart(2, "0");
+  return `#${hex(r)}${hex(g)}${hex(b)}`;
+}
+
+/** 0.625rem -> 10 (Figma ใช้หน่วย px เป็นตัวเลข) */
+function remToPx(value) {
+  const m = value.match(/([\d.]+)rem/);
+  return m ? Math.round(parseFloat(m[1]) * 16) : null;
+}
+
+/**
+ * หาชื่อฟอนต์จริงจาก layout ของแอปตัวอย่าง
+ * เดาจากชื่อ CSS variable ไม่ได้ เพราะ --font-ibm-thai จริง ๆ คือ "IBM Plex Sans Thai"
+ * ถ้าเดาผิดดีไซเนอร์จะไปตั้งฟอนต์ที่ไม่มีอยู่จริงใน Figma
+ */
+function loadFontMap() {
+  const map = {};
+  try {
+    const layout = readFileSync(join(ROOT, "apps/web/app/layout.tsx"), "utf8");
+    // จับ:  const x = IBM_Plex_Sans_Thai({ ... variable: "--font-ibm-thai" ... })
+    const re = /=\s*([A-Z][A-Za-z0-9_]*)\s*\(\{([\s\S]*?)\}\)/g;
+    let m;
+    while ((m = re.exec(layout))) {
+      const v = m[2].match(/variable:\s*"(--[a-z0-9-]+)"/i);
+      if (v) map[v[1]] = m[1].replace(/_/g, " ");
+    }
+  } catch {
+    /* ไม่มีไฟล์ก็ปล่อยผ่าน ไปใช้ fallback ด้านล่าง */
+  }
+  return map;
+}
+
+const FONT_MAP = loadFontMap();
+const unknownFonts = new Set();
+
+/** var(--font-ibm-thai), ui-sans-serif, ... -> "IBM Plex Sans Thai" */
+function fontName(value) {
+  const m = value.match(/var\((--font-[a-z0-9-]+)\)/i);
+  if (!m) return value.split(",")[0].trim();
+  if (FONT_MAP[m[1]]) return FONT_MAP[m[1]];
+  unknownFonts.add(m[1]);
+  // fallback: แปลงจากชื่อตัวแปร ซึ่งอาจไม่ตรงชื่อฟอนต์จริง
+  return m[1]
+    .replace("--font-", "")
+    .split("-")
+    .map((w) => (w.length <= 3 ? w.toUpperCase() : w[0].toUpperCase() + w.slice(1)))
+    .join(" ");
+}
+
+/** อ่านบล็อก CSS ทั้งหมดในไฟล์แบรนด์ คืน { selector: { var: value } } */
+function parseBrandFile(css) {
+  const blocks = {};
+  const re = /\[data-brand="([^"]+)"\](\.dark)?\s*\{([^}]*)\}/g;
+  let m;
+  while ((m = re.exec(css))) {
+    const mode = m[2] ? "dark" : "light";
+    const vars = {};
+    for (const line of m[3].split("\n")) {
+      const v = line.match(/--([a-z0-9-]+)\s*:\s*([^;]+);/i);
+      if (v) vars[v[1].trim()] = v[2].trim();
+    }
+    blocks[`${m[1]}-${mode}`] = vars;
+  }
+  return blocks;
+}
+
+/** แปลง 1 บล็อกเป็นรูปแบบของ Tokens Studio */
+function toTokenSet(vars) {
+  const set = {};
+  let skipped = 0;
+
+  for (const [name, raw] of Object.entries(vars)) {
+    if (name === "radius") {
+      const px = remToPx(raw);
+      if (px != null) set[name] = { value: String(px), type: "borderRadius" };
+      continue;
+    }
+    if (name === "font-sans") {
+      set[name] = { value: fontName(raw), type: "fontFamilies" };
+      continue;
+    }
+    const hex = hslToHex(raw);
+    if (hex) set[name] = { value: hex, type: "color" };
+    else skipped++;
+  }
+  return { set, skipped };
+}
+
+const out = {};
+const summary = [];
+
+for (const file of readdirSync(TOKENS_SRC).filter((f) => f.endsWith(".css"))) {
+  const blocks = parseBrandFile(readFileSync(join(TOKENS_SRC, file), "utf8"));
+  for (const [setName, vars] of Object.entries(blocks)) {
+    const { set, skipped } = toTokenSet(vars);
+    out[setName] = set;
+    summary.push({ ชุด: setName, ตัวแปร: Object.keys(set).length, แปลงไม่ได้: skipped });
+  }
+}
+
+const setOrder = Object.keys(out);
+
+// $themes ทำให้ Tokens Studio สร้าง mode ให้อัตโนมัติตอน push เข้า Figma
+out.$themes = setOrder.map((name) => {
+  const [brand, mode] = name.split("-");
+  return {
+    id: name,
+    name: mode,
+    group: brand,
+    selectedTokenSets: { [name]: "enabled" },
+  };
+});
+out.$metadata = { tokenSetOrder: setOrder };
+
+writeFileSync(join(ROOT, "figma-tokens.json"), JSON.stringify(out, null, 2) + "\n");
+
+console.table(summary);
+console.log(`\nเขียนไฟล์ figma-tokens.json แล้ว — ${setOrder.length} ชุด: ${setOrder.join(", ")}`);
+
+if (unknownFonts.size) {
+  console.warn(
+    `\n⚠️  หาชื่อฟอนต์จริงไม่เจอสำหรับ: ${[...unknownFonts].join(", ")}\n` +
+      `   ชื่อที่ใส่ให้อาจไม่ตรงกับฟอนต์จริงใน Figma\n` +
+      `   แก้ได้โดยโหลดฟอนต์นั้นใน apps/web/app/layout.tsx ด้วย next/font/google`
+  );
+}
