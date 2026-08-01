@@ -268,6 +268,44 @@ style={{ color: "#333" }}        // inline style สี
 โหมดมืดจะ **สว่างขึ้น** เพื่อให้เด่นขึ้นเหมือนกัน ตัวที่มีให้คือ
 `--primary-hover` `--secondary-hover` `--accent-hover` `--destructive-hover`
 
+#### Alert แบบมีสีพื้น
+
+`Alert` มี 4 variant — `default` `warning` `brand` `destructive`
+
+```tsx
+<Alert variant="warning">
+  <TriangleAlertIcon />
+  <AlertTitle>แพ็กเกจของคุณจะหมดอายุใน 3 วัน</AlertTitle>
+  <AlertDescription>ต่ออายุตอนนี้เพื่อไม่ให้บริการสะดุด</AlertDescription>
+</Alert>
+```
+
+**ห้ามลอกวิธีของหน้า docs ของ shadcn** ที่เขียนแบบนี้ — มันผิดกฎข้อ 2
+
+```tsx
+// ❌ hardcode สี + ต้องเขียน dark: เอง + ไม่เปลี่ยนตามแบรนด์
+<Alert className="border-amber-200 bg-amber-50 text-amber-900
+                  dark:border-amber-900 dark:bg-amber-950 dark:text-amber-50" />
+```
+
+พื้นของ variant พวกนี้เป็นสีจาง `/10` **ทับพื้นหลังเดิม** ไม่ใช่สีทึบ จึงกลับด้าน
+เองในโหมดมืดโดยไม่ต้องเขียน `dark:` เลย และ `brand` ก็เปลี่ยนตามแบรนด์ให้อัตโนมัติ
+
+**ห้ามบังคับสีไอคอนเป็นสีสด** เช่น `[&>svg]:text-warning` — ไอคอนต้องรับสีจาก
+ตัวอักษร (base มี `[&>svg]:text-current` ให้แล้ว) สีสดพวกนั้นออกแบบมาสำหรับ
+วางบนพื้นทึบ พอเอามาวางบนพื้นจางจะได้คอนทราสต์แค่ 2.36–2.95 ต่ำกว่าเกณฑ์ 3:1
+ของกราฟิก (วัดจริงมาแล้ว) — ตัวอย่างของ shadcn เองก็ใช้ไอคอนสีเดียวกับหัวข้อ
+
+token ที่เกี่ยวข้อง มีให้ทุกแบรนด์ทั้งสองโหมด
+
+| token | ใช้ตอนไหน |
+|---|---|
+| `--warning` | พื้นจางและเส้นขอบของ warning |
+| `--warning-foreground` | **ตัวอักษรบนพื้นจาง** ไม่ใช่บนพื้นทึบ |
+| `--destructive-subtle` | ตัวอักษรบนพื้นจางของ destructive |
+
+`--destructive-foreground` เป็นสีขาวสำหรับพื้นทึบ (ปุ่มลบ) **ใช้กับ Alert ไม่ได้**
+
 ### 3. ต่อ className ด้วย `cn()` จาก `@peckey954/ui/lib/utils`
 
 ```tsx

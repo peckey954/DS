@@ -5,7 +5,9 @@ import {
   CircleAlertIcon,
   InboxIcon,
   RocketIcon,
+  SparklesIcon,
   TerminalIcon,
+  TriangleAlertIcon,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -37,6 +39,12 @@ const COPY = defineCopy({
     installOkDesc: "เพิ่ม component ใหม่ได้ด้วยคำสั่ง pnpm dlx shadcn@latest add",
     saveFail: "บันทึกไม่สำเร็จ",
     saveFailDesc: "การเชื่อมต่อขาดหาย กรุณาลองใหม่อีกครั้ง",
+    expiring: "แพ็กเกจของคุณจะหมดอายุใน 3 วัน",
+    expiringDesc:
+      "ต่ออายุตอนนี้เพื่อไม่ให้บริการสะดุด หรืออัปเกรดเป็นแพ็กเกจแบบเสียค่าใช้จ่ายเพื่อใช้งานต่อ",
+    newFeature: "มีฟีเจอร์ใหม่มาแล้ว",
+    newFeatureDesc:
+      "ตอนนี้เลือกความโค้งและความห่างของทั้งระบบได้จากแถบด้านบน",
     toastHint: "แจ้งเตือนแบบ toast",
     toastPlain: "บันทึกร่างเรียบร้อยแล้ว",
     plain: "ปกติ",
@@ -64,6 +72,12 @@ const COPY = defineCopy({
     installOkDesc: "Add new components with pnpm dlx shadcn@latest add",
     saveFail: "Could not save",
     saveFailDesc: "The connection dropped. Please try again.",
+    expiring: "Your subscription will expire in 3 days.",
+    expiringDesc:
+      "Renew now to avoid service interruption or upgrade to a paid plan to continue using the service.",
+    newFeature: "A new feature has arrived",
+    newFeatureDesc:
+      "You can now pick the corner radius and density for the whole system from the top bar.",
     toastHint: "Toast notifications",
     toastPlain: "Draft saved",
     plain: "Plain",
@@ -105,6 +119,20 @@ export function SectionFeedback() {
             <AlertTitle>{c.installOk}</AlertTitle>
             <AlertDescription>
               {c.installOkDesc}
+            </AlertDescription>
+          </Alert>
+          <Alert variant="warning">
+            <TriangleAlertIcon />
+            <AlertTitle>{c.expiring}</AlertTitle>
+            <AlertDescription>
+              {c.expiringDesc}
+            </AlertDescription>
+          </Alert>
+          <Alert variant="brand">
+            <SparklesIcon />
+            <AlertTitle>{c.newFeature}</AlertTitle>
+            <AlertDescription>
+              {c.newFeatureDesc}
             </AlertDescription>
           </Alert>
           <Alert variant="destructive">

@@ -79,6 +79,18 @@
     "$type": "color",
     "$value": "#CA2121"
   },
+  "warning": {
+    "$type": "color",
+    "$value": "#C47F08"
+  },
+  "warning-foreground": {
+    "$type": "color",
+    "$value": "#6F3A0B"
+  },
+  "destructive-subtle": {
+    "$type": "color",
+    "$value": "#9C1C1C"
+  },
   "border": {
     "$type": "color",
     "$value": "#DAE7E0"

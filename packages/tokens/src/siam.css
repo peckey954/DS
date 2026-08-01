@@ -36,6 +36,16 @@
   --accent-hover: hsl(210 40% 93%);
   --destructive-hover: hsl(0 72% 46%);
 
+
+  /* สถานะเตือน + ตัวอักษรบนพื้นอ่อน — ใช้กับ Alert แบบมีสีพื้น
+     --warning            สีเข้ม สำหรับไอคอนและเส้นขอบ
+     --warning-foreground ตัวอักษรบนพื้นอ่อน (bg-warning/10) ไม่ใช่บนพื้นทึบ
+     --destructive-subtle ตัวอักษรบนพื้นอ่อนของ destructive
+                          (--destructive-foreground เป็นสีขาวสำหรับพื้นทึบ ใช้ตรงนี้ไม่ได้) */
+  --warning: hsl(38 92% 40%);
+  --warning-foreground: hsl(28 82% 24%);
+  --destructive-subtle: hsl(0 70% 36%);
+
   --border: hsl(214 32% 91%);
   --input: hsl(214 32% 91%);
   --ring: hsl(221 83% 53%);
@@ -91,6 +101,12 @@
   --secondary-hover: hsl(217 33% 22%);
   --accent-hover: hsl(217 33% 22%);
   --destructive-hover: hsl(0 63% 50%);
+
+
+  /* โหมดมืดกลับด้าน — ตัวอักษรบนพื้นอ่อนต้องสว่าง */
+  --warning: hsl(45 95% 58%);
+  --warning-foreground: hsl(45 88% 80%);
+  --destructive-subtle: hsl(0 85% 79%);
 
   --border: hsl(217 33% 20%);
   --input: hsl(217 33% 20%);

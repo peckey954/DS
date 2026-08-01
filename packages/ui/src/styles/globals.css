@@ -31,6 +31,12 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
 
+  /* สถานะเตือน + ตัวอักษรบนพื้นอ่อน (ใช้กับ Alert แบบมีสีพื้น)
+     ใส่ fallback ไว้ แบรนด์เก่าที่ยังไม่ประกาศจะไม่พัง */
+  --color-warning: var(--warning, var(--destructive));
+  --color-warning-foreground: var(--warning-foreground, var(--foreground));
+  --color-destructive-subtle: var(--destructive-subtle, var(--destructive));
+
   /* สีตอน hover ของพื้นผิวที่มีสี — ใช้แทนการลด opacity */
   --color-primary-hover: var(--primary-hover);
   --color-secondary-hover: var(--secondary-hover);
