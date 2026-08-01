@@ -93,6 +93,8 @@ pnpm dlx shadcn@latest add https://ds-web-iota.vercel.app/r/button.json
 
 - [USING-IN-OTHER-PROJECTS.md](USING-IN-OTHER-PROJECTS.md) — วิธีติดตั้งทั้งสองแนวทาง
   ปรับสี/ฟอนต์เป็นแบรนด์ของตัวเอง และตารางแก้ปัญหาที่เจอบ่อย
+- [NEW-PROJECT-PROMPT.md](NEW-PROJECT-PROMPT.md) — คำสั่งสำเร็จรูปสำหรับให้ AI
+  สร้างโปรเจกต์ใหม่ที่ใช้ DS ให้ครบในรอบเดียว
 - [PUBLISHING.md](PUBLISHING.md) — สำหรับคนดูแล repo นี้: วิธี publish ขึ้น npm
   สร้าง registry และขึ้นเวอร์ชันใหม่
 
