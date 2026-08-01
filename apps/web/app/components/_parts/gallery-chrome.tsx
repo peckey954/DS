@@ -8,6 +8,7 @@ import { Separator } from "@peckey954/ui/components/ui/separator";
 
 import { BrandSwitcher } from "@/components/brand-switcher";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { StyleSwitcher } from "@/components/style-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useT, type TranslationKey } from "@/lib/i18n";
 
@@ -44,9 +45,10 @@ export function GalleryHeader() {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <LanguageSwitcher />
             <BrandSwitcher />
+            <StyleSwitcher />
             <ThemeToggle />
           </div>
         </div>
