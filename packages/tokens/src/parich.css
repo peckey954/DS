@@ -3,9 +3,23 @@
    scope ด้วย [data-brand="parich"]  ·  .dark = โหมดมืด
    แก้ค่าตรงนี้ = เปลี่ยนทั้งแบรนด์ (component ไม่ต้องแตะ)
 
-   หมายเหตุเรื่องความอ่านง่าย: สีส้มสว่างเกินกว่าจะใช้ตัวอักษรสีขาวทับได้
-   (คอนทราสต์ขาวบนส้มได้แค่ ~2.8:1 ซึ่งต่ำกว่าเกณฑ์ WCAG AA ที่ 4.5:1)
-   --primary-foreground จึงเป็นสีเข้ม ไม่ใช่สีขาวเหมือนแบรนด์อื่น
+   ── หมายเหตุเรื่องคอนทราสต์ (ตัดสินใจแล้ว อย่าแก้กลับ) ──
+   --primary-foreground เป็นสีขาวตามอัตลักษณ์ของแบรนด์ ซึ่งได้คอนทราสต์
+   ต่ำกว่าเกณฑ์ WCAG AA (4.5:1) โดยรู้ตัว — เจ้าของแบรนด์ยืนยันให้ใช้แบบนี้
+
+   ค่าที่วัดจากเบราว์เซอร์จริง (ขาวบนปุ่มหลัก):
+
+     โหมดสว่าง  ปกติ 2.80:1   hover 3.34:1
+     โหมดมืด    ปกติ 2.53:1   hover 3.47:1
+
+     เกณฑ์ WCAG AA: ตัวอักษรปกติ 4.5:1 · ตัวใหญ่ (18pt+ / 14pt ตัวหนา) 3:1
+
+   ผลที่ตามมาที่ควรรู้:
+   - ปุ่มหลักจะอ่านยากกลางแดดจ้า และสำหรับผู้ที่สายตาเลือนราง
+   - ข้อความบนปุ่มควรใช้ขนาดใหญ่หรือตัวหนาเข้าไว้ จะได้เข้าเกณฑ์ AA large
+   - ถ้าโปรเจกต์ไหนต้องผ่านการตรวจ accessibility (เช่นงานภาครัฐ)
+     ให้เปลี่ยน --primary-foreground เป็น hsl(20 15% 12%) ซึ่งได้ 5.94:1
+     โดยไม่ต้องแตะสีแบรนด์
    ============================================================ */
 
 [data-brand="parich"] {
@@ -19,7 +33,7 @@
   --popover-foreground: hsl(20 15% 12%);
 
   --primary: hsl(24.6 95% 53.1%); /* #F97316 */
-  --primary-foreground: hsl(20 15% 12%);
+  --primary-foreground: hsl(0 0% 100%); /* ขาวตามแบรนด์ — ดูหมายเหตุคอนทราสต์ด้านบน */
 
   --secondary: hsl(30 25% 96%);
   --secondary-foreground: hsl(20 15% 12%);
@@ -53,7 +67,7 @@
   --sidebar: hsl(30 25% 97%);
   --sidebar-foreground: hsl(20 15% 12%);
   --sidebar-primary: hsl(24.6 95% 53.1%);
-  --sidebar-primary-foreground: hsl(20 15% 12%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
   --sidebar-accent: hsl(30 40% 94%);
   --sidebar-accent-foreground: hsl(20 15% 12%);
   --sidebar-border: hsl(30 20% 89%);
@@ -76,7 +90,7 @@
   --popover-foreground: hsl(30 20% 96%);
 
   --primary: hsl(24.6 95% 58%);
-  --primary-foreground: hsl(20 15% 10%);
+  --primary-foreground: hsl(0 0% 100%);
 
   --secondary: hsl(20 12% 17%);
   --secondary-foreground: hsl(30 20% 96%);
@@ -90,8 +104,11 @@
   --destructive: hsl(0 63% 45%);
   --destructive-foreground: hsl(0 0% 98%);
 
-  /* โหมดมืดกลับด้าน — hover ให้ "สว่างขึ้น" เพื่อให้เด่นขึ้นเหมือนกัน */
-  --primary-hover: hsl(24.6 95% 64%);
+  /* โหมดมืด hover ปกติจะให้ "สว่างขึ้น" แต่ --primary-hover ของแบรนด์นี้
+     กลับกันเป็น "เข้มลง" โดยตั้งใจ เพราะตัวอักษรบนปุ่มหลักเป็นสีขาว
+     ถ้าทำให้ส้มสว่างขึ้นตอน hover คอนทราสต์จะตกจาก 2.53 เหลือ 2.23
+     คือปุ่มอ่านยากที่สุดตอนที่ผู้ใช้กำลังชี้เมาส์อยู่พอดี */
+  --primary-hover: hsl(24.6 95% 46%);
   --secondary-hover: hsl(20 12% 21%);
   --accent-hover: hsl(20 14% 23%);
   --destructive-hover: hsl(0 63% 50%);
@@ -109,7 +126,7 @@
   --sidebar: hsl(20 14% 10%);
   --sidebar-foreground: hsl(30 20% 96%);
   --sidebar-primary: hsl(24.6 95% 58%);
-  --sidebar-primary-foreground: hsl(20 15% 10%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
   --sidebar-accent: hsl(20 14% 19%);
   --sidebar-accent-foreground: hsl(30 20% 96%);
   --sidebar-border: hsl(20 12% 20%);

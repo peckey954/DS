@@ -329,7 +329,7 @@
       "type": "color"
     },
     "primary-foreground": {
-      "value": "#231d1a",
+      "value": "#ffffff",
       "type": "color"
     },
     "secondary": {
@@ -425,7 +425,7 @@
       "type": "color"
     },
     "sidebar-primary-foreground": {
-      "value": "#231d1a",
+      "value": "#ffffff",
       "type": "color"
     },
     "sidebar-accent": {
@@ -483,7 +483,7 @@
       "type": "color"
     },
     "primary-foreground": {
-      "value": "#1d1816",
+      "value": "#ffffff",
       "type": "color"
     },
     "secondary": {
@@ -519,7 +519,7 @@
       "type": "color"
     },
     "primary-hover": {
-      "value": "#fa944c",
+      "value": "#e56106",
       "type": "color"
     },
     "secondary-hover": {
@@ -579,7 +579,7 @@
       "type": "color"
     },
     "sidebar-primary-foreground": {
-      "value": "#1d1816",
+      "value": "#ffffff",
       "type": "color"
     },
     "sidebar-accent": {
