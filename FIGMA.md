@@ -63,9 +63,41 @@ pnpm tokens:figma
 
 1. ติดตั้งปลั๊กอิน **Tokens Studio for Figma**
 2. เปิดปลั๊กอิน → **Import** → เลือกไฟล์ `figma-tokens.json`
-3. กด **Push to Figma** → ปลั๊กอินจะสร้าง Variables ให้ครบทุกตัว
+3. ไปแท็บ **Themes** จะเห็นรายการ `Parich Light` / `Parich Dark` ฯลฯ
+4. **Export to Figma → Variables** แล้วเลือกธีมที่ต้องการ
 
 > ปลั๊กอินนี้ **เขียนเข้า Figma ได้** ต่างจาก MCP — นี่คือเหตุผลที่ต้องใช้มันแทน
+
+### ⚠️ ต้องเขียนลง collection ที่ component ใช้จริง
+
+นี่คือจุดที่พลาดแล้วงงที่สุด — **import สำเร็จ ค่าถูกทุกตัว แต่สีใน Figma ไม่เปลี่ยนเลย**
+
+สาเหตุคือ Figma อ้างอิง variable ด้วย **ID ไม่ใช่ชื่อ** ถ้า Tokens Studio ไปสร้าง
+collection ใหม่ ต่อให้ตั้งชื่อ variable ตรงกันเป๊ะ component ก็ยังชี้ไปที่ตัวเดิมอยู่ดี
+
+ใน `$themes` ของไฟล์ที่สคริปต์สร้าง:
+
+| ฟิลด์ | กลายเป็นอะไรใน Figma |
+|---|---|
+| `group` | ชื่อ **Collection** |
+| `name` | ชื่อ **Mode** ในคอลเลกชันนั้น |
+
+ค่าเริ่มต้นตั้ง `group` เป็น **`mode`** ซึ่งเป็นชื่อ collection ที่ไฟล์ shadcn community ใช้
+ถ้าไฟล์ของคุณใช้ชื่ออื่น ให้ระบุตอน build:
+
+```bash
+FIGMA_COLLECTION=<ชื่อ collection> pnpm tokens:figma
+```
+
+**วิธีดูว่าไฟล์คุณใช้ collection ชื่ออะไร**: คลิก component สักตัว → ดูช่อง Fill ในแผงขวา
+→ คลิกที่ชิปชื่อ variable → Figma จะบอกว่ามันอยู่ collection ไหน
+
+ชื่อ mode ตั้งเป็น `Parich Light` / `Parich Dark` เพื่อไม่ให้ชนกับโหมด Light/Dark เดิม
+ของไฟล์ — ธีม shadcn ต้นฉบับจึงยังอยู่ครบ สลับเทียบกันได้
+
+### ใช้โหมดใหม่กับ frame
+
+เลือก frame หรือ page → แผงขวาเลื่อนลงล่างสุด → **Variable modes** → เลือก `Parich Light`
 
 ### เพิ่มแบรนด์ใหม่
 

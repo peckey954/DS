@@ -902,48 +902,48 @@
   "$themes": [
     {
       "id": "nara-light",
-      "name": "light",
-      "group": "nara",
+      "name": "Nara Light",
+      "group": "mode",
       "selectedTokenSets": {
         "nara-light": "enabled"
       }
     },
     {
       "id": "nara-dark",
-      "name": "dark",
-      "group": "nara",
+      "name": "Nara Dark",
+      "group": "mode",
       "selectedTokenSets": {
         "nara-dark": "enabled"
       }
     },
     {
       "id": "parich-light",
-      "name": "light",
-      "group": "parich",
+      "name": "Parich Light",
+      "group": "mode",
       "selectedTokenSets": {
         "parich-light": "enabled"
       }
     },
     {
       "id": "parich-dark",
-      "name": "dark",
-      "group": "parich",
+      "name": "Parich Dark",
+      "group": "mode",
       "selectedTokenSets": {
         "parich-dark": "enabled"
       }
     },
     {
       "id": "siam-light",
-      "name": "light",
-      "group": "siam",
+      "name": "Siam Light",
+      "group": "mode",
       "selectedTokenSets": {
         "siam-light": "enabled"
       }
     },
     {
       "id": "siam-dark",
-      "name": "dark",
-      "group": "siam",
+      "name": "Siam Dark",
+      "group": "mode",
       "selectedTokenSets": {
         "siam-dark": "enabled"
       }

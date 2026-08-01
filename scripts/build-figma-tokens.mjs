@@ -148,13 +148,28 @@ for (const file of readdirSync(TOKENS_SRC).filter((f) => f.endsWith(".css"))) {
 
 const setOrder = Object.keys(out);
 
-// $themes ทำให้ Tokens Studio สร้าง mode ให้อัตโนมัติตอน push เข้า Figma
+/**
+ * $themes คือส่วนที่บอก Tokens Studio ว่าจะเขียนลง Figma ตรงไหน
+ *   group -> ชื่อ Collection
+ *   name  -> ชื่อ Mode ภายใน collection นั้น
+ *
+ * ต้องตั้ง group ให้ตรงกับ collection ที่ component ผูกอยู่จริง ไม่งั้น Tokens Studio
+ * จะสร้าง collection ใหม่ที่ไม่มีใครใช้ แล้วสีใน Figma จะไม่เปลี่ยนแม้ import สำเร็จ
+ *
+ * ไฟล์ shadcn community ใช้ collection ชื่อ "mode" — เปลี่ยนได้ด้วย:
+ *   FIGMA_COLLECTION=<ชื่อ> pnpm tokens:figma
+ */
+const FIGMA_COLLECTION = process.env.FIGMA_COLLECTION ?? "mode";
+
+const titled = (s) => s[0].toUpperCase() + s.slice(1);
+
 out.$themes = setOrder.map((name) => {
   const [brand, mode] = name.split("-");
   return {
     id: name,
-    name: mode,
-    group: brand,
+    // ตั้งชื่อ mode ให้ไม่ชนกับ Light/Dark เดิมของไฟล์ จะได้ไม่ทับธีมต้นฉบับ
+    name: `${titled(brand)} ${titled(mode)}`,
+    group: FIGMA_COLLECTION,
     selectedTokenSets: { [name]: "enabled" },
   };
 });
