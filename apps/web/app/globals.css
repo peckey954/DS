@@ -11,5 +11,8 @@
 @import "@peckey954/tokens/nara.css";
 @import "@peckey954/tokens/parich.css";
 
+/* 3) แกนสไตล์ (ความโค้ง / ความห่าง) — ต้องมาหลังไฟล์แบรนด์ */
+@import "@peckey954/tokens/styles.css";
+
 /* ให้ Tailwind สแกน class ที่ใช้ในไลบรารี UI */
 @source "../node_modules/@peckey954/ui/src";

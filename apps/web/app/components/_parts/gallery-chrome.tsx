@@ -50,12 +50,16 @@ export function GalleryHeader() {
             <ThemeToggle />
           </div>
         </div>
-        <nav className="mt-3 flex flex-wrap gap-1">
+        <nav className="mt-3 flex flex-wrap items-center gap-1">
           {NAV.map((item) => (
             <Button key={item.href} asChild variant="ghost" size="sm">
               <a href={item.href}>{t(item.key)}</a>
             </Button>
           ))}
+          <Separator orientation="vertical" className="mx-1 h-5" />
+          <Button asChild variant="outline" size="sm">
+            <Link href="/styles">{t("nav.styles")}</Link>
+          </Button>
         </nav>
       </div>
     </header>

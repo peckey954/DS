@@ -1,6 +1,6 @@
 {
   "name": "@peckey954/tokens",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Brand design tokens (colours, fonts, radius) for @peckey954/ui — one CSS file per brand, light and dark included.",
   "keywords": [
     "design-tokens",
@@ -30,6 +30,7 @@
   "exports": {
     "./siam.css": "./src/siam.css",
     "./nara.css": "./src/nara.css",
-    "./parich.css": "./src/parich.css"
+    "./parich.css": "./src/parich.css",
+    "./styles.css": "./src/styles.css"
   }
 }

@@ -206,6 +206,46 @@ for (const setName of setOrder) {
 }
 console.log(`\nไฟล์แยกรายโหมดอยู่ที่ figma-import/ (อย่างละ .dtcg.json และ .flat.json)`);
 
+/* --------------------- ไฟล์ความโค้ง สำหรับ Figma --------------------- */
+/* อ่านค่าจาก styles.css โดยตรง จะได้ไม่มีตัวเลขซ้ำสองที่แล้วหลุดกัน
+   สเกลคำนวณตามสูตรใน packages/ui/src/styles/globals.css:
+     sm = r − 4px · md = r − 2px · lg = r · xl = r + 4px
+   ส่วน none/xs/2xl/3xl/4xl/full เป็นค่าคงที่ของ Tailwind ที่เราไม่ได้ override */
+const stylesCss = readFileSync(join(TOKENS_SRC, "styles.css"), "utf8");
+const radiusStyles = {};
+for (const m of stylesCss.matchAll(
+  /html\[data-radius="([^"]+)"\]\s*\{[^}]*?--radius:\s*([\d.]+)rem/g
+)) {
+  radiusStyles[m[1]] = parseFloat(m[2]) * 16; // rem -> px
+}
+
+const FIXED_RADIUS = { "radius-none": 0, "radius-xs": 2, "radius-2xl": 16, "radius-3xl": 24, "radius-4xl": 32, "radius-full": 9999 };
+
+for (const [style, px] of Object.entries(radiusStyles)) {
+  const scale = {
+    ...FIXED_RADIUS,
+    "radius-sm": Math.max(0, px - 4),
+    "radius-md": Math.max(0, px - 2),
+    "radius-lg": px,
+    "radius-xl": px + 4,
+  };
+  const order = ["radius-none","radius-xs","radius-sm","radius-md","radius-lg","radius-xl","radius-2xl","radius-3xl","radius-4xl","radius-full"];
+
+  const dtcg = {};
+  const flat = {};
+  for (const k of order) {
+    dtcg[k] = { $type: "number", $value: scale[k] };
+    flat[k] = scale[k];
+  }
+  writeFileSync(join(IMPORT_DIR, `radius-${style}.dtcg.json`), JSON.stringify(dtcg, null, 2) + "\n");
+  writeFileSync(join(IMPORT_DIR, `radius-${style}.flat.json`), JSON.stringify(flat, null, 2) + "\n");
+}
+console.log(
+  `ไฟล์ความโค้ง ${Object.keys(radiusStyles).length} แบบ: ${Object.entries(radiusStyles)
+    .map(([k, v]) => `${k}(${v}px)`)
+    .join(" · ")}`
+);
+
 console.table(summary);
 console.log(`\nเขียนไฟล์ figma-tokens.json แล้ว — ${setOrder.length} ชุด: ${setOrder.join(", ")}`);
 

@@ -1,0 +1,12 @@
+{
+  "radius-none": 0,
+  "radius-xs": 2,
+  "radius-sm": 6,
+  "radius-md": 8,
+  "radius-lg": 10,
+  "radius-xl": 14,
+  "radius-2xl": 16,
+  "radius-3xl": 24,
+  "radius-4xl": 32,
+  "radius-full": 9999
+}

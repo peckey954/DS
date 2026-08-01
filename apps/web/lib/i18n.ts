@@ -30,6 +30,7 @@ const th = {
   "nav.feedback": "สถานะ",
   "nav.data": "แสดงข้อมูล",
   "nav.multiSelect": "multi-select",
+  "nav.styles": "ทดลองสไตล์",
 
   "section.layout": "โครงสร้าง & เลย์เอาต์",
   "section.forms": "ฟอร์ม & อินพุต",
@@ -79,6 +80,7 @@ const en: Record<TranslationKey, string> = {
   "nav.feedback": "Feedback",
   "nav.data": "Data display",
   "nav.multiSelect": "multi-select",
+  "nav.styles": "Style playground",
 
   "section.layout": "Layout & structure",
   "section.forms": "Forms & inputs",
