@@ -29,6 +29,7 @@
   ],
   "exports": {
     "./siam.css": "./src/siam.css",
-    "./nara.css": "./src/nara.css"
+    "./nara.css": "./src/nara.css",
+    "./parich.css": "./src/parich.css"
   }
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans_Thai, Prompt } from "next/font/google";
+import { IBM_Plex_Sans_Thai, Prompt, Sarabun } from "next/font/google";
 import { Providers } from "@/components/providers";
 import "./globals.css";
 
@@ -19,6 +19,13 @@ const prompt = Prompt({
   display: "swap",
 });
 
+const sarabun = Sarabun({
+  subsets: ["thai", "latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-sarabun",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Design System — Multi-brand",
   description: "shadcn-based design system: สลับสี / ฟอนต์ / dark-light ต่อแบรนด์",
@@ -34,7 +41,7 @@ export default function RootLayout({
       lang="th"
       data-brand="siam"
       suppressHydrationWarning
-      className={`${ibmThai.variable} ${prompt.variable}`}
+      className={`${ibmThai.variable} ${prompt.variable} ${sarabun.variable}`}
     >
       <body className="min-h-screen bg-background text-foreground font-sans antialiased">
         <Providers>{children}</Providers>

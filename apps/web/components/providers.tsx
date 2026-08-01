@@ -6,12 +6,13 @@ import { Toaster } from "@peckey954/ui/components/ui/sonner";
 
 /* ---------------------------------- แบรนด์ --------------------------------- */
 
-export type Brand = "siam" | "nara";
+export type Brand = "siam" | "nara" | "parich";
 
 /** เพิ่มแบรนด์ใหม่ = เพิ่ม 1 บรรทัดตรงนี้ (หลังสร้างไฟล์ token แล้ว) */
 export const BRANDS: { id: Brand; label: string }[] = [
   { id: "siam", label: "Siam" },
   { id: "nara", label: "Nara" },
+  { id: "parich", label: "Parich" },
 ];
 
 type BrandContextValue = {

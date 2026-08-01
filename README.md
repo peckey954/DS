@@ -58,7 +58,7 @@ import { Card, CardHeader, CardTitle } from "@peckey954/ui/components/ui/card";
 1. โหลดฟอนต์ใน `apps/web/app/layout.tsx` ด้วย `next/font/google`
    (ต้องมี `subsets: ["thai", "latin"]`) แล้วตั้ง `variable`
 2. ชี้ `--font-sans` ของแบรนด์ไปที่ variable นั้น
-   ตัวอย่าง: Siam ใช้ `IBM Plex Sans Thai`, Nara ใช้ `Prompt`
+   ตัวอย่าง: Siam ใช้ `IBM Plex Sans Thai`, Nara ใช้ `Prompt`, Parich ใช้ `Sarabun`
 
 ### เพิ่มแบรนด์ใหม่
 1. copy `packages/tokens/src/siam.css` เป็น `brandx.css` แก้ค่า + เปลี่ยน selector เป็น `[data-brand="brandx"]`
@@ -128,7 +128,7 @@ git push -u origin main
 3. ติดตั้งปลั๊กอิน **Tokens Studio for Figma** เพื่อ sync ค่าระหว่าง Figma ↔ โค้ด
    - Export จาก Figma → ได้ JSON → แปลงเป็น CSS variable ใส่ `packages/tokens`
    - หรือกลับกัน: เอา token ในโค้ดเป็นตัวตั้ง แล้ว push เข้า Figma
-4. ทำ 1 collection ต่อ 1 แบรนด์ใน Figma (Siam / Nara) และแต่ละ collection มีโหมด Light/Dark
+4. ทำ 1 collection ต่อ 1 แบรนด์ใน Figma (Siam / Nara / Parich) และแต่ละ collection มีโหมด Light/Dark
    → ดีไซเนอร์สลับแบรนด์/โหมดใน Figma ได้เหมือนในแอป
 
 หัวใจคือ **"ชื่อ token ต้องตรงกันทั้งสองฝั่ง"** — พอชื่อตรง การ sync สี/ฟอนต์จึงทำได้อัตโนมัติ
@@ -151,7 +151,7 @@ git push -u origin main
 │       ├── styles/globals.css # แมป token -> Tailwind (@theme)
 │       └── index.ts
 └── packages/tokens/           # ค่าจริงของแต่ละแบรนด์
-    └── src/{siam,nara}.css
+    └── src/{siam,nara,parich}.css
 ```
 
 ## Stack

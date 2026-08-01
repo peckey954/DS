@@ -32,6 +32,7 @@ import **หลัง** `@peckey954/ui/globals.css` เสมอ:
 |---|---|---|
 | `siam.css` | น้ำเงิน | IBM Plex Sans Thai |
 | `nara.css` | เขียวมรกต | Prompt |
+| `parich.css` | ส้ม `#F97316` | Sarabun |
 
 โหมดมืดใช้ selector `[data-brand="..."].dark` — ใช้คู่กับ `next-themes` ที่ตั้ง
 `attribute="class"` ได้ทันที

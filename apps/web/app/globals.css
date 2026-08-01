@@ -9,6 +9,7 @@
 /* 2) ค่าจริงของแต่ละแบรนด์ (โหลดทั้งคู่ แล้วสลับด้วย data-brand) */
 @import "@peckey954/tokens/siam.css";
 @import "@peckey954/tokens/nara.css";
+@import "@peckey954/tokens/parich.css";
 
 /* ให้ Tailwind สแกน class ที่ใช้ในไลบรารี UI */
 @source "../node_modules/@peckey954/ui/src";

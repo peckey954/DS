@@ -110,12 +110,13 @@ function parseBrandFile(css) {
 /** แปลง 1 บล็อกเป็นรูปแบบของ Tokens Studio */
 function toTokenSet(vars) {
   const set = {};
-  let skipped = 0;
+  const skipped = [];
 
   for (const [name, raw] of Object.entries(vars)) {
     if (name === "radius") {
       const px = remToPx(raw);
       if (px != null) set[name] = { value: String(px), type: "borderRadius" };
+      else skipped.push(`${name}: ${raw}`);
       continue;
     }
     if (name === "font-sans") {
@@ -124,20 +125,24 @@ function toTokenSet(vars) {
     }
     const hex = hslToHex(raw);
     if (hex) set[name] = { value: hex, type: "color" };
-    else skipped++;
+    // แปลงไม่ได้ต้องดังออกมา ไม่ใช่หายเงียบ ๆ ไม่งั้น Figma จะขาด variable
+    // โดยไม่มีใครรู้ (รองรับเฉพาะ hsl() — ถ้าเขียนเป็น hex หรือ oklch จะตกตรงนี้)
+    else skipped.push(`${name}: ${raw}`);
   }
   return { set, skipped };
 }
 
 const out = {};
 const summary = [];
+const allSkipped = [];
 
 for (const file of readdirSync(TOKENS_SRC).filter((f) => f.endsWith(".css"))) {
   const blocks = parseBrandFile(readFileSync(join(TOKENS_SRC, file), "utf8"));
   for (const [setName, vars] of Object.entries(blocks)) {
     const { set, skipped } = toTokenSet(vars);
     out[setName] = set;
-    summary.push({ ชุด: setName, ตัวแปร: Object.keys(set).length, แปลงไม่ได้: skipped });
+    summary.push({ ชุด: setName, ตัวแปร: Object.keys(set).length, แปลงไม่ได้: skipped.length });
+    if (skipped.length) allSkipped.push({ setName, skipped });
   }
 }
 
@@ -159,6 +164,14 @@ writeFileSync(join(ROOT, "figma-tokens.json"), JSON.stringify(out, null, 2) + "\
 
 console.table(summary);
 console.log(`\nเขียนไฟล์ figma-tokens.json แล้ว — ${setOrder.length} ชุด: ${setOrder.join(", ")}`);
+
+if (allSkipped.length) {
+  console.error("\n❌ มี token ที่แปลงไม่ได้ — Figma จะขาด variable เหล่านี้:");
+  for (const { setName, skipped } of allSkipped)
+    for (const line of skipped) console.error(`   ${setName} -> ${line}`);
+  console.error("   รองรับเฉพาะรูปแบบ hsl() เท่านั้น");
+  process.exitCode = 1;
+}
 
 if (unknownFonts.size) {
   console.warn(
