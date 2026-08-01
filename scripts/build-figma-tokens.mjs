@@ -9,7 +9,7 @@
  * แต่ปลั๊กอิน Tokens Studio เขียนได้ ไฟล์นี้คือสะพานระหว่างสองฝั่ง
  * แก้สีใน packages/tokens ที่เดียว แล้วรันสคริปต์นี้ push เข้า Figma ได้เลย
  */
-import { readFileSync, writeFileSync, readdirSync } from "node:fs";
+import { readFileSync, writeFileSync, readdirSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -176,6 +176,35 @@ out.$themes = setOrder.map((name) => {
 out.$metadata = { tokenSetOrder: setOrder };
 
 writeFileSync(join(ROOT, "figma-tokens.json"), JSON.stringify(out, null, 2) + "\n");
+
+/* ------------------- ไฟล์แยกรายโหมด สำหรับ Import mode ------------------- */
+// Figma มีเมนู "Import mode" ที่นำเข้าลงคอลัมน์โหมดโดยตรง ไม่ต้องผ่านปลั๊กอิน
+// แต่ยังไม่แน่ชัดว่ารับ schema ไหน จึงออกให้ 2 รูปแบบต่อโหมด
+const IMPORT_DIR = join(ROOT, "figma-import");
+mkdirSync(IMPORT_DIR, { recursive: true });
+
+for (const setName of setOrder) {
+  // เอาเฉพาะสี — radius กับ font อยู่คนละ collection (tw/border-radius, tw/font)
+  // ถ้าปนไปด้วยจะไปสร้างตัวแปรเกินใน collection ของสี
+  const colors = Object.entries(out[setName]).filter(([, v]) => v.type === "color");
+
+  // แบบ A — DTCG ($value / $type) เป็นมาตรฐานกลางที่เครื่องมือส่วนใหญ่รองรับ
+  const dtcg = {};
+  for (const [k, v] of colors) dtcg[k] = { $type: v.type, $value: v.value.toUpperCase() };
+  writeFileSync(
+    join(IMPORT_DIR, `${setName}.dtcg.json`),
+    JSON.stringify(dtcg, null, 2) + "\n"
+  );
+
+  // แบบ B — flat ชื่อ -> ค่า เผื่อตัวนำเข้าที่รับแค่คู่ key/value ธรรมดา
+  const flat = {};
+  for (const [k, v] of colors) flat[k] = v.value.toUpperCase();
+  writeFileSync(
+    join(IMPORT_DIR, `${setName}.flat.json`),
+    JSON.stringify(flat, null, 2) + "\n"
+  );
+}
+console.log(`\nไฟล์แยกรายโหมดอยู่ที่ figma-import/ (อย่างละ .dtcg.json และ .flat.json)`);
 
 console.table(summary);
 console.log(`\nเขียนไฟล์ figma-tokens.json แล้ว — ${setOrder.length} ชุด: ${setOrder.join(", ")}`);

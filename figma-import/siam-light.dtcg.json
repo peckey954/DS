@@ -1,0 +1,146 @@
+{
+  "background": {
+    "$type": "color",
+    "$value": "#FFFFFF"
+  },
+  "foreground": {
+    "$type": "color",
+    "$value": "#0F1729"
+  },
+  "card": {
+    "$type": "color",
+    "$value": "#FFFFFF"
+  },
+  "card-foreground": {
+    "$type": "color",
+    "$value": "#0F1729"
+  },
+  "popover": {
+    "$type": "color",
+    "$value": "#FFFFFF"
+  },
+  "popover-foreground": {
+    "$type": "color",
+    "$value": "#0F1729"
+  },
+  "primary": {
+    "$type": "color",
+    "$value": "#2463EB"
+  },
+  "primary-foreground": {
+    "$type": "color",
+    "$value": "#FFFFFF"
+  },
+  "secondary": {
+    "$type": "color",
+    "$value": "#F1F5F9"
+  },
+  "secondary-foreground": {
+    "$type": "color",
+    "$value": "#0F1729"
+  },
+  "muted": {
+    "$type": "color",
+    "$value": "#F1F5F9"
+  },
+  "muted-foreground": {
+    "$type": "color",
+    "$value": "#65758B"
+  },
+  "accent": {
+    "$type": "color",
+    "$value": "#F1F5F9"
+  },
+  "accent-foreground": {
+    "$type": "color",
+    "$value": "#0F1729"
+  },
+  "destructive": {
+    "$type": "color",
+    "$value": "#DC2828"
+  },
+  "destructive-foreground": {
+    "$type": "color",
+    "$value": "#FFFFFF"
+  },
+  "primary-hover": {
+    "$type": "color",
+    "$value": "#1555E0"
+  },
+  "secondary-hover": {
+    "$type": "color",
+    "$value": "#E6EDF4"
+  },
+  "accent-hover": {
+    "$type": "color",
+    "$value": "#E6EDF4"
+  },
+  "destructive-hover": {
+    "$type": "color",
+    "$value": "#CA2121"
+  },
+  "border": {
+    "$type": "color",
+    "$value": "#E1E7EF"
+  },
+  "input": {
+    "$type": "color",
+    "$value": "#E1E7EF"
+  },
+  "ring": {
+    "$type": "color",
+    "$value": "#2463EB"
+  },
+  "chart-1": {
+    "$type": "color",
+    "$value": "#2463EB"
+  },
+  "chart-2": {
+    "$type": "color",
+    "$value": "#2EB88A"
+  },
+  "chart-3": {
+    "$type": "color",
+    "$value": "#E88C30"
+  },
+  "chart-4": {
+    "$type": "color",
+    "$value": "#AF57DB"
+  },
+  "chart-5": {
+    "$type": "color",
+    "$value": "#E23670"
+  },
+  "sidebar": {
+    "$type": "color",
+    "$value": "#FAFAFA"
+  },
+  "sidebar-foreground": {
+    "$type": "color",
+    "$value": "#0F1729"
+  },
+  "sidebar-primary": {
+    "$type": "color",
+    "$value": "#2463EB"
+  },
+  "sidebar-primary-foreground": {
+    "$type": "color",
+    "$value": "#FFFFFF"
+  },
+  "sidebar-accent": {
+    "$type": "color",
+    "$value": "#F1F5F9"
+  },
+  "sidebar-accent-foreground": {
+    "$type": "color",
+    "$value": "#0F1729"
+  },
+  "sidebar-border": {
+    "$type": "color",
+    "$value": "#E1E7EF"
+  },
+  "sidebar-ring": {
+    "$type": "color",
+    "$value": "#2463EB"
+  }
+}
