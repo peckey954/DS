@@ -81,11 +81,15 @@
   },
   "warning": {
     "$type": "color",
-    "$value": "#FAC72E"
+    "$value": "#451A03"
   },
   "warning-foreground": {
     "$type": "color",
-    "$value": "#F9E29F"
+    "$value": "#FFFBEB"
+  },
+  "warning-border": {
+    "$type": "color",
+    "$value": "#76350F"
   },
   "destructive-subtle": {
     "$type": "color",

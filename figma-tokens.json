@@ -81,11 +81,15 @@
       "type": "color"
     },
     "warning": {
-      "value": "#c47f08",
+      "value": "#fffbeb",
       "type": "color"
     },
     "warning-foreground": {
-      "value": "#6f3a0b",
+      "value": "#76350f",
+      "type": "color"
+    },
+    "warning-border": {
+      "value": "#fde68b",
       "type": "color"
     },
     "destructive-subtle": {
@@ -247,11 +251,15 @@
       "type": "color"
     },
     "warning": {
-      "value": "#fac72e",
+      "value": "#451a03",
       "type": "color"
     },
     "warning-foreground": {
-      "value": "#f9e29f",
+      "value": "#fffbeb",
+      "type": "color"
+    },
+    "warning-border": {
+      "value": "#76350f",
       "type": "color"
     },
     "destructive-subtle": {
@@ -405,11 +413,15 @@
       "type": "color"
     },
     "warning": {
-      "value": "#c47f08",
+      "value": "#fffbeb",
       "type": "color"
     },
     "warning-foreground": {
-      "value": "#6f3a0b",
+      "value": "#76350f",
+      "type": "color"
+    },
+    "warning-border": {
+      "value": "#fde68b",
       "type": "color"
     },
     "destructive-subtle": {
@@ -571,11 +583,15 @@
       "type": "color"
     },
     "warning": {
-      "value": "#fac72e",
+      "value": "#451a03",
       "type": "color"
     },
     "warning-foreground": {
-      "value": "#f9e29f",
+      "value": "#fffbeb",
+      "type": "color"
+    },
+    "warning-border": {
+      "value": "#76350f",
       "type": "color"
     },
     "destructive-subtle": {
@@ -729,11 +745,15 @@
       "type": "color"
     },
     "warning": {
-      "value": "#c47f08",
+      "value": "#fffbeb",
       "type": "color"
     },
     "warning-foreground": {
-      "value": "#6f3a0b",
+      "value": "#76350f",
+      "type": "color"
+    },
+    "warning-border": {
+      "value": "#fde68b",
       "type": "color"
     },
     "destructive-subtle": {
@@ -895,11 +915,15 @@
       "type": "color"
     },
     "warning": {
-      "value": "#fac72e",
+      "value": "#451a03",
       "type": "color"
     },
     "warning-foreground": {
-      "value": "#f9e29f",
+      "value": "#fffbeb",
+      "type": "color"
+    },
+    "warning-border": {
+      "value": "#76350f",
       "type": "color"
     },
     "destructive-subtle": {
