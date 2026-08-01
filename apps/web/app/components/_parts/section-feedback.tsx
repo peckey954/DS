@@ -3,10 +3,10 @@
 import * as React from "react";
 import {
   CircleAlertIcon,
+  CircleCheckIcon,
   InboxIcon,
   RocketIcon,
   SparklesIcon,
-  TerminalIcon,
   TriangleAlertIcon,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -112,10 +112,12 @@ export function SectionFeedback() {
       title={t("section.feedback")}
       hint="alert · sonner (toast) · progress · skeleton · spinner · empty"
     >
-      <Demo name="alert" hint={c.alertHint} wide>
+      {/* พื้นกล่อง demo ต้องไม่ใช่ bg-card เพราะ Alert แบบ default ก็ใช้ bg-card
+          พอสีชนกันเป๊ะจะดูเหมือน Alert ไม่มีพื้นหลัง ทั้งที่จริงทึบอยู่แล้ว */}
+      <Demo name="alert" hint={c.alertHint} wide bodyClassName="bg-muted/30">
         <div className="w-full space-y-3">
           <Alert>
-            <TerminalIcon />
+            <CircleCheckIcon />
             <AlertTitle>{c.installOk}</AlertTitle>
             <AlertDescription>
               {c.installOkDesc}
