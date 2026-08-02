@@ -279,6 +279,69 @@ console.log(
     .join(" · ")}`
 );
 
+/* ---- โทน "แยกสี" (data-tint="pure") สำหรับ Figma -----------------
+   tint ไปเขียนทับตัวแปรชุดเดียวกับที่ mode ถืออยู่ (background, card, border…)
+   จึงแยกเป็น collection ใหม่ไม่ได้ ต้องทำเป็น "mode เพิ่ม" ในคอลเลกชันเดิม
+   ผลคือ mode มี 12 อัน = 3 แบรนด์ x สว่าง/มืด x ตามแบรนด์/แยกสี
+
+   ทำได้เฉพาะ pure เพราะค่าเป็น hsl() ตายตัว ส่วน blend ใช้ color-mix กับ
+   var(--primary) ที่คลี่ตอนรันไทม์ ซึ่งก็คือชุด mode เดิมอยู่แล้ว จึงไม่ต้องทำซ้ำ
+
+   --brand เป็น color-mix ต้องคำนวณเองที่นี่ (primary ทับ card ตามสัดส่วน) */
+const tintCss = readFileSync(join(TOKENS_SRC, "tint.css"), "utf8");
+
+function parsePureBlock(dark) {
+  const re = new RegExp(
+    `html\\[data-tint="pure"\\]${dark ? "\\.dark" : ""}\\s*\\{([^}]*)\\}`
+  );
+  const m = tintCss.match(re);
+  if (!m) throw new Error("หาบล็อก pure ไม่เจอ");
+  const vars = {};
+  for (const line of m[1].split("\n")) {
+    const v = line.match(/--([a-z0-9-]+)\s*:\s*([^;]+);/i);
+    if (v) vars[v[1].trim()] = v[2].trim();
+  }
+  return vars;
+}
+
+/** ผสมสีทึบสองสีตามสัดส่วน แบบเดียวกับ color-mix(in srgb, A p%, B) */
+function mixHex(aHex, bHex, pct) {
+  const n = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+  const [ar, ag, ab] = n(aHex);
+  const [br, bg, bb] = n(bHex);
+  const f = pct / 100;
+  const c = [ar * f + br * (1 - f), ag * f + bg * (1 - f), ab * f + bb * (1 - f)];
+  return "#" + c.map((v) => Math.round(v).toString(16).padStart(2, "0")).join("").toUpperCase();
+}
+
+for (const brand of ["blue", "green", "parich"]) {
+  for (const mode of ["light", "dark"]) {
+    const base = out[`${brand}-${mode}`];
+    if (!base) continue;
+    const pure = parsePureBlock(mode === "dark");
+    const set = { ...base };
+    for (const [name, raw] of Object.entries(pure)) {
+      if (name === "brand") continue;
+      const hex = hslToHex(raw);
+      if (hex) set[name] = { value: hex, type: "color" };
+      else allSkipped.push({ setName: `${brand}-${mode}-pure`, skipped: [`${name}: ${raw}`] });
+    }
+    // --brand = primary ผสมลง card ของโทน pure (5% สว่าง · 10% มืด)
+    const pct = mode === "dark" ? 10 : 5;
+    set.brand = { value: mixHex(set.primary.value, set.card.value, pct), type: "color" };
+
+    const setName = `${brand}-${mode}-pure`;
+    out[setName] = set;
+    out.$metadata.tokenSetOrder.push(setName);
+    out.$themes.push({
+      id: setName,
+      name: `${titled(brand)} ${titled(mode)} Pure`,
+      group: FIGMA_COLLECTION,
+      selectedTokenSets: { [setName]: "enabled" },
+    });
+  }
+}
+
 /* ---- รวมความโค้งกับฟอนต์เข้า figma-tokens.json ด้วย ----------------
    Tokens Studio import ทีเดียวได้ครบทั้ง 3 collection ไม่ต้องนำเข้าทีละไฟล์
    ชื่อ collection ตั้งได้ด้วย FIGMA_RADIUS_COLLECTION / FIGMA_FONT_COLLECTION
