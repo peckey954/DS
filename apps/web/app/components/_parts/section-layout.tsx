@@ -138,7 +138,7 @@ export function SectionLayout() {
             <CardTitle>{c.cardTitle}</CardTitle>
             <CardDescription>{c.cardDesc}</CardDescription>
             <CardAction>
-              <Badge variant="secondary">+12%</Badge>
+              <Badge tone="neutral" appearance="soft">+12%</Badge>
             </CardAction>
           </CardHeader>
           <CardContent>

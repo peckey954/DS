@@ -44,6 +44,18 @@
 
   --color-brand: var(--brand, var(--card));
 
+  /* สถานะ success (พื้นอ่อน / ตัวอักษร / เส้นขอบ) + สีทึบของ badge */
+  --color-success: var(--success, var(--card));
+  --color-success-foreground: var(--success-foreground, var(--foreground));
+  --color-success-border: var(--success-border, var(--border));
+  --color-success-solid: var(--success-solid, var(--primary));
+  --color-success-solid-foreground: var(--success-solid-foreground, var(--primary-foreground));
+  --color-success-solid-hover: var(--success-solid-hover, var(--primary-hover));
+
+  --color-warning-solid: var(--warning-solid, var(--warning));
+  --color-warning-solid-foreground: var(--warning-solid-foreground, var(--warning-foreground));
+  --color-warning-solid-hover: var(--warning-solid-hover, var(--warning));
+
   /* สีตอน hover ของพื้นผิวที่มีสี — ใช้แทนการลด opacity */
   --color-primary-hover: var(--primary-hover);
   --color-secondary-hover: var(--secondary-hover);

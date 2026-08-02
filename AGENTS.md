@@ -356,6 +356,43 @@ token ที่เกี่ยวข้อง มีให้ทุกแบร�
 
 `--destructive-foreground` เป็นสีขาวสำหรับพื้นทึบ (ปุ่มลบ) **ใช้กับ Alert ไม่ได้**
 
+#### Badge — 2 มิติ: tone x appearance
+
+```tsx
+<Badge tone="success" appearance="soft">จ่ายแล้ว</Badge>
+```
+
+| | `solid` (เข้ม) | `soft` (อ่อน) | `outline` (เส้นขอบ) |
+|---|---|---|---|
+| `brand` | `--primary` | `--brand` | เส้น `--primary` |
+| `success` | `--success-solid` | `--success` | เส้น `--success-border` |
+| `warning` | `--warning-solid` | `--warning` | เส้น `--warning-border` |
+| `danger` | `--destructive` | `--danger` | เส้น `--danger-border` |
+| `neutral` | `--foreground` | `--secondary` | เส้น `--border` |
+
+**tone ตั้งค่าสีลงตัวแปร `--bdg-*` แล้ว appearance หยิบไปใช้** ไม่ได้เขียนคู่ผสม
+ทั้ง 15 แบบตรง ๆ เพราะถ้าเขียนแบบนั้น เพิ่มสีใหม่ทีต้องแก้ 3 ที่ทุกครั้ง
+วิธีนี้เพิ่ม tone ใหม่ = เพิ่มบรรทัดเดียว **tone ต้องตั้งให้ครบ 6 ตัวเสมอ**
+(`--bdg-solid` `--bdg-on-solid` `--bdg-solid-hover` `--bdg-surface` `--bdg-text` `--bdg-border`)
+
+`brand` ใช้ `--primary` และ `danger` ใช้ `--destructive` เป็นพื้นทึบ **ไม่สร้าง token
+ซ้ำ** ชื่อจึงไม่สมมาตรกับ `--success-solid` โดยตั้งใจ ยึดตารางข้างบนเป็นหลัก
+
+#### สีสถานะ success
+
+อิงสเกล Radix (green / amber) ค่าเหมือนกันทุกแบรนด์เหมือน `--destructive`
+เพราะเป็นสีความหมาย ไม่ใช่สีแบรนด์
+
+**พื้นทึบไม่ได้ใช้ step 9 ของ Radix ตรง ๆ** — Radix green-9 (`#30A46C`) วางตัวอักษร
+ขาวได้คอนทราสต์แค่ 2.9 ตกเกณฑ์ AA จึงเลื่อนไปทาง step 11 (`hsl(152 60% 32%)`
+วัดได้ 4.73) ส่วน amber ใช้ step 9 ได้แต่ต้องใช้ตัวอักษรสีเข้ม ไม่ใช่ขาว
+(Radix เองก็กำหนดไว้แบบนี้)
+
+#### ปุ่ม `outline-primary`
+
+เส้นขอบสีหลัก เน้นกว่า `outline` ธรรมดาแต่เบากว่าปุ่มทึบ
+hover ใช้ `--brand` ซึ่งเป็นสีเดียวกับ Alert แบบ brand และกรอบ radio ตอนถูกเลือก
+
 ### 3. ต่อ className ด้วย `cn()` จาก `@peckey954/ui/lib/utils`
 
 ```tsx

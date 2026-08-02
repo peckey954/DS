@@ -107,6 +107,42 @@
     "$type": "color",
     "$value": "#F4F7FE"
   },
+  "success": {
+    "$type": "color",
+    "$value": "#EFFBF3"
+  },
+  "success-foreground": {
+    "$type": "color",
+    "$value": "#135336"
+  },
+  "success-border": {
+    "$type": "color",
+    "$value": "#AEE0C5"
+  },
+  "success-solid": {
+    "$type": "color",
+    "$value": "#218355"
+  },
+  "success-solid-foreground": {
+    "$type": "color",
+    "$value": "#FFFFFF"
+  },
+  "success-solid-hover": {
+    "$type": "color",
+    "$value": "#1C6E48"
+  },
+  "warning-solid": {
+    "$type": "color",
+    "$value": "#FFC83D"
+  },
+  "warning-solid-foreground": {
+    "$type": "color",
+    "$value": "#5B280B"
+  },
+  "warning-solid-hover": {
+    "$type": "color",
+    "$value": "#FFBE1A"
+  },
   "border": {
     "$type": "color",
     "$value": "#E1E7EF"

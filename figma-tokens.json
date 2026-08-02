@@ -108,6 +108,42 @@
       "value": "#f3fbf8",
       "type": "color"
     },
+    "success": {
+      "value": "#effbf3",
+      "type": "color"
+    },
+    "success-foreground": {
+      "value": "#135336",
+      "type": "color"
+    },
+    "success-border": {
+      "value": "#aee0c5",
+      "type": "color"
+    },
+    "success-solid": {
+      "value": "#218355",
+      "type": "color"
+    },
+    "success-solid-foreground": {
+      "value": "#ffffff",
+      "type": "color"
+    },
+    "success-solid-hover": {
+      "value": "#1c6e48",
+      "type": "color"
+    },
+    "warning-solid": {
+      "value": "#ffc83d",
+      "type": "color"
+    },
+    "warning-solid-foreground": {
+      "value": "#5b280b",
+      "type": "color"
+    },
+    "warning-solid-hover": {
+      "value": "#ffbe1a",
+      "type": "color"
+    },
     "border": {
       "value": "#dae7e0",
       "type": "color"
@@ -280,6 +316,42 @@
     },
     "brand": {
       "value": "#153027",
+      "type": "color"
+    },
+    "success": {
+      "value": "#112c20",
+      "type": "color"
+    },
+    "success-foreground": {
+      "value": "#98e1be",
+      "type": "color"
+    },
+    "success-border": {
+      "value": "#265e45",
+      "type": "color"
+    },
+    "success-solid": {
+      "value": "#3bce87",
+      "type": "color"
+    },
+    "success-solid-foreground": {
+      "value": "#0e251b",
+      "type": "color"
+    },
+    "success-solid-hover": {
+      "value": "#54d496",
+      "type": "color"
+    },
+    "warning-solid": {
+      "value": "#ffc83d",
+      "type": "color"
+    },
+    "warning-solid-foreground": {
+      "value": "#5b280b",
+      "type": "color"
+    },
+    "warning-solid-hover": {
+      "value": "#ffd15c",
       "type": "color"
     },
     "border": {
@@ -456,6 +528,42 @@
       "value": "#fff8f3",
       "type": "color"
     },
+    "success": {
+      "value": "#effbf3",
+      "type": "color"
+    },
+    "success-foreground": {
+      "value": "#135336",
+      "type": "color"
+    },
+    "success-border": {
+      "value": "#aee0c5",
+      "type": "color"
+    },
+    "success-solid": {
+      "value": "#218355",
+      "type": "color"
+    },
+    "success-solid-foreground": {
+      "value": "#ffffff",
+      "type": "color"
+    },
+    "success-solid-hover": {
+      "value": "#1c6e48",
+      "type": "color"
+    },
+    "warning-solid": {
+      "value": "#ffc83d",
+      "type": "color"
+    },
+    "warning-solid-foreground": {
+      "value": "#5b280b",
+      "type": "color"
+    },
+    "warning-solid-hover": {
+      "value": "#ffbe1a",
+      "type": "color"
+    },
     "border": {
       "value": "#e9e3dd",
       "type": "color"
@@ -628,6 +736,42 @@
     },
     "brand": {
       "value": "#332218",
+      "type": "color"
+    },
+    "success": {
+      "value": "#112c20",
+      "type": "color"
+    },
+    "success-foreground": {
+      "value": "#98e1be",
+      "type": "color"
+    },
+    "success-border": {
+      "value": "#265e45",
+      "type": "color"
+    },
+    "success-solid": {
+      "value": "#3bce87",
+      "type": "color"
+    },
+    "success-solid-foreground": {
+      "value": "#0e251b",
+      "type": "color"
+    },
+    "success-solid-hover": {
+      "value": "#54d496",
+      "type": "color"
+    },
+    "warning-solid": {
+      "value": "#ffc83d",
+      "type": "color"
+    },
+    "warning-solid-foreground": {
+      "value": "#5b280b",
+      "type": "color"
+    },
+    "warning-solid-hover": {
+      "value": "#ffd15c",
       "type": "color"
     },
     "border": {
@@ -804,6 +948,42 @@
       "value": "#f4f7fe",
       "type": "color"
     },
+    "success": {
+      "value": "#effbf3",
+      "type": "color"
+    },
+    "success-foreground": {
+      "value": "#135336",
+      "type": "color"
+    },
+    "success-border": {
+      "value": "#aee0c5",
+      "type": "color"
+    },
+    "success-solid": {
+      "value": "#218355",
+      "type": "color"
+    },
+    "success-solid-foreground": {
+      "value": "#ffffff",
+      "type": "color"
+    },
+    "success-solid-hover": {
+      "value": "#1c6e48",
+      "type": "color"
+    },
+    "warning-solid": {
+      "value": "#ffc83d",
+      "type": "color"
+    },
+    "warning-solid-foreground": {
+      "value": "#5b280b",
+      "type": "color"
+    },
+    "warning-solid-hover": {
+      "value": "#ffbe1a",
+      "type": "color"
+    },
     "border": {
       "value": "#e1e7ef",
       "type": "color"
@@ -976,6 +1156,42 @@
     },
     "brand": {
       "value": "#13213d",
+      "type": "color"
+    },
+    "success": {
+      "value": "#112c20",
+      "type": "color"
+    },
+    "success-foreground": {
+      "value": "#98e1be",
+      "type": "color"
+    },
+    "success-border": {
+      "value": "#265e45",
+      "type": "color"
+    },
+    "success-solid": {
+      "value": "#3bce87",
+      "type": "color"
+    },
+    "success-solid-foreground": {
+      "value": "#0e251b",
+      "type": "color"
+    },
+    "success-solid-hover": {
+      "value": "#54d496",
+      "type": "color"
+    },
+    "warning-solid": {
+      "value": "#ffc83d",
+      "type": "color"
+    },
+    "warning-solid-foreground": {
+      "value": "#5b280b",
+      "type": "color"
+    },
+    "warning-solid-hover": {
+      "value": "#ffd15c",
       "type": "color"
     },
     "border": {

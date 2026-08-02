@@ -315,7 +315,7 @@ export default function StylesPreview() {
               </CardHeader>
               <CardContent>
                 <p className="text-2xl font-semibold">฿1,284,900</p>
-                <Badge variant="secondary" className="mt-2">
+                <Badge tone="neutral" appearance="soft" className="mt-2">
                   +12%
                 </Badge>
               </CardContent>

@@ -204,7 +204,8 @@ function MultiSelect({
                 {shownChips.map((option) => (
                   <Badge
                     key={option.value}
-                    variant="outline"
+                    tone="brand"
+                    appearance="outline"
                     className="gap-1 border-primary/40 py-1 pr-1 pl-2 text-primary"
                   >
                     <span className="truncate">{option.label}</span>
@@ -228,7 +229,7 @@ function MultiSelect({
                   </Badge>
                 ))}
                 {hiddenChipCount > 0 ? (
-                  <Badge variant="secondary" className="py-1">
+                  <Badge tone="neutral" appearance="soft" className="py-1">
                     +{hiddenChipCount}
                   </Badge>
                 ) : null}
@@ -323,7 +324,7 @@ function MultiSelect({
                     <div className="flex min-w-0 flex-1 flex-col gap-1">
                       <div className="flex flex-wrap items-center gap-2">
                         {option.badge != null ? (
-                          <Badge variant="secondary">{option.badge}</Badge>
+                          <Badge tone="neutral" appearance="soft">{option.badge}</Badge>
                         ) : null}
                         <span className="truncate font-medium">
                           {option.label}

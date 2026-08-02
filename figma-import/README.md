@@ -5,7 +5,7 @@
 
 ## มีอะไรบ้าง
 
-3 แบรนด์ × 2 โหมด × 2 รูปแบบ ทุกไฟล์มีเฉพาะ **สี** (43 ตัว)
+3 แบรนด์ × 2 โหมด × 2 รูปแบบ ทุกไฟล์มีเฉพาะ **สี** (52 ตัว)
 ส่วน `radius` และ `font-sans` เป็นแกนสไตล์แยก ไม่ได้อยู่ในไฟล์แบรนด์แล้ว
 จึงออกมาเป็นไฟล์ของตัวเอง สำหรับ collection คนละอันใน Figma
 
@@ -21,6 +21,32 @@
 | `.flat.json` | คู่ชื่อกับค่า — `{ "primary": "#F97316" }` | ตัวนำเข้าที่รับแบบง่าย |
 
 ลองแบบ `.dtcg.json` ก่อน ถ้าไม่ผ่านค่อยลอง `.flat.json`
+
+## ตารางประกอบตอนสร้าง component ใน Figma
+
+**Alert** — 4 variant ทุกช่องเป็น variable ตัวเดียว opacity 100%
+
+| variant | พื้น | ตัวอักษร | เส้นขอบ |
+|---|---|---|---|
+| default | `card` | `card-foreground` | `border` |
+| warning | `warning` | `warning-foreground` | `warning-border` |
+| brand | `brand` | `foreground` | `primary` |
+| destructive | `danger` | `danger-foreground` | `danger-border` |
+
+**Badge** — ทำเป็น property 2 ตัว `Tone` (5 ค่า) x `Appearance` (3 ค่า) = 15 variant
+
+| Tone | Solid พื้น / ตัวอักษร | Soft พื้น / ตัวอักษร | Outline เส้นขอบ / ตัวอักษร |
+|---|---|---|---|
+| Brand | `primary` / `primary-foreground` | `brand` / `foreground` | `primary` / `foreground` |
+| Success | `success-solid` / `success-solid-foreground` | `success` / `success-foreground` | `success-border` / `success-foreground` |
+| Warning | `warning-solid` / `warning-solid-foreground` | `warning` / `warning-foreground` | `warning-border` / `warning-foreground` |
+| Danger | `destructive` / `destructive-foreground` | `danger` / `danger-foreground` | `danger-border` / `danger-foreground` |
+| Neutral | `foreground` / `background` | `secondary` / `secondary-foreground` | `border` / `secondary-foreground` |
+
+แบบ Soft ใช้เส้นขอบตัวเดียวกับ Outline ส่วนแบบ Solid ไม่มีเส้นขอบ
+
+**Button `outline-primary`** — พื้น `background` · เส้นขอบ `primary` · ตัวอักษร `primary`
+· hover พื้นเป็น `brand`
 
 ## วิธีใช้กับ Import mode ของ Figma
 

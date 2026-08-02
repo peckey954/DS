@@ -85,13 +85,15 @@ const COPY = defineCopy({
     a3: "รัน pnpm dlx shadcn@latest add <name> ในโฟลเดอร์ apps/web",
     carouselHint: "เลื่อนดูทีละการ์ด",
     avatarHint: "รูปโปรไฟล์ / กลุ่ม / จุดสถานะ",
-    badgeHint: "ป้ายสถานะ 6 variant",
-    badgeDefault: "ค่าเริ่มต้น",
-    badgeSecondary: "รอง",
-    badgeDestructive: "อันตราย",
+    badgeHint: "5 สี x 3 แบบ",
+    badgeSolid: "เข้ม",
+    badgeSoft: "อ่อน",
     badgeOutline: "เส้นขอบ",
-    badgeGhost: "โปร่ง",
-    badgeLink: "ลิงก์",
+    toneBrand: "แบรนด์",
+    toneSuccess: "สำเร็จ",
+    toneWarning: "เตือน",
+    toneDanger: "อันตราย",
+    toneNeutral: "กลาง",
     kbdHint: "แสดงปุ่มลัดบนคีย์บอร์ด",
     kbdSearch: "เปิดการค้นหา",
     kbdSave: "บันทึก",
@@ -129,13 +131,15 @@ const COPY = defineCopy({
     a3: "Run pnpm dlx shadcn@latest add <name> inside apps/web",
     carouselHint: "Swipe through cards one at a time",
     avatarHint: "Avatar / group / status dot",
-    badgeHint: "Status badge, 6 variants",
-    badgeDefault: "Default",
-    badgeSecondary: "Secondary",
-    badgeDestructive: "Destructive",
+    badgeHint: "5 tones x 3 appearances",
+    badgeSolid: "Solid",
+    badgeSoft: "Soft",
     badgeOutline: "Outline",
-    badgeGhost: "Ghost",
-    badgeLink: "Link",
+    toneBrand: "Brand",
+    toneSuccess: "Success",
+    toneWarning: "Warning",
+    toneDanger: "Danger",
+    toneNeutral: "Neutral",
     kbdHint: "Show keyboard shortcuts",
     kbdSearch: "Open search",
     kbdSave: "Save",
@@ -213,13 +217,14 @@ export function SectionData() {
                 <TableCell>{inv.customer}</TableCell>
                 <TableCell>
                   <Badge
-                    variant={
+                    tone={
                       inv.status === c.paid
-                        ? "default"
+                        ? "success"
                         : inv.status === c.pending
-                          ? "secondary"
-                          : "destructive"
+                          ? "neutral"
+                          : "danger"
                     }
+                    appearance={inv.status === c.pending ? "soft" : "solid"}
                   >
                     {inv.status}
                   </Badge>
@@ -330,14 +335,34 @@ export function SectionData() {
         </div>
       </Demo>
 
-      <Demo name="badge" hint={c.badgeHint}>
-        <div className="flex w-full flex-wrap gap-2">
-          <Badge>{c.badgeDefault}</Badge>
-          <Badge variant="secondary">{c.badgeSecondary}</Badge>
-          <Badge variant="destructive">{c.badgeDestructive}</Badge>
-          <Badge variant="outline">{c.badgeOutline}</Badge>
-          <Badge variant="ghost">{c.badgeGhost}</Badge>
-          <Badge variant="link">{c.badgeLink}</Badge>
+      <Demo name="badge" hint={c.badgeHint} wide>
+        <div className="w-full space-y-2">
+          {(
+            [
+              ["solid", c.badgeSolid],
+              ["soft", c.badgeSoft],
+              ["outline", c.badgeOutline],
+            ] as const
+          ).map(([appearance, label]) => (
+            <div key={appearance} className="flex flex-wrap items-center gap-2">
+              <span className="w-14 shrink-0 text-xs text-muted-foreground">
+                {label}
+              </span>
+              {(
+                [
+                  ["brand", c.toneBrand],
+                  ["success", c.toneSuccess],
+                  ["warning", c.toneWarning],
+                  ["danger", c.toneDanger],
+                  ["neutral", c.toneNeutral],
+                ] as const
+              ).map(([tone, toneLabel]) => (
+                <Badge key={tone} tone={tone} appearance={appearance}>
+                  {toneLabel}
+                </Badge>
+              ))}
+            </div>
+          ))}
         </div>
       </Demo>
 

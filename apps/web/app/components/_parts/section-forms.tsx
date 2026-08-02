@@ -100,6 +100,7 @@ const COPY = defineCopy({
     btnPrimary: "ปุ่มหลัก",
     btnSecondary: "รอง",
     btnOutline: "เส้นขอบ",
+    btnOutlinePrimary: "เส้นขอบสีหลัก",
     btnGhost: "โปร่ง",
     btnDestructive: "ลบ",
     btnLink: "ลิงก์",
@@ -225,6 +226,7 @@ const COPY = defineCopy({
     btnPrimary: "Primary",
     btnSecondary: "Secondary",
     btnOutline: "Outline",
+    btnOutlinePrimary: "Outline primary",
     btnGhost: "Ghost",
     btnDestructive: "Delete",
     btnLink: "Link",
@@ -448,6 +450,7 @@ export function SectionForms() {
               <Button>{c.btnPrimary}</Button>
               <Button variant="secondary">{c.btnSecondary}</Button>
               <Button variant="outline">{c.btnOutline}</Button>
+              <Button variant="outline-primary">{c.btnOutlinePrimary}</Button>
               <Button variant="ghost">{c.btnGhost}</Button>
               <Button variant="destructive">{c.btnDestructive}</Button>
               <Button variant="link">{c.btnLink}</Button>

@@ -16,6 +16,11 @@ const buttonVariants = cva(
           "bg-destructive text-white hover:bg-destructive-hover focus-visible:ring-destructive/20 dark:bg-destructive/60 dark:hover:bg-destructive-hover dark:focus-visible:ring-destructive/40",
         outline:
           "border bg-background shadow-xs hover:bg-accent-hover hover:text-accent-foreground dark:border-input dark:bg-input/30 dark:hover:bg-accent-hover",
+        /* เส้นขอบสีหลัก — เน้นกว่า outline ธรรมดาแต่เบากว่าปุ่มทึบ
+           ตอน hover ใช้ --brand ซึ่งเป็นพื้นอ่อนสีแบรนด์ที่มีอยู่แล้ว
+           จึงเป็นสีเดียวกับ Alert แบบ brand และกรอบ radio ตอนถูกเลือก */
+        "outline-primary":
+          "border border-primary bg-background text-primary shadow-xs hover:bg-brand dark:bg-input/30 dark:hover:bg-brand",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary-hover",
         ghost:
