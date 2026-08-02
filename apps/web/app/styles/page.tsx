@@ -56,8 +56,15 @@ const DENSITY = [
   { id: "comfortable", label: "โปร่ง", hint: "Comfortable · ปุ่มสูง 45px" },
 ] as const;
 
+const TINT = [
+  { id: "brand", label: "ตามแบรนด์", hint: "Brand · พื้นผสมสีแบรนด์ชัด" },
+  { id: "soft", label: "ผสมบาง", hint: "Soft · พื้นผสมนิดเดียว" },
+  { id: "pure", label: "แยกสี", hint: "Pure · พื้นเทาแท้ ไม่ผสม" },
+] as const;
+
 type Radius = (typeof RADIUS)[number]["id"];
 type Density = (typeof DENSITY)[number]["id"];
+type Tint = (typeof TINT)[number]["id"];
 
 /** ปุ่มเลือกของแถบควบคุม — ตั้งใจไม่ใช้ token ขนาด จะได้ไม่ย่อขยายตามที่กำลังทดสอบ */
 function Choice({
@@ -91,6 +98,7 @@ function Choice({
 export default function StylesPreview() {
   const [radius, setRadius] = React.useState<Radius>("standard");
   const [density, setDensity] = React.useState<Density>("standard");
+  const [tint, setTint] = React.useState<Tint>("brand");
   const [measured, setMeasured] = React.useState<Record<string, string>>({});
   const sampleRef = React.useRef<HTMLButtonElement>(null);
   const iconRef = React.useRef<HTMLButtonElement>(null);
@@ -98,7 +106,8 @@ export default function StylesPreview() {
   React.useEffect(() => {
     document.documentElement.dataset.radius = radius;
     document.documentElement.dataset.density = density;
-  }, [radius, density]);
+    document.documentElement.dataset.tint = tint;
+  }, [radius, density, tint]);
 
   // วัดค่าจริงหลังเรนเดอร์ เพื่อให้เห็นตัวเลขไม่ใช่แค่ความรู้สึก
   React.useEffect(() => {
@@ -112,10 +121,12 @@ export default function StylesPreview() {
         "ปุ่ม padding": cs.paddingLeft,
         "ปุ่ม มุมโค้ง": cs.borderRadius,
         "ไอคอน": svg ? getComputedStyle(svg).width : "-",
+        // แสดงสีพื้นจริง จะได้เห็นว่าโทน "แยกสี" ให้ R=G=B เท่ากันจริง
+        "สีพื้น": getComputedStyle(document.body).backgroundColor,
       });
     });
     return () => cancelAnimationFrame(id);
-  }, [radius, density]);
+  }, [radius, density, tint]);
 
   return (
     <div className="min-h-screen">
@@ -127,7 +138,7 @@ export default function StylesPreview() {
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <div>
               <h1 className="text-base font-semibold">
-                ทดลองสไตล์ — ความโค้ง × ความห่าง
+                ทดลองสไตล์ — โทนสีพื้น × ความโค้ง × ความห่าง
               </h1>
               <p className="text-sm text-muted-foreground">
                 กดสลับแล้วดูว่า component เปลี่ยนยังไง สลับแบรนด์กับโหมดมืดได้ด้วย
@@ -136,6 +147,23 @@ export default function StylesPreview() {
             <div className="flex items-center gap-2">
               <BrandSwitcher />
               <ThemeToggle />
+            </div>
+          </div>
+
+          <div className="mb-3">
+            <p className="mb-1.5 text-xs font-medium tracking-wide text-muted-foreground uppercase">
+              โทนสีพื้น
+            </p>
+            <div className="flex gap-2">
+              {TINT.map((t) => (
+                <Choice
+                  key={t.id}
+                  active={tint === t.id}
+                  onClick={() => setTint(t.id)}
+                  label={t.label}
+                  hint={t.hint}
+                />
+              ))}
             </div>
           </div>
 

@@ -136,7 +136,14 @@ const out = {};
 const summary = [];
 const allSkipped = [];
 
-for (const file of readdirSync(TOKENS_SRC).filter((f) => f.endsWith(".css"))) {
+/* ไฟล์ที่ไม่ได้เก็บสีของแบรนด์ ต้องข้าม
+   - styles.css  เป็นแกนความโค้ง/ความห่าง อ่านแยกอยู่ด้านล่างแล้ว
+   - tint.css    ใช้ color-mix() ซึ่งแปลงเป็น hex ตายตัวไม่ได้ */
+const NOT_BRAND_FILES = new Set(["styles.css", "tint.css"]);
+
+for (const file of readdirSync(TOKENS_SRC).filter(
+  (f) => f.endsWith(".css") && !NOT_BRAND_FILES.has(f)
+)) {
   const blocks = parseBrandFile(readFileSync(join(TOKENS_SRC, file), "utf8"));
   for (const [setName, vars] of Object.entries(blocks)) {
     const { set, skipped } = toTokenSet(vars);

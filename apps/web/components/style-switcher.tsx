@@ -16,6 +16,10 @@ const COPY = defineCopy({
   th: {
     radiusAria: "เลือกความโค้ง",
     densityAria: "เลือกความห่าง",
+    tintAria: "เลือกโทนสีพื้น",
+    tintBrand: "ตามแบรนด์",
+    tintSoft: "ผสมบาง",
+    tintPure: "แยกสี",
     sharp: "ไม่โค้ง",
     standard: "โค้งปกติ",
     friendly: "โค้งมาก",
@@ -27,6 +31,10 @@ const COPY = defineCopy({
   en: {
     radiusAria: "Select corner radius",
     densityAria: "Select density",
+    tintAria: "Select neutral tone",
+    tintBrand: "Brand tinted",
+    tintSoft: "Soft tint",
+    tintPure: "Pure neutral",
     sharp: "Sharp",
     standard: "Standard",
     friendly: "Friendly",
@@ -39,6 +47,7 @@ const COPY = defineCopy({
 
 type Radius = "sharp" | "standard" | "friendly" | "pill";
 type Density = "compact" | "standard" | "comfortable";
+type Tint = "brand" | "soft" | "pure";
 
 /**
  * สลับแกนสไตล์ของทั้งหน้า — เขียน data-radius / data-density ลงบน <html>
@@ -48,6 +57,7 @@ export function StyleSwitcher() {
   const c = useCopy(COPY);
   const [radius, setRadius] = React.useState<Radius>("standard");
   const [density, setDensity] = React.useState<Density>("standard");
+  const [tint, setTint] = React.useState<Tint>("brand");
 
   React.useEffect(() => {
     document.documentElement.dataset.radius = radius;
@@ -57,8 +67,23 @@ export function StyleSwitcher() {
     document.documentElement.dataset.density = density;
   }, [density]);
 
+  React.useEffect(() => {
+    document.documentElement.dataset.tint = tint;
+  }, [tint]);
+
   return (
     <>
+      <Select value={tint} onValueChange={(v) => setTint(v as Tint)}>
+        <SelectTrigger size="sm" className="w-28" aria-label={c.tintAria}>
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="brand">{c.tintBrand}</SelectItem>
+          <SelectItem value="soft">{c.tintSoft}</SelectItem>
+          <SelectItem value="pure">{c.tintPure}</SelectItem>
+        </SelectContent>
+      </Select>
+
       <Select
         value={radius}
         onValueChange={(v) => setRadius(v as Radius)}

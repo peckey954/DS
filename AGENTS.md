@@ -220,23 +220,39 @@ style={{ color: "#333" }}        // inline style สี
 
 ถ้าต้องการสีที่ไม่มีใน token → **เพิ่ม token ใหม่** (ดูข้อ 4) ไม่ใช่ hardcode
 
-#### แกนสไตล์ — ความโค้ง / ความห่าง
+#### แกนสไตล์ — โทนสีพื้น / ความโค้ง / ความห่าง
 
-นอกจากแบรนด์และโหมดสว่างมืด ยังปรับได้อีก 2 แกน **โดยไม่ต้องแตะโค้ด component**
+นอกจากแบรนด์และโหมดสว่างมืด ยังปรับได้อีก 3 แกน **โดยไม่ต้องแตะโค้ด component**
 
 ```html
-<html data-brand="parich" data-radius="pill" data-density="compact" class="dark">
+<html data-brand="parich" data-tint="pure" data-radius="pill" data-density="compact" class="dark">
 ```
 
-| แกน | ค่า | ผลที่ได้ (ปุ่ม) |
+| แกน | ค่า | ผลที่ได้ |
 |---|---|---|
-| `data-radius` | `sharp` · `standard` · `friendly` · `pill` | 0px · 8px · 14px · แคปซูล |
-| `data-density` | `compact` · `standard` · `comfortable` | สูง 32px · 36px · 45px |
+| `data-tint` | `brand` · `soft` · `pure` | สีกลางผสมสีแบรนด์ ชัด · บาง · ไม่ผสมเลย |
+| `data-radius` | `sharp` · `standard` · `friendly` · `pill` | ปุ่ม 0px · 8px · 14px · แคปซูล |
+| `data-density` | `compact` · `standard` · `comfortable` | ปุ่มสูง 32px · 36px · 45px |
 
-**ไม่ใส่ attribute = ใช้ค่าของแบรนด์ตามปกติ** ทั้งสองแกนเป็นของเสริม ไม่บังคับ
+**ไม่ใส่ attribute = ใช้ค่าของแบรนด์ตามปกติ** ทั้งสามแกนเป็นของเสริม ไม่บังคับ
 
-ทั้งคู่ทำงานด้วยการเขียนทับตัวแปรเดียว — `--radius` และ `--spacing` ของ Tailwind v4
-ซึ่งทุก utility คำนวณต่อจากมัน (`.p-4` → `calc(var(--spacing) * 4)`)
+`data-radius` กับ `data-density` ทำงานด้วยการเขียนทับตัวแปรเดียว — `--radius`
+และ `--spacing` ของ Tailwind v4 ซึ่งทุก utility คำนวณต่อจากมัน
+(`.p-4` → `calc(var(--spacing) * 4)`)
+
+**`data-tint` แตะเฉพาะ "สีกลาง"** (พื้นหลัง การ์ด เส้นขอบ ตัวอักษร) เท่านั้น
+ไม่แตะ `--primary` `--destructive` `--chart-*` เลย สีแบรนด์ยังเป็นสีแบรนด์เหมือนเดิม
+
+- `pure` เขียนค่าเทาแท้ตรง ๆ (`hsl(0 0% 12%)`) จึงเหมือนกันทุกแบรนด์
+- `soft` ใช้ `color-mix()` กับ `var(--primary)` ซึ่งคลี่เป็นสีของแบรนด์ที่ใช้อยู่
+  **กฎชุดเดียวจึงครอบคลุมทุกแบรนด์ เพิ่มแบรนด์ใหม่ไม่ต้องมาแก้ `tint.css`**
+
+ค่าอยู่ที่ `packages/tokens/src/tint.css` ต้อง `@import` **หลัง** ไฟล์แบรนด์
+และ selector ต้องขึ้นต้นด้วย `html` เพื่อให้ specificity ชนะไฟล์แบรนด์
+(`html[data-tint="pure"]` = 0,1,1 ชนะ `[data-brand="siam"]` = 0,1,0)
+
+**`tint.css` ไม่เข้า Figma** เพราะ `color-mix()` แปลงเป็น hex ตายตัวไม่ได้
+`scripts/build-figma-tokens.mjs` จึงข้ามไฟล์นี้ไว้ใน `NOT_BRAND_FILES`
 
 **สิ่งที่ต้องระวังเวลาเขียน component ใหม่**
 
