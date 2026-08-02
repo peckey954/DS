@@ -35,17 +35,29 @@
   --destructive-hover: hsl(0 72% 46%);
 
 
-  /* พื้นผิวสถานะเตือน — ทำงานเหมือน --card / --card-foreground
-     คือเป็น "พื้นทึบ + ตัวอักษร + เส้นขอบ" ของมันเอง ไม่ใช่สีจางทับพื้นหลัง
-     ค่าตรงกับ amber-50 / amber-900 / amber-200 ของ Tailwind เป๊ะ
-     เพื่อให้เหลืองสดตรงกับตัวอย่างของ shadcn ถ้าใช้สีจางทับพื้นจะออกเบจ
+  /* พื้นผิวของ Alert แบบมีสี — ชุดเดียวกับ --card / --sidebar
+     คือ <ชื่อพื้นผิว> + -foreground + -border
 
-     --destructive-subtle = ตัวอักษรบนพื้นจางของ destructive
-     (--destructive-foreground เป็นสีขาวสำหรับพื้นทึบ ใช้ตรงนี้ไม่ได้) */
+     ทุกค่าเป็น "สีทึบ" ไม่ใช่สีจางทับพื้น เพราะ Figma ผูก opacity ไว้กับ variable
+     ไม่ได้ ถ้าใช้สีจาง คนออกแบบต้องมาตั้ง opacity เองทุกครั้ง และต้องตั้งคนละค่า
+     ในโหมดสว่างกับโหมดมืด ซึ่ง Figma สลับให้ตามโหมดไม่ได้
+     ค่าที่ใส่ไว้คือค่าที่วัดจากเบราว์เซอร์ตอนที่ยังใช้สีจางทับพื้น --card
+     หน้าตาจึงเหมือนเดิมเป๊ะ แค่เปลี่ยนวิธีเก็บค่า
+
+     --warning ตรงกับ amber-50 / amber-900 / amber-200 ของ Tailwind เป๊ะ
+     --danger  ใช้กับ Alert variant="destructive" ที่ชื่อไม่ตรงกันเพราะ
+               --destructive ถูกจองไว้ให้ปุ่มพื้นทึบแล้ว
+     --brand   ใช้ --primary เป็นเส้นขอบ และ --foreground เป็นตัวอักษร
+               จึงไม่ต้องมี --brand-border / --brand-foreground */
   --warning: hsl(48 100% 96%);
   --warning-foreground: hsl(22 78% 26%);
   --warning-border: hsl(48 97% 77%);
-  --destructive-subtle: hsl(0 70% 36%);
+
+  --danger: hsl(0 69.2% 94.9%);
+  --danger-foreground: hsl(0 70% 36%);
+  --danger-border: hsl(0 71.1% 85.1%);
+
+  --brand: hsl(157.5 50% 96.9%);
 
   --border: hsl(150 20% 88%);
   --input: hsl(150 20% 88%);
@@ -103,11 +115,16 @@
   --destructive-hover: hsl(0 63% 50%);
 
 
-  /* โหมดมืดสลับหัวท้าย — พื้นเป็น amber-950 ตัวอักษรเป็น amber-50 */
+  /* โหมดมืดสลับหัวท้าย — warning พื้นเป็น amber-950 ตัวอักษรเป็น amber-50 */
   --warning: hsl(21 92% 14%);
   --warning-foreground: hsl(48 100% 96%);
   --warning-border: hsl(22 78% 26%);
-  --destructive-subtle: hsl(0 85% 79%);
+
+  --danger: hsl(25.7 11.5% 12%);
+  --danger-foreground: hsl(0 85% 79%);
+  --danger-border: hsl(3.3 36.7% 19.2%);
+
+  --brand: hsl(160 39.1% 13.5%);
 
   --border: hsl(165 18% 20%);
   --input: hsl(165 18% 20%);

@@ -92,8 +92,20 @@
       "value": "#fde68b",
       "type": "color"
     },
-    "destructive-subtle": {
+    "danger": {
+      "value": "#fbe9e9",
+      "type": "color"
+    },
+    "danger-foreground": {
       "value": "#9c1c1c",
+      "type": "color"
+    },
+    "danger-border": {
+      "value": "#f4bebe",
+      "type": "color"
+    },
+    "brand": {
+      "value": "#f3fbf8",
       "type": "color"
     },
     "border": {
@@ -262,8 +274,20 @@
       "value": "#76350f",
       "type": "color"
     },
-    "destructive-subtle": {
+    "danger": {
+      "value": "#221e1b",
+      "type": "color"
+    },
+    "danger-foreground": {
       "value": "#f79c9c",
+      "type": "color"
+    },
+    "danger-border": {
+      "value": "#43211f",
+      "type": "color"
+    },
+    "brand": {
+      "value": "#153027",
       "type": "color"
     },
     "border": {
@@ -424,8 +448,20 @@
       "value": "#fde68b",
       "type": "color"
     },
-    "destructive-subtle": {
+    "danger": {
+      "value": "#fbe9e9",
+      "type": "color"
+    },
+    "danger-foreground": {
       "value": "#9c1c1c",
+      "type": "color"
+    },
+    "danger-border": {
+      "value": "#f4bebe",
+      "type": "color"
+    },
+    "brand": {
+      "value": "#fff8f3",
       "type": "color"
     },
     "border": {
@@ -594,8 +630,20 @@
       "value": "#76350f",
       "type": "color"
     },
-    "destructive-subtle": {
+    "danger": {
+      "value": "#2d1917",
+      "type": "color"
+    },
+    "danger-foreground": {
       "value": "#f79c9c",
+      "type": "color"
+    },
+    "danger-border": {
+      "value": "#4c1d1c",
+      "type": "color"
+    },
+    "brand": {
+      "value": "#332218",
       "type": "color"
     },
     "border": {
@@ -756,8 +804,20 @@
       "value": "#fde68b",
       "type": "color"
     },
-    "destructive-subtle": {
+    "danger": {
+      "value": "#fbe9e9",
+      "type": "color"
+    },
+    "danger-foreground": {
       "value": "#9c1c1c",
+      "type": "color"
+    },
+    "danger-border": {
+      "value": "#f4bebe",
+      "type": "color"
+    },
+    "brand": {
+      "value": "#f4f7fe",
       "type": "color"
     },
     "border": {
@@ -926,8 +986,20 @@
       "value": "#76350f",
       "type": "color"
     },
-    "destructive-subtle": {
+    "danger": {
+      "value": "#201828",
+      "type": "color"
+    },
+    "danger-foreground": {
       "value": "#f79c9c",
+      "type": "color"
+    },
+    "danger-border": {
+      "value": "#421d29",
+      "type": "color"
+    },
+    "brand": {
+      "value": "#13213d",
       "type": "color"
     },
     "border": {

@@ -24,21 +24,25 @@ const alertVariants = cva(
 
            คำอธิบายไม่ใช้ text-muted-foreground เพราะบนพื้นจางเหลือ 4.08–4.35
            ใช้สีเดียวกับหัวข้อแต่ลด opacity แทน ได้ทั้งลำดับสายตาและคอนทราสต์ */
-        destructive:
-          "border-destructive/30 bg-destructive/10 text-destructive-subtle *:data-[slot=alert-description]:text-destructive-subtle/85",
+        /* ทั้งสามตัวใช้ token พื้นทึบของตัวเอง (ชุดเดียวกับ --card คือ พื้น + ตัวอักษร
+           + เส้นขอบ) ไม่ใช่สีจางทับพื้นหลัง — เหตุผลสองข้อ
 
-        /* warning ไม่ใช้สีจางทับพื้นเหมือนอีกสองตัว แต่ใช้ token พื้นทึบของตัวเอง
-           (ชุดเดียวกับ --card คือ พื้น + ตัวอักษร + เส้นขอบ) เพราะสีจางทับพื้นขาว
-           ให้ผลออกเบจอมน้ำตาล ไม่ใช่เหลืองสดแบบตัวอย่างของ shadcn
-           token ตั้งค่าให้ตรงกับ amber-50 / amber-900 / amber-200 เป๊ะ */
+           1. สีจางทับพื้นขาวให้ผลเพี้ยน เหลืองจะกลายเป็นเบจอมน้ำตาล
+              ไม่ใช่เหลืองสดแบบตัวอย่างของ shadcn
+           2. Figma ผูก opacity ไว้กับ variable ไม่ได้ ถ้าใช้สีจาง คนออกแบบต้อง
+              ตั้ง opacity เองทุกครั้ง และต้องตั้งคนละค่าในโหมดสว่าง/มืด
+              ซึ่ง Figma สลับให้ตามโหมดไม่ได้
+
+           ผลพลอยได้: brand ไม่ต้องใช้ dark: อีกแล้ว ตรงตามกฎข้อ 5 เต็มรูปแบบ
+
+           สีของ brand ต้องเท่ากับสถานะ "ถูกเลือก" ของกรอบ radio/checkbox
+           ใน field.tsx เสมอ — ถ้าแก้ตรงนั้นต้องแก้ค่า --brand ด้วย */
+        destructive:
+          "border-danger-border bg-danger text-danger-foreground *:data-[slot=alert-description]:text-danger-foreground/85",
         warning:
           "border-warning-border bg-warning text-warning-foreground *:data-[slot=alert-description]:text-warning-foreground/85",
-
-        /* ต้องใช้คลาสชุดเดียวกับสถานะ "ถูกเลือก" ของกรอบ radio/checkbox ใน field.tsx
-           เป๊ะ ๆ เพื่อให้สีตรงกัน — ถ้าแก้ตรงนั้นต้องแก้ตรงนี้ด้วย
-           dark: ตรงนี้ปรับแค่ความจาง ไม่ได้เปลี่ยนสี จึงไม่ขัดกฎข้อ 5 */
         brand:
-          "border-primary bg-primary/5 text-foreground dark:bg-primary/10 *:data-[slot=alert-description]:text-foreground/80",
+          "border-primary bg-brand text-foreground *:data-[slot=alert-description]:text-foreground/80",
       },
     },
     defaultVariants: {

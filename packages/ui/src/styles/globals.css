@@ -31,12 +31,18 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
 
-  /* พื้นผิวสถานะเตือน — ชุดเดียวกับ --card คือ พื้น + ตัวอักษร + เส้นขอบ
+  /* พื้นผิวของ Alert แบบมีสี — ชุดเดียวกับ --card คือ พื้น + ตัวอักษร + เส้นขอบ
+     ทุกตัวเป็นสีทึบ ไม่มี opacity เพื่อให้ยกไปเป็น variable ใน Figma ได้ตรง ๆ
      ใส่ fallback ไว้ แบรนด์เก่าที่ยังไม่ประกาศจะไม่พัง */
   --color-warning: var(--warning, var(--card));
   --color-warning-foreground: var(--warning-foreground, var(--foreground));
   --color-warning-border: var(--warning-border, var(--border));
-  --color-destructive-subtle: var(--destructive-subtle, var(--destructive));
+
+  --color-danger: var(--danger, var(--card));
+  --color-danger-foreground: var(--danger-foreground, var(--destructive));
+  --color-danger-border: var(--danger-border, var(--border));
+
+  --color-brand: var(--brand, var(--card));
 
   /* สีตอน hover ของพื้นผิวที่มีสี — ใช้แทนการลด opacity */
   --color-primary-hover: var(--primary-hover);

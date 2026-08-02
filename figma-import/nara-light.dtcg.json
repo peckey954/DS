@@ -91,9 +91,21 @@
     "$type": "color",
     "$value": "#FDE68B"
   },
-  "destructive-subtle": {
+  "danger": {
+    "$type": "color",
+    "$value": "#FBE9E9"
+  },
+  "danger-foreground": {
     "$type": "color",
     "$value": "#9C1C1C"
+  },
+  "danger-border": {
+    "$type": "color",
+    "$value": "#F4BEBE"
+  },
+  "brand": {
+    "$type": "color",
+    "$value": "#F3FBF8"
   },
   "border": {
     "$type": "color",
