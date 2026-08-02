@@ -83,16 +83,23 @@
   /* สถานะ success + สีทึบของ badge — อิงสเกล Radix (green / amber)
      ค่าเหมือนกันทุกแบรนด์เหมือน --destructive เพราะเป็นสีความหมาย ไม่ใช่สีแบรนด์
 
-     ── ทำไมสีทึบไม่ใช่ step 9 ของ Radix ตรง ๆ ──
-     Radix green-9 (#30A46C) วางตัวอักษรขาวได้คอนทราสต์แค่ 3.17 ตกเกณฑ์ AA
-     สำหรับตัวอักษรขนาดปกติ ซึ่ง badge เป็นตัวเล็กด้วยซ้ำ จึงเลื่อนไปทาง step 11
-     ส่วน amber ใช้ step 9 ได้ แต่ต้องใช้ตัวอักษรสีเข้มไม่ใช่ขาว (Radix เองก็ทำแบบนี้) */
-  --success: hsl(140 60% 96%);
-  --success-foreground: hsl(153 62% 20%);
-  --success-border: hsl(148 45% 78%);
-  --success-solid: hsl(152 60% 32%);
-  --success-solid-foreground: hsl(0 0% 100%);
-  --success-solid-hover: hsl(152 60% 27%);
+     ── ทำไมเขียวสดถึงคู่กับตัวอักษรสีเข้ม ไม่ใช่ขาว ──
+     เขียวสว่างกว่าแดงกับน้ำเงินมากในสายตามนุษย์ (สัมประสิทธิ์ 0.7152 เทียบกับ
+     0.2126 และ 0.0722) เขียวที่ "ดูสด" จึงสว่างเกินกว่าจะวางตัวอักษรขาวได้
+     วัดแล้ว: green-500 กับขาว = 2.30 · Radix green-9 กับขาว = 3.09 ตกทั้งคู่
+     ถ้าจะใช้ตัวอักษรขาวต้องกดเขียวให้เข้มจนหม่น เลยเลือกทางกลับกัน
+     คือใช้เขียวสด (green-500 / green-400) คู่ตัวอักษรเขียวเข้ม ได้ 5.76 กับ 7.61
+     เป็นวิธีเดียวกับที่ใช้กับ amber ซึ่งสว่างด้วยเหตุผลเดียวกัน
+
+     ห้ามใช้ emerald-500 (#10B77F) เป็นสี success เด็ดขาด เพราะเป็นค่าเดียวกับ
+     --primary ของแบรนด์เขียวเป๊ะ ป้าย success จะกลืนกับป้ายแบรนด์
+     green-500 ห่างจากแบรนด์เขียว 18 องศาบนวงล้อสี จึงแยกออกจากกันได้ */
+  --success: hsl(141 78% 96%);
+  --success-foreground: hsl(145 66% 22%);
+  --success-border: hsl(141 60% 76%);
+  --success-solid: hsl(142 71% 45%);
+  --success-solid-foreground: hsl(150 65% 13%);
+  --success-solid-hover: hsl(142 71% 39%);
 
   --warning-solid: hsl(43 100% 62%);
   --warning-solid-foreground: hsl(22 78% 20%);
@@ -168,12 +175,12 @@
   /* โหมดมืด — พื้นอ่อนกลายเป็นเข้ม ตัวอักษรกลายเป็นสว่าง
      สีทึบใช้เขียวสว่างขึ้นคู่กับตัวอักษรเข้ม ตรงกับที่ --primary ของทุกแบรนด์ทำอยู่แล้ว
      ส่วน amber ใช้ค่าเดียวกับโหมดสว่าง เพราะ Radix ตั้ง amber-9 ไว้เท่ากันทั้งสองโหมด */
-  --success: hsl(154 45% 12%);
-  --success-foreground: hsl(151 55% 74%);
-  --success-border: hsl(153 42% 26%);
-  --success-solid: hsl(151 60% 52%);
-  --success-solid-foreground: hsl(155 45% 10%);
-  --success-solid-hover: hsl(151 60% 58%);
+  --success: hsl(146 55% 10%);
+  --success-foreground: hsl(142 69% 74%);
+  --success-border: hsl(144 50% 24%);
+  --success-solid: hsl(142 69% 58%);
+  --success-solid-foreground: hsl(150 70% 11%);
+  --success-solid-hover: hsl(142 69% 64%);
 
   --warning-solid: hsl(43 100% 62%);
   --warning-solid-foreground: hsl(22 78% 20%);
