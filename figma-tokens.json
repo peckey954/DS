@@ -121,15 +121,15 @@
       "type": "color"
     },
     "success-solid": {
-      "value": "#21c45d",
+      "value": "#168840",
       "type": "color"
     },
     "success-solid-foreground": {
-      "value": "#0c3721",
+      "value": "#ffffff",
       "type": "color"
     },
     "success-solid-hover": {
-      "value": "#1daa51",
+      "value": "#137236",
       "type": "color"
     },
     "warning-solid": {
@@ -291,7 +291,7 @@
       "type": "color"
     },
     "warning": {
-      "value": "#451a03",
+      "value": "#3d3105",
       "type": "color"
     },
     "warning-foreground": {
@@ -299,11 +299,11 @@
       "type": "color"
     },
     "warning-border": {
-      "value": "#76350f",
+      "value": "#715a14",
       "type": "color"
     },
     "danger": {
-      "value": "#221e1b",
+      "value": "#491214",
       "type": "color"
     },
     "danger-foreground": {
@@ -311,7 +311,7 @@
       "type": "color"
     },
     "danger-border": {
-      "value": "#43211f",
+      "value": "#86272c",
       "type": "color"
     },
     "brand": {
@@ -331,15 +331,15 @@
       "type": "color"
     },
     "success-solid": {
-      "value": "#4ade80",
+      "value": "#168840",
       "type": "color"
     },
     "success-solid-foreground": {
-      "value": "#08301c",
+      "value": "#ffffff",
       "type": "color"
     },
     "success-solid-hover": {
-      "value": "#64e392",
+      "value": "#137236",
       "type": "color"
     },
     "warning-solid": {
@@ -541,15 +541,15 @@
       "type": "color"
     },
     "success-solid": {
-      "value": "#21c45d",
+      "value": "#168840",
       "type": "color"
     },
     "success-solid-foreground": {
-      "value": "#0c3721",
+      "value": "#ffffff",
       "type": "color"
     },
     "success-solid-hover": {
-      "value": "#1daa51",
+      "value": "#137236",
       "type": "color"
     },
     "warning-solid": {
@@ -711,7 +711,7 @@
       "type": "color"
     },
     "warning": {
-      "value": "#451a03",
+      "value": "#3d3105",
       "type": "color"
     },
     "warning-foreground": {
@@ -719,11 +719,11 @@
       "type": "color"
     },
     "warning-border": {
-      "value": "#76350f",
+      "value": "#715a14",
       "type": "color"
     },
     "danger": {
-      "value": "#2d1917",
+      "value": "#491214",
       "type": "color"
     },
     "danger-foreground": {
@@ -731,7 +731,7 @@
       "type": "color"
     },
     "danger-border": {
-      "value": "#4c1d1c",
+      "value": "#86272c",
       "type": "color"
     },
     "brand": {
@@ -751,15 +751,15 @@
       "type": "color"
     },
     "success-solid": {
-      "value": "#4ade80",
+      "value": "#168840",
       "type": "color"
     },
     "success-solid-foreground": {
-      "value": "#08301c",
+      "value": "#ffffff",
       "type": "color"
     },
     "success-solid-hover": {
-      "value": "#64e392",
+      "value": "#137236",
       "type": "color"
     },
     "warning-solid": {
@@ -961,15 +961,15 @@
       "type": "color"
     },
     "success-solid": {
-      "value": "#21c45d",
+      "value": "#168840",
       "type": "color"
     },
     "success-solid-foreground": {
-      "value": "#0c3721",
+      "value": "#ffffff",
       "type": "color"
     },
     "success-solid-hover": {
-      "value": "#1daa51",
+      "value": "#137236",
       "type": "color"
     },
     "warning-solid": {
@@ -1131,7 +1131,7 @@
       "type": "color"
     },
     "warning": {
-      "value": "#451a03",
+      "value": "#3d3105",
       "type": "color"
     },
     "warning-foreground": {
@@ -1139,11 +1139,11 @@
       "type": "color"
     },
     "warning-border": {
-      "value": "#76350f",
+      "value": "#715a14",
       "type": "color"
     },
     "danger": {
-      "value": "#201828",
+      "value": "#491214",
       "type": "color"
     },
     "danger-foreground": {
@@ -1151,7 +1151,7 @@
       "type": "color"
     },
     "danger-border": {
-      "value": "#421d29",
+      "value": "#86272c",
       "type": "color"
     },
     "brand": {
@@ -1171,15 +1171,15 @@
       "type": "color"
     },
     "success-solid": {
-      "value": "#4ade80",
+      "value": "#168840",
       "type": "color"
     },
     "success-solid-foreground": {
-      "value": "#08301c",
+      "value": "#ffffff",
       "type": "color"
     },
     "success-solid-hover": {
-      "value": "#64e392",
+      "value": "#137236",
       "type": "color"
     },
     "warning-solid": {

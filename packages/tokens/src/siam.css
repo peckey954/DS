@@ -79,9 +79,9 @@
   --success: hsl(141 78% 96%);
   --success-foreground: hsl(145 66% 22%);
   --success-border: hsl(141 60% 76%);
-  --success-solid: hsl(142 71% 45%);
-  --success-solid-foreground: hsl(150 65% 13%);
-  --success-solid-hover: hsl(142 71% 39%);
+  --success-solid: hsl(142 72% 31%);
+  --success-solid-foreground: hsl(0 0% 100%);
+  --success-solid-hover: hsl(142 72% 26%);
 
   --warning-solid: hsl(43 100% 62%);
   --warning-solid-foreground: hsl(22 78% 20%);
@@ -140,13 +140,19 @@
 
 
   /* โหมดมืดสลับหัวท้าย — warning พื้นเป็น amber-950 ตัวอักษรเป็น amber-50 */
-  --warning: hsl(21 92% 14%);
+  /* amber-950 ของ Tailwind (#451A03) อยู่ที่เฉด 21 ซึ่งตาคนอ่านว่า "น้ำตาลแดง"
+     ไม่ใช่เหลือง ย้ายมาเฉด 47 ให้เป็นเหลืองเข้มจริง ๆ ในโหมดมืด */
+  --warning: hsl(47 85% 13%);
   --warning-foreground: hsl(48 100% 96%);
-  --warning-border: hsl(22 78% 26%);
+  --warning-border: hsl(45 70% 26%);
 
-  --danger: hsl(270 25% 12.5%);
+  /* ค่าเดิมได้จากการเอาสีแดงจาง 10% ทับพื้นการ์ดของแต่ละแบรนด์ ผลคือแดงถูกพื้น
+     กลืนจนออกม่วง/น้ำตาลและไม่เท่ากันสักแบรนด์ เปลี่ยนเป็นสีคงที่แบบเดียวกับ
+     warning ไปเลย จะได้แดงชัดและเหมือนกันทุกแบรนด์
+     (ต้องเอา --danger ออกจาก tint.css ด้วย ไม่งั้นโดนทับ) */
+  --danger: hsl(358 60% 18%);
   --danger-foreground: hsl(0 85% 79%);
-  --danger-border: hsl(340.5 38.9% 18.6%);
+  --danger-border: hsl(357 55% 34%);
 
   --brand: hsl(220 52.5% 15.7%);
 
@@ -157,9 +163,13 @@
   --success: hsl(146 55% 10%);
   --success-foreground: hsl(142 69% 74%);
   --success-border: hsl(144 50% 24%);
-  --success-solid: hsl(142 69% 58%);
-  --success-solid-foreground: hsl(150 70% 11%);
-  --success-solid-hover: hsl(142 69% 64%);
+  /* โหมดมืดใช้ค่าเดียวกับโหมดสว่าง และ hover ก็ "เข้มลง" เหมือนกัน
+     ผิดจากกฎปกติที่โหมดมืดต้องสว่างขึ้น แต่จำเป็น เพราะตัวอักษรเป็นสีขาว
+     ถ้าทำให้เขียวสว่างขึ้นตอน hover คอนทราสต์จะตกต่ำกว่าเกณฑ์ทันที
+     (เป็นเหตุผลเดียวกับที่ --primary-hover ของแบรนด์ส้มกลับด้าน) */
+  --success-solid: hsl(142 72% 31%);
+  --success-solid-foreground: hsl(0 0% 100%);
+  --success-solid-hover: hsl(142 72% 26%);
 
   --warning-solid: hsl(43 100% 62%);
   --warning-solid-foreground: hsl(22 78% 20%);

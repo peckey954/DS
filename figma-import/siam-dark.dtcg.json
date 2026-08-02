@@ -81,7 +81,7 @@
   },
   "warning": {
     "$type": "color",
-    "$value": "#451A03"
+    "$value": "#3D3105"
   },
   "warning-foreground": {
     "$type": "color",
@@ -89,11 +89,11 @@
   },
   "warning-border": {
     "$type": "color",
-    "$value": "#76350F"
+    "$value": "#715A14"
   },
   "danger": {
     "$type": "color",
-    "$value": "#201828"
+    "$value": "#491214"
   },
   "danger-foreground": {
     "$type": "color",
@@ -101,7 +101,7 @@
   },
   "danger-border": {
     "$type": "color",
-    "$value": "#421D29"
+    "$value": "#86272C"
   },
   "brand": {
     "$type": "color",
@@ -121,15 +121,15 @@
   },
   "success-solid": {
     "$type": "color",
-    "$value": "#4ADE80"
+    "$value": "#168840"
   },
   "success-solid-foreground": {
     "$type": "color",
-    "$value": "#08301C"
+    "$value": "#FFFFFF"
   },
   "success-solid-hover": {
     "$type": "color",
-    "$value": "#64E392"
+    "$value": "#137236"
   },
   "warning-solid": {
     "$type": "color",

@@ -71,8 +71,6 @@ html[data-tint="pure"] {
   /* พื้นผิว Alert ต้องคำนวณใหม่ เพราะ --card เปลี่ยนไปแล้ว
      สัดส่วนตรงกับที่ไฟล์แบรนด์ใช้ (brand 5% · danger 10% · ขอบ 30%) */
   --brand: color-mix(in srgb, var(--primary) 5%, var(--card));
-  --danger: color-mix(in srgb, var(--destructive) 10%, var(--card));
-  --danger-border: color-mix(in srgb, var(--destructive) 30%, var(--card));
 }
 
 html[data-tint="pure"].dark {
@@ -107,8 +105,6 @@ html[data-tint="pure"].dark {
 
   /* โหมดมืดใช้ 10% เท่าไฟล์แบรนด์ */
   --brand: color-mix(in srgb, var(--primary) 10%, var(--card));
-  --danger: color-mix(in srgb, var(--destructive) 10%, var(--card));
-  --danger-border: color-mix(in srgb, var(--destructive) 30%, var(--card));
 }
 
 /* ── โทน blend — สเกลฐานเดียวกับ pure แต่ผสมสีแบรนด์ลงไป
@@ -116,8 +112,9 @@ html[data-tint="pure"].dark {
    สว่าง  พื้นใหญ่ 4% · พื้นยก 8% · เส้นขอบ 11% · ตัวอักษร 6%
    มืด    พื้นใหญ่ 7% · พื้นยก 11% · เส้นขอบ 14% · ตัวอักษร 6%
 
-   --brand / --danger คงสัดส่วนเดิม (5% สว่าง · 10% มืด · danger 10/30)
-   เพราะเป็นพื้นผิวของ Alert ไม่ใช่สีกลาง ห้ามเลื่อนตามโทน               */
+   --brand คงสัดส่วนเดิม (5% สว่าง · 10% มืด) เพราะต้องเท่ากับกรอบ radio ตอนถูกเลือก
+   ส่วน --danger / --warning ไม่อยู่ในไฟล์นี้เลย เป็นสีคงที่ในไฟล์แบรนด์
+   เพราะเป็นสีความหมาย ต้องแดง/เหลืองชัดเท่ากันทุกแบรนด์ทุกโทน               */
 
 html[data-tint="blend"] {
   --background: color-mix(in srgb, var(--primary) 4%, hsl(0 0% 100%));
@@ -150,8 +147,6 @@ html[data-tint="blend"] {
   --sidebar-border: color-mix(in srgb, var(--primary) 11%, hsl(0 0% 90%));
 
   --brand: color-mix(in srgb, var(--primary) 5%, var(--card));
-  --danger: color-mix(in srgb, var(--destructive) 10%, var(--card));
-  --danger-border: color-mix(in srgb, var(--destructive) 30%, var(--card));
 }
 
 html[data-tint="blend"].dark {
@@ -185,6 +180,4 @@ html[data-tint="blend"].dark {
   --sidebar-border: color-mix(in srgb, var(--primary) 14%, hsl(0 0% 20%));
 
   --brand: color-mix(in srgb, var(--primary) 10%, var(--card));
-  --danger: color-mix(in srgb, var(--destructive) 10%, var(--card));
-  --danger-border: color-mix(in srgb, var(--destructive) 30%, var(--card));
 }

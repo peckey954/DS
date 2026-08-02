@@ -121,15 +121,15 @@
   },
   "success-solid": {
     "$type": "color",
-    "$value": "#21C45D"
+    "$value": "#168840"
   },
   "success-solid-foreground": {
     "$type": "color",
-    "$value": "#0C3721"
+    "$value": "#FFFFFF"
   },
   "success-solid-hover": {
     "$type": "color",
-    "$value": "#1DAA51"
+    "$value": "#137236"
   },
   "warning-solid": {
     "$type": "color",
