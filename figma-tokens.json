@@ -1307,6 +1307,62 @@
       "selectedTokenSets": {
         "siam-dark": "enabled"
       }
+    },
+    {
+      "id": "radius-sharp",
+      "name": "Sharp",
+      "group": "radius",
+      "selectedTokenSets": {
+        "radius-sharp": "enabled"
+      }
+    },
+    {
+      "id": "radius-standard",
+      "name": "Standard",
+      "group": "radius",
+      "selectedTokenSets": {
+        "radius-standard": "enabled"
+      }
+    },
+    {
+      "id": "radius-friendly",
+      "name": "Friendly",
+      "group": "radius",
+      "selectedTokenSets": {
+        "radius-friendly": "enabled"
+      }
+    },
+    {
+      "id": "radius-pill",
+      "name": "Pill",
+      "group": "radius",
+      "selectedTokenSets": {
+        "radius-pill": "enabled"
+      }
+    },
+    {
+      "id": "font-ibm",
+      "name": "IBM Plex Sans Thai",
+      "group": "font",
+      "selectedTokenSets": {
+        "font-ibm": "enabled"
+      }
+    },
+    {
+      "id": "font-prompt",
+      "name": "Prompt",
+      "group": "font",
+      "selectedTokenSets": {
+        "font-prompt": "enabled"
+      }
+    },
+    {
+      "id": "font-sarabun",
+      "name": "Sarabun",
+      "group": "font",
+      "selectedTokenSets": {
+        "font-sarabun": "enabled"
+      }
     }
   ],
   "$metadata": {
@@ -1316,7 +1372,200 @@
       "parich-light",
       "parich-dark",
       "siam-light",
-      "siam-dark"
+      "siam-dark",
+      "radius-sharp",
+      "radius-standard",
+      "radius-friendly",
+      "radius-pill",
+      "font-ibm",
+      "font-prompt",
+      "font-sarabun"
     ]
+  },
+  "radius-sharp": {
+    "radius-none": {
+      "value": "0",
+      "type": "borderRadius"
+    },
+    "radius-xs": {
+      "value": "2",
+      "type": "borderRadius"
+    },
+    "radius-2xl": {
+      "value": "16",
+      "type": "borderRadius"
+    },
+    "radius-3xl": {
+      "value": "24",
+      "type": "borderRadius"
+    },
+    "radius-4xl": {
+      "value": "32",
+      "type": "borderRadius"
+    },
+    "radius-full": {
+      "value": "9999",
+      "type": "borderRadius"
+    },
+    "radius-sm": {
+      "value": "0",
+      "type": "borderRadius"
+    },
+    "radius-md": {
+      "value": "0",
+      "type": "borderRadius"
+    },
+    "radius-lg": {
+      "value": "0",
+      "type": "borderRadius"
+    },
+    "radius-xl": {
+      "value": "4",
+      "type": "borderRadius"
+    }
+  },
+  "radius-standard": {
+    "radius-none": {
+      "value": "0",
+      "type": "borderRadius"
+    },
+    "radius-xs": {
+      "value": "2",
+      "type": "borderRadius"
+    },
+    "radius-2xl": {
+      "value": "16",
+      "type": "borderRadius"
+    },
+    "radius-3xl": {
+      "value": "24",
+      "type": "borderRadius"
+    },
+    "radius-4xl": {
+      "value": "32",
+      "type": "borderRadius"
+    },
+    "radius-full": {
+      "value": "9999",
+      "type": "borderRadius"
+    },
+    "radius-sm": {
+      "value": "6",
+      "type": "borderRadius"
+    },
+    "radius-md": {
+      "value": "8",
+      "type": "borderRadius"
+    },
+    "radius-lg": {
+      "value": "10",
+      "type": "borderRadius"
+    },
+    "radius-xl": {
+      "value": "14",
+      "type": "borderRadius"
+    }
+  },
+  "radius-friendly": {
+    "radius-none": {
+      "value": "0",
+      "type": "borderRadius"
+    },
+    "radius-xs": {
+      "value": "2",
+      "type": "borderRadius"
+    },
+    "radius-2xl": {
+      "value": "16",
+      "type": "borderRadius"
+    },
+    "radius-3xl": {
+      "value": "24",
+      "type": "borderRadius"
+    },
+    "radius-4xl": {
+      "value": "32",
+      "type": "borderRadius"
+    },
+    "radius-full": {
+      "value": "9999",
+      "type": "borderRadius"
+    },
+    "radius-sm": {
+      "value": "12",
+      "type": "borderRadius"
+    },
+    "radius-md": {
+      "value": "14",
+      "type": "borderRadius"
+    },
+    "radius-lg": {
+      "value": "16",
+      "type": "borderRadius"
+    },
+    "radius-xl": {
+      "value": "20",
+      "type": "borderRadius"
+    }
+  },
+  "radius-pill": {
+    "radius-none": {
+      "value": "0",
+      "type": "borderRadius"
+    },
+    "radius-xs": {
+      "value": "2",
+      "type": "borderRadius"
+    },
+    "radius-2xl": {
+      "value": "16",
+      "type": "borderRadius"
+    },
+    "radius-3xl": {
+      "value": "24",
+      "type": "borderRadius"
+    },
+    "radius-4xl": {
+      "value": "32",
+      "type": "borderRadius"
+    },
+    "radius-full": {
+      "value": "9999",
+      "type": "borderRadius"
+    },
+    "radius-sm": {
+      "value": "24",
+      "type": "borderRadius"
+    },
+    "radius-md": {
+      "value": "26",
+      "type": "borderRadius"
+    },
+    "radius-lg": {
+      "value": "28",
+      "type": "borderRadius"
+    },
+    "radius-xl": {
+      "value": "32",
+      "type": "borderRadius"
+    }
+  },
+  "font-ibm": {
+    "family/sans": {
+      "value": "IBM Plex Sans Thai",
+      "type": "fontFamilies"
+    }
+  },
+  "font-prompt": {
+    "family/sans": {
+      "value": "Prompt",
+      "type": "fontFamilies"
+    }
+  },
+  "font-sarabun": {
+    "family/sans": {
+      "value": "Sarabun",
+      "type": "fontFamilies"
+    }
   }
 }

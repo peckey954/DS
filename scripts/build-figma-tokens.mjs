@@ -279,6 +279,56 @@ console.log(
     .join(" · ")}`
 );
 
+/* ---- รวมความโค้งกับฟอนต์เข้า figma-tokens.json ด้วย ----------------
+   Tokens Studio import ทีเดียวได้ครบทั้ง 3 collection ไม่ต้องนำเข้าทีละไฟล์
+   ชื่อ collection ตั้งได้ด้วย FIGMA_RADIUS_COLLECTION / FIGMA_FONT_COLLECTION
+   ต้องตั้งให้ตรงกับ collection ที่ component ในไฟล์ Figma ผูกอยู่จริง
+   ไม่งั้น Tokens Studio จะสร้าง collection ใหม่ที่ไม่มีใครใช้ */
+const RADIUS_COLLECTION = process.env.FIGMA_RADIUS_COLLECTION ?? "radius";
+const FONT_COLLECTION = process.env.FIGMA_FONT_COLLECTION ?? "font";
+
+for (const [style, px] of Object.entries(radiusStyles)) {
+  const scale = {
+    ...FIXED_RADIUS,
+    "radius-sm": Math.max(0, px - 4),
+    "radius-md": Math.max(0, px - 2),
+    "radius-lg": px,
+    "radius-xl": px + 4,
+  };
+  const setName = `radius-${style}`;
+  out[setName] = Object.fromEntries(
+    Object.entries(scale).map(([k, v]) => [k, { value: String(v), type: "borderRadius" }])
+  );
+  out.$metadata.tokenSetOrder.push(setName);
+  out.$themes.push({
+    id: setName,
+    name: titled(style),
+    group: RADIUS_COLLECTION,
+    selectedTokenSets: { [setName]: "enabled" },
+  });
+}
+
+for (const [style, family] of Object.entries(fontStyles)) {
+  const setName = `font-${style}`;
+  out[setName] = { "family/sans": { value: family, type: "fontFamilies" } };
+  out.$metadata.tokenSetOrder.push(setName);
+  out.$themes.push({
+    id: setName,
+    name: family,
+    group: FONT_COLLECTION,
+    selectedTokenSets: { [setName]: "enabled" },
+  });
+}
+
+writeFileSync(
+  join(ROOT, "figma-tokens.json"),
+  JSON.stringify(out, null, 2) + "\n"
+);
+console.log(
+  `figma-tokens.json รวม ${Object.keys(out.$themes).length} ธีม ` +
+    `(collection: ${FIGMA_COLLECTION} · ${RADIUS_COLLECTION} · ${FONT_COLLECTION})`
+);
+
 console.table(summary);
 console.log(`\nเขียนไฟล์ figma-tokens.json แล้ว — ${setOrder.length} ชุด: ${setOrder.join(", ")}`);
 

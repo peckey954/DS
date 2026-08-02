@@ -28,47 +28,44 @@ pnpm tokens:figma      # สร้างไฟล์ใหม่ใน figma-imp
 
 ---
 
-## 1. นำเข้า variable (ประมาณ 20 นาที)
+## 1. นำเข้า variable ด้วย Tokens Studio (ประมาณ 15 นาที)
 
-### 1.1 สี — collection `mode`
+`figma-tokens.json` เป็นไฟล์ Tokens Studio ที่รวม **13 ชุด** ครบทั้งสามหมวดในไฟล์เดียว
+import ทีเดียวได้ 3 collection ไม่ต้องนำเข้าทีละโหมด
 
-ทำ 6 รอบ รอบละโหมด · โหมดละ **52 สี**
-
-| ไฟล์ | ลงคอลัมน์ |
-|---|---|
-| `figma-import/siam-light.dtcg.json` | Siam Light |
-| `figma-import/siam-dark.dtcg.json` | Siam Dark |
-| `figma-import/nara-light.dtcg.json` | Nara Light |
-| `figma-import/nara-dark.dtcg.json` | Nara Dark |
-| `figma-import/parich-light.dtcg.json` | Parich Light |
-| `figma-import/parich-dark.dtcg.json` | Parich Dark |
-
-วิธี: แผง **Variables** → เลือก collection **`mode`** → คลิกขวาหัวคอลัมน์ → **Import mode**
-
-ถ้าตัว import ไม่รับ `.dtcg.json` ให้ใช้ `.flat.json` แทน
-
-**ตรวจหลังทำ:** ต้องเห็น `success` `success-solid` `warning-solid` `danger` `brand` ในลิสต์
-
-### 1.2 ความโค้ง — collection ที่เก็บ `radius-*`
-
-| ไฟล์ | โหมด | ปุ่ม |
+| collection | mode | ที่มา |
 |---|---|---|
-| `radius-sharp` | Sharp | 0px |
-| `radius-standard` | Standard | 8px |
-| `radius-friendly` | Friendly | 14px |
-| `radius-pill` | Pill | แคปซูล |
+| `mode` | Siam/Nara/Parich x Light/Dark = 6 | สี 52 ตัวต่อโหมด |
+| `radius` | Sharp · Standard · Friendly · Pill | `radius-sm/md/lg/xl` + ค่าคงที่ของ Tailwind |
+| `font` | IBM Plex Sans Thai · Prompt · Sarabun | `family/sans` |
 
-### 1.3 ฟอนต์ — `tw/font` → `family/sans`
+### ขั้นตอน
 
-| ไฟล์ | ค่า |
-|---|---|
-| `font-ibm` | IBM Plex Sans Thai |
-| `font-prompt` | Prompt |
-| `font-sarabun` | Sarabun |
+1. เปิดปลั๊กอิน **Tokens Studio for Figma** ในไฟล์ที่ต้องการ
+2. เมนู **Tools → Load from file/folder** → เลือก `figma-tokens.json`
+3. ไปแท็บ **Themes** จะเห็น 13 ธีมจัดกลุ่มเป็น 3 collection ตามตารางข้างบน
+4. กด **Export to Figma** → เลือกทุกธีม → ยืนยัน
 
-**ตอนนี้ในไฟล์คุณยังเป็น `Inter` อยู่** (ตรวจด้วย MCP แล้ว) ต้องเปลี่ยนข้อนี้
+### ก่อนกด Export ต้องเช็คชื่อ collection ให้ตรงก่อน
 
----
+เปิดแผง **Variables** ในไฟล์ Figma แล้วดูว่า collection ที่ component ผูกอยู่ชื่ออะไรจริง ๆ
+ถ้าไม่ตรงกับ `mode` / `radius` / `font` ให้สร้างไฟล์ใหม่ด้วยชื่อที่ถูก
+
+```bash
+FIGMA_COLLECTION=<ชื่อจริง> \
+FIGMA_RADIUS_COLLECTION=<ชื่อจริง> \
+FIGMA_FONT_COLLECTION=<ชื่อจริง> \
+pnpm tokens:figma
+```
+
+**นี่คือจุดที่พลาดบ่อยที่สุด** ถ้าชื่อไม่ตรง Tokens Studio จะสร้าง collection ใหม่ที่
+ไม่มีใครใช้ Export ขึ้นเขียวหมดแต่สีใน Figma ไม่เปลี่ยนสักนิด เพราะ Figma ผูก
+component กับ variable ด้วย **ID ไม่ใช่ชื่อ**
+
+### ถ้าไม่อยากใช้ Tokens Studio
+
+ในโฟลเดอร์ `figma-import/` มีไฟล์แยกรายโหมดให้ใช้กับปลั๊กอินตัวอื่นหรือ Import mode
+ของ Figma — `*.dtcg.json` (มาตรฐาน W3C) และ `*.flat.json` (คู่ชื่อกับค่า)
 
 ## 2. ตั้งค่าไฟล์ (5 นาที)
 
@@ -151,6 +148,25 @@ property `Tone` (5) x `Appearance` (3) = **15 variant**
 - [ ] Alert แบบ Destructive เป็นแดงชัด (ไม่ใช่ม่วง/น้ำตาล) ในโหมดมืด
 
 ---
+
+## 5.5 ทำงานสองทาง — VS Code กับ Figma MCP
+
+**MCP ของ Figma อ่านได้อย่างเดียว เขียนไม่ได้** สร้าง variable หรือ component ให้ไม่ได้
+ข้อ 1-3 จึงต้องทำมือเสมอ แต่หลังจากนั้นใช้ MCP ได้เต็มที่
+
+| ทิศทาง | ทำได้ | วิธี |
+|---|---|---|
+| โค้ด -> Figma | ค่า token | `pnpm tokens:figma` แล้ว import |
+| โค้ด -> Figma | component | ทำมือ ใช้ตารางในข้อ 3 |
+| Figma -> โค้ด | อ่านดีไซน์แล้วเขียนโค้ด | ส่งลิงก์ frame ให้ AI แล้วให้ใช้ `get_design_context` |
+| Figma -> โค้ด | ตรวจว่า variable ตรงกับโค้ดไหม | `get_variable_defs` แล้วเทียบกับ `figma-tokens.json` |
+
+**วิธีให้สองฝั่งตรงกันเสมอ** — หลัง import ทุกครั้ง ให้ส่งลิงก์ node มาแล้วสั่งว่า
+"ตรวจว่า variable ใน Figma ตรงกับ figma-tokens.json ไหม" AI จะอ่านผ่าน MCP แล้วเทียบ
+ให้ทีละตัว เจอตัวไหนไม่ตรงจะบอกชื่อกับค่าที่ควรเป็น
+
+**เวลาให้ AI ออกแบบหน้าใหม่ใน Figma แล้วแปลงเป็นโค้ด** ต้องบอกให้มันอ่าน
+`AGENTS.md` ก่อนเสมอ ไม่งั้นมันจะเขียน component ขึ้นมาใหม่แทนที่จะใช้ของที่มีอยู่แล้ว
 
 ## 6. เมื่อ DS เปลี่ยนอีกในอนาคต
 
