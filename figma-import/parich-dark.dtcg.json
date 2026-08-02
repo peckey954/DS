@@ -97,7 +97,7 @@
   },
   "danger-foreground": {
     "$type": "color",
-    "$value": "#F79C9C"
+    "$value": "#FFFFFF"
   },
   "danger-border": {
     "$type": "color",

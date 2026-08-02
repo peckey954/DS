@@ -307,7 +307,7 @@
       "type": "color"
     },
     "danger-foreground": {
-      "value": "#f79c9c",
+      "value": "#ffffff",
       "type": "color"
     },
     "danger-border": {
@@ -727,7 +727,7 @@
       "type": "color"
     },
     "danger-foreground": {
-      "value": "#f79c9c",
+      "value": "#ffffff",
       "type": "color"
     },
     "danger-border": {
@@ -1147,7 +1147,7 @@
       "type": "color"
     },
     "danger-foreground": {
-      "value": "#f79c9c",
+      "value": "#ffffff",
       "type": "color"
     },
     "danger-border": {
