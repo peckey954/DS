@@ -27,7 +27,13 @@ function Swatch({ brand }: { brand: Brand }) {
     <span
       data-brand={brand}
       aria-hidden
-      className="size-3 shrink-0 rounded-full bg-primary ring-1 ring-border"
+      // ไม่ใส่เส้นวงรอบจุด ด้วยสองเหตุผล
+      // 1. ring วาดอยู่นอกกล่อง แต่จุดนี้ชิดขอบซ้ายของ SelectValue ซึ่งมี
+      //    overflow:hidden เส้นฝั่งซ้ายเลยโดนตัดหายไป 1px ดูเหมือนวงกลมแหว่ง
+      // 2. span นี้ไม่ได้รับ class dark (มันอยู่บน <html>) token จึงคลี่เป็นค่า
+      //    โหมดสว่างเสมอ เส้นวงจะกลายเป็นสีอ่อนเด่นผิดที่เวลาอยู่โหมดมืด
+      // สีหลักของทุกแบรนด์อิ่มพอที่จะเห็นชัดบนทั้งพื้นขาวและพื้นดำอยู่แล้ว
+      className="size-3 shrink-0 rounded-full bg-primary"
     />
   );
 }
