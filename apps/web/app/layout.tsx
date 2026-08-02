@@ -4,7 +4,7 @@ import { Providers } from "@/components/providers";
 import "./globals.css";
 
 // ฟอนต์ไทยของแต่ละแบรนด์ — ผูกไว้กับ CSS variable
-// token ของแบรนด์ (siam/nara) จะเลือกว่าจะใช้ตัวไหนผ่าน --font-sans
+// token ของแบรนด์ (blue/green) จะเลือกว่าจะใช้ตัวไหนผ่าน --font-sans
 const ibmThai = IBM_Plex_Sans_Thai({
   subsets: ["thai", "latin"],
   weight: ["400", "500", "600", "700"],
@@ -39,7 +39,7 @@ export default function RootLayout({
   return (
     <html
       lang="th"
-      data-brand="siam"
+      data-brand="blue"
       suppressHydrationWarning
       className={`${ibmThai.variable} ${prompt.variable} ${sarabun.variable}`}
     >

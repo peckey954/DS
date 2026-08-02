@@ -17,21 +17,21 @@ import **หลัง** `@peckey954/ui/globals.css` เสมอ:
 
 ```css
 @import "@peckey954/ui/globals.css";
-@import "@peckey954/tokens/siam.css";
+@import "@peckey954/tokens/blue.css";
 ```
 
 แล้วตั้ง `data-brand` บน `<html>` ให้ตรงกับชื่อแบรนด์:
 
 ```tsx
-<html data-brand="siam">
+<html data-brand="blue">
 ```
 
 ## แบรนด์ที่มีให้
 
 | ไฟล์ | สีหลัก | ฟอนต์ |
 |---|---|---|
-| `siam.css` | น้ำเงิน | IBM Plex Sans Thai |
-| `nara.css` | เขียวมรกต | Prompt |
+| `blue.css` | น้ำเงิน | IBM Plex Sans Thai |
+| `green.css` | เขียวมรกต | Prompt |
 | `parich.css` | ส้ม `#F97316` | Sarabun |
 
 โหมดมืดใช้ selector `[data-brand="..."].dark` — ใช้คู่กับ `next-themes` ที่ตั้ง

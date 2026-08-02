@@ -1,10 +1,10 @@
 /* ============================================================
-   Brand: SIAM  (สีน้ำเงิน + ฟอนต์ IBM Plex Sans Thai)
-   scope ด้วย [data-brand="siam"]  ·  .dark = โหมดมืด
+   Brand: BLUE  (สีน้ำเงิน + ฟอนต์ IBM Plex Sans Thai)
+   scope ด้วย [data-brand="blue"]  ·  .dark = โหมดมืด
    แก้ค่าตรงนี้ = เปลี่ยนทั้งแบรนด์ (component ไม่ต้องแตะ)
    ============================================================ */
 
-[data-brand="siam"] {
+[data-brand="blue"] {
   --background: hsl(0 0% 100%);
   --foreground: hsl(222 47% 11%);
 
@@ -107,7 +107,7 @@
   --sidebar-ring: hsl(221 83% 53%);
 }
 
-[data-brand="siam"].dark {
+[data-brand="blue"].dark {
   --background: hsl(222 47% 8%);
   --foreground: hsl(210 40% 98%);
 

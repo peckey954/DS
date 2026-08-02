@@ -71,7 +71,7 @@ export default nextConfig;
 @import "@peckey954/ui/globals.css";
 
 /* ค่าจริงของแบรนด์ที่โปรเจกต์นี้ใช้ */
-@import "@peckey954/tokens/siam.css";
+@import "@peckey954/tokens/blue.css";
 
 /* ให้ Tailwind สแกนหา class ที่ใช้อยู่ในโค้ดของไลบรารี */
 @source "../node_modules/@peckey954/ui/src";
@@ -92,7 +92,7 @@ export default nextConfig;
 ```tsx
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="th" data-brand="siam">
+    <html lang="th" data-brand="blue">
       <body className="min-h-screen bg-background text-foreground font-sans antialiased">
         {children}
       </body>
@@ -150,8 +150,8 @@ pnpm dlx shadcn@latest add https://ds-web-iota.vercel.app/r/theme.json
 | ไฟล์ | คืออะไร |
 |---|---|
 | `ds-theme.css` | คำศัพท์กลาง แมป token เข้า Tailwind — **ต้องมี** |
-| `brand-siam.css` | ค่าสีแบรนด์ Siam |
-| `brand-nara.css` | ค่าสีแบรนด์ Nara |
+| `brand-blue.css` | ค่าสีแบรนด์ Blue |
+| `brand-green.css` | ค่าสีแบรนด์ Green |
 
 แล้วแก้ `app/globals.css`:
 
@@ -159,10 +159,10 @@ pnpm dlx shadcn@latest add https://ds-web-iota.vercel.app/r/theme.json
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "../styles/ds-theme.css";
-@import "../styles/brand-siam.css";
+@import "../styles/brand-blue.css";
 ```
 
-พร้อมตั้ง `data-brand="siam"` บน `<html>` เหมือนแนวทาง A
+พร้อมตั้ง `data-brand="blue"` บน `<html>` เหมือนแนวทาง A
 
 ## 3. ติดตั้ง component ที่ต้องการ
 
@@ -203,7 +203,7 @@ pnpm dlx shadcn@latest add https://ds-web-iota.vercel.app/r/button.json --overwr
 
 ## 1. สร้างไฟล์ token ของตัวเอง
 
-ก็อป `@peckey954/tokens/siam.css` (หรือ `styles/brand-siam.css` ถ้าใช้แนวทาง B)
+ก็อป `@peckey954/tokens/blue.css` (หรือ `styles/brand-blue.css` ถ้าใช้แนวทาง B)
 มาเป็น `app/brand.css` แล้วเปลี่ยนค่า:
 
 ```css

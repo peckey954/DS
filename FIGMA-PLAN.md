@@ -35,7 +35,7 @@ import ทีเดียวได้ 3 collection ไม่ต้องนำ�
 
 | collection | mode | ที่มา |
 |---|---|---|
-| `mode` | Siam/Nara/Parich x Light/Dark = 6 | สี 52 ตัวต่อโหมด |
+| `mode` | Blue/Green/Parich x Light/Dark = 6 | สี 52 ตัวต่อโหมด |
 | `radius` | Sharp · Standard · Friendly · Pill | `radius-sm/md/lg/xl` + ค่าคงที่ของ Tailwind |
 | `font` | IBM Plex Sans Thai · Prompt · Sarabun | `family/sans` |
 

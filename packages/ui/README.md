@@ -29,14 +29,14 @@ export default { transpilePackages: ["@peckey954/ui"] };
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "@peckey954/ui/globals.css";
-@import "@peckey954/tokens/siam.css";
+@import "@peckey954/tokens/blue.css";
 @source "../node_modules/@peckey954/ui/src";
 ```
 
 `app/layout.tsx` — ตั้ง `data-brand` ให้ตรงกับไฟล์ token:
 
 ```tsx
-<html lang="th" data-brand="siam">
+<html lang="th" data-brand="blue">
 ```
 
 ## ใช้งาน

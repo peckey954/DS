@@ -57,7 +57,7 @@ pnpm tokens:figma
 ```
 
 จะได้ไฟล์ `figma-tokens.json` ที่ root ซึ่งแปลง `hsl()` เป็น hex ให้แล้ว
-พร้อมแยกเป็นชุด `siam-light` `siam-dark` `nara-light` `nara-dark`
+พร้อมแยกเป็นชุด `blue-light` `blue-dark` `green-light` `green-dark`
 
 จากนั้นใน Figma:
 

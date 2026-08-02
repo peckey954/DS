@@ -260,12 +260,12 @@ style={{ color: "#333" }}        // inline style สี
 (วัดค่าต่าง R-G-B ของสีพื้น: `pure` 0 · `blend` 7-14)
 
 **ถ้าไม่ใส่ `data-tint` เลยจะได้สีกลางของแบรนด์ตามที่ไฟล์แบรนด์เขียนไว้** ซึ่งแต่ละ
-แบรนด์จูนด้วยมือ ไม่เท่ากัน — siam โหมดมืดผสม 19 แต่ parich โหมดมืดผสมแค่ 6
+แบรนด์จูนด้วยมือ ไม่เท่ากัน — blue โหมดมืดผสม 19 แต่ parich โหมดมืดผสมแค่ 6
 และโหมดสว่างทุกแบรนด์แทบไม่ผสมเลย **ถ้าต้องการระดับที่แน่นอน ให้ใส่ `data-tint` เสมอ**
 
 ค่าอยู่ที่ `packages/tokens/src/tint.css` ต้อง `@import` **หลัง** ไฟล์แบรนด์
 และ selector ต้องขึ้นต้นด้วย `html` เพื่อให้ specificity ชนะไฟล์แบรนด์
-(`html[data-tint="pure"]` = 0,1,1 ชนะ `[data-brand="siam"]` = 0,1,0)
+(`html[data-tint="pure"]` = 0,1,1 ชนะ `[data-brand="blue"]` = 0,1,0)
 
 **`tint.css` ไม่เข้า Figma** เพราะ `color-mix()` แปลงเป็น hex ตายตัวไม่ได้
 `scripts/build-figma-tokens.mjs` จึงข้ามไฟล์นี้ไว้ใน `NOT_BRAND_FILES`
@@ -436,19 +436,19 @@ component ที่รับ prop `className` ต้องส่งผ่าน 
 **ห้ามแก้สีในตัว component เด็ดขาด**
 
 ```
-packages/tokens/src/siam.css   → [data-brand="siam"]  = light
-                                 [data-brand="siam"].dark = dark
-packages/tokens/src/nara.css   → [data-brand="nara"]  / .dark
+packages/tokens/src/blue.css   → [data-brand="blue"]  = light
+                                 [data-brand="blue"].dark = dark
+packages/tokens/src/green.css   → [data-brand="green"]  / .dark
 ```
 
 - เปลี่ยนฟอนต์: โหลดใน `apps/web/app/layout.tsx` ด้วย `next/font/google`
   (ต้องมี `subsets: ["thai", "latin"]`) ตั้ง `variable` แล้วชี้ `--font-sans` ของแบรนด์ไปที่ variable นั้น
-  ปัจจุบัน Siam ใช้ `IBM Plex Sans Thai`, Nara ใช้ `Prompt`
+  ปัจจุบัน Blue ใช้ `IBM Plex Sans Thai`, Green ใช้ `Prompt`
 - เพิ่ม token ใหม่: ต้องเพิ่ม **ครบทั้ง 3 ที่**
   1. ค่าจริงในไฟล์แบรนด์ทุกไฟล์ (ทั้งบล็อก light และ `.dark`)
   2. แมปชื่อใน `@theme inline` ที่ `packages/ui/src/styles/globals.css`
   3. ใช้งานผ่านชื่อ class กลางใน component
-- เพิ่มแบรนด์ใหม่: copy `siam.css` → `brandx.css`, เปลี่ยน selector เป็น `[data-brand="brandx"]`,
+- เพิ่มแบรนด์ใหม่: copy `blue.css` → `brandx.css`, เปลี่ยน selector เป็น `[data-brand="brandx"]`,
   `@import` ใน `apps/web/app/globals.css`, เพิ่ม 1 บรรทัดใน `BRANDS` ที่ `apps/web/components/providers.tsx`
 
 ### 5. dark / light จัดการด้วย token — เขียนสีชุดเดียวพอ
@@ -488,7 +488,7 @@ pnpm dlx shadcn@latest add <name>
 - [ ] ไม่มี arbitrary color `bg-[...]` / `text-[...]`
 - [ ] ทุก className ที่ต่อกันแบบมีเงื่อนไข ใช้ `cn()`
 - [ ] component ที่ใช้ import จาก `@peckey954/ui/components/ui/*` ไม่ใช่เขียนเอง
-- [ ] สลับ Siam ↔ Nara และ light ↔ dark แล้วหน้าตายังถูกต้อง
+- [ ] สลับ Blue ↔ Green และ light ↔ dark แล้วหน้าตายังถูกต้อง
 
 ตรวจเร็ว ๆ ด้วย:
 
@@ -516,5 +516,5 @@ pnpm lint
 
 - [README.md](README.md) — ภาพรวมโปรเจกต์ + วิธี sync กับ Figma
 - [packages/ui/src/styles/globals.css](packages/ui/src/styles/globals.css) — รายชื่อ token กลางทั้งหมด
-- [packages/tokens/src/siam.css](packages/tokens/src/siam.css) — ตัวอย่างค่าจริงของแบรนด์
+- [packages/tokens/src/blue.css](packages/tokens/src/blue.css) — ตัวอย่างค่าจริงของแบรนด์
 - [apps/web/app/layout.tsx](apps/web/app/layout.tsx) — การโหลดฟอนต์ + `data-brand`

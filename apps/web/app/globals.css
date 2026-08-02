@@ -7,8 +7,8 @@
 @import "@peckey954/ui/globals.css";
 
 /* 2) ค่าจริงของแต่ละแบรนด์ (โหลดทั้งคู่ แล้วสลับด้วย data-brand) */
-@import "@peckey954/tokens/siam.css";
-@import "@peckey954/tokens/nara.css";
+@import "@peckey954/tokens/blue.css";
+@import "@peckey954/tokens/green.css";
 @import "@peckey954/tokens/parich.css";
 
 /* 3) แกนสไตล์ (โทนสีพื้น / ความโค้ง / ความห่าง) — ต้องมาหลังไฟล์แบรนด์ */

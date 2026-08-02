@@ -28,8 +28,8 @@
     "src"
   ],
   "exports": {
-    "./siam.css": "./src/siam.css",
-    "./nara.css": "./src/nara.css",
+    "./blue.css": "./src/blue.css",
+    "./green.css": "./src/green.css",
     "./parich.css": "./src/parich.css",
     "./styles.css": "./src/styles.css",
     "./tint.css": "./src/tint.css"

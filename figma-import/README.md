@@ -11,7 +11,7 @@
 
 | ไฟล์ | จำนวน | ใส่ลง collection |
 |---|---|---|
-| `siam-light` … `parich-dark` | 6 | `mode` |
+| `blue-light` … `parich-dark` | 6 | `mode` |
 | `radius-sharp` … `radius-pill` | 4 | ความโค้ง |
 | `font-ibm` `font-prompt` `font-sarabun` | 3 | ฟอนต์ (`family/sans`) |
 

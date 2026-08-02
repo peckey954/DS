@@ -51,7 +51,7 @@ https://raw.githubusercontent.com/peckey954/DS/main/AGENTS.md
    บรรทัด @source ขาดไม่ได้ ไม่งั้น component จะไม่มีสไตล์เลย
 
 5. สร้าง app/brand.css โดยก็อปโครงทั้งไฟล์จาก
-   node_modules/@peckey954/tokens/src/siam.css มาแก้ค่าสี
+   node_modules/@peckey954/tokens/src/blue.css มาแก้ค่าสี
    - เปลี่ยน selector เป็น [data-brand="acme"] และ [data-brand="acme"].dark
    - ต้องประกาศ CSS variable ให้ครบทุกตัวเหมือนไฟล์ต้นฉบับ ห้ามขาดตัวไหน
    - สี hover: โหมดสว่างให้เข้มขึ้น โหมดมืดให้สว่างขึ้น
@@ -72,7 +72,7 @@ https://raw.githubusercontent.com/peckey954/DS/main/AGENTS.md
 
 9. ตรวจก่อนบอกว่าเสร็จ:
    - pnpm build ต้องผ่าน
-   - pnpm dev แล้วเปิดหน้าเว็บจริง ยืนยันว่าสีเป็นสีแบรนด์เรา ไม่ใช่สีน้ำเงินของ Siam
+   - pnpm dev แล้วเปิดหน้าเว็บจริง ยืนยันว่าสีเป็นสีแบรนด์เรา ไม่ใช่สีน้ำเงินของ Blue
    - สลับ dark mode แล้วสียังถูกต้อง
    - ฟอนต์ไทยขึ้นเป็นฟอนต์ที่เลือก ไม่ใช่ฟอนต์สำรอง
 
@@ -88,14 +88,14 @@ https://raw.githubusercontent.com/peckey954/DS/main/AGENTS.md
 ## เมื่อไหร่ต้องกลับมาแก้ไฟล์นี้
 
 คำสั่งข้างบนเขียนแบบ **ชี้ไปหาของจริง** ไม่ได้ก็อปค่ามาแปะ เช่นขั้นที่ 5 สั่งให้ไปอ่าน
-`siam.css` จาก `node_modules` แทนที่จะเขียนรายชื่อ CSS variable ไว้ในนี้
+`blue.css` จาก `node_modules` แทนที่จะเขียนรายชื่อ CSS variable ไว้ในนี้
 เพราะฉะนั้น DS เปลี่ยนอะไรส่วนใหญ่ **ไม่ต้องแก้ไฟล์นี้เลย**
 
 | เปลี่ยนอะไรใน DS | ต้องแก้ไฟล์นี้ไหม |
 |---|---|
 | เพิ่ม / แก้ / ลบ component | ❌ ไม่ต้อง |
 | เพิ่ม token ใหม่ (เช่น `--primary-hover`) | ❌ ไม่ต้อง — ก็อปมาจากไฟล์จริงอยู่แล้ว |
-| เปลี่ยนสีของ siam / nara | ❌ ไม่ต้อง |
+| เปลี่ยนสีของ blue / green | ❌ ไม่ต้อง |
 | แก้บั๊ก ปรับ spacing | ❌ ไม่ต้อง |
 | **เพิ่ม peer dependency ใหม่** | ✅ ต้อง — เพิ่มในขั้นที่ 2 |
 | **เปลี่ยนโครงสร้าง / ลำดับการ import CSS** | ✅ ต้อง — แก้ขั้นที่ 4 |

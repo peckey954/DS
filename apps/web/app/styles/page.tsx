@@ -62,8 +62,8 @@ const TINT = [
 ] as const;
 
 const FONT = [
-  { id: "ibm", label: "IBM Plex Thai", hint: "ฟอนต์เดิมของ Siam" },
-  { id: "prompt", label: "Prompt", hint: "ฟอนต์เดิมของ Nara" },
+  { id: "ibm", label: "IBM Plex Thai", hint: "ฟอนต์เดิมของ Blue" },
+  { id: "prompt", label: "Prompt", hint: "ฟอนต์เดิมของ Green" },
   { id: "sarabun", label: "Sarabun", hint: "ฟอนต์เดิมของ Parich" },
 ] as const;
 

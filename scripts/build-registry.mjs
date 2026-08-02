@@ -139,16 +139,16 @@ items.push({
       target: "styles/ds-theme.css",
     },
     {
-      path: "styles/brand-siam.css",
-      content: readFileSync(join(TOKENS_SRC, "siam.css"), "utf8"),
+      path: "styles/brand-blue.css",
+      content: readFileSync(join(TOKENS_SRC, "blue.css"), "utf8"),
       type: "registry:file",
-      target: "styles/brand-siam.css",
+      target: "styles/brand-blue.css",
     },
     {
-      path: "styles/brand-nara.css",
-      content: readFileSync(join(TOKENS_SRC, "nara.css"), "utf8"),
+      path: "styles/brand-green.css",
+      content: readFileSync(join(TOKENS_SRC, "green.css"), "utf8"),
       type: "registry:file",
-      target: "styles/brand-nara.css",
+      target: "styles/brand-green.css",
     },
   ],
 });

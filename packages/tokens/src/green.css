@@ -1,9 +1,9 @@
 /* ============================================================
-   Brand: NARA  (สีเขียวมรกต + ฟอนต์ Prompt + มุมโค้งมากขึ้น)
-   scope ด้วย [data-brand="nara"]  ·  .dark = โหมดมืด
+   Brand: GREEN  (สีเขียวมรกต + ฟอนต์ Prompt + มุมโค้งมากขึ้น)
+   scope ด้วย [data-brand="green"]  ·  .dark = โหมดมืด
    ============================================================ */
 
-[data-brand="nara"] {
+[data-brand="green"] {
   --background: hsl(150 20% 99%);
   --foreground: hsl(160 30% 12%);
 
@@ -105,7 +105,7 @@
   --sidebar-ring: hsl(160 84% 39%);
 }
 
-[data-brand="nara"].dark {
+[data-brand="green"].dark {
   --background: hsl(165 30% 6%);
   --foreground: hsl(150 20% 96%);
 

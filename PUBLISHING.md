@@ -19,7 +19,7 @@ repo นี้คือ **ตัวกลาง** ของดีไซน์ท
 | แพ็กเกจ | เนื้อหา |
 |---|---|
 | `@peckey954/ui` | component ทั้ง 55 ตัว + `cn()` + คำศัพท์กลาง (`globals.css`) |
-| `@peckey954/tokens` | ค่าสี/ฟอนต์/radius ของแบรนด์ Siam และ Nara |
+| `@peckey954/tokens` | ค่าสี/ฟอนต์/radius ของแบรนด์ Blue และ Green |
 
 > เรา ship เป็น **source code** (ไม่ได้ build เป็น JS ล่วงหน้า) โปรเจกต์ปลายทาง
 > จึงต้องตั้ง `transpilePackages` ใน `next.config`

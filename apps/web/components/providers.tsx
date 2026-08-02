@@ -6,16 +6,16 @@ import { Toaster } from "@peckey954/ui/components/ui/sonner";
 
 /* ---------------------------------- แบรนด์ --------------------------------- */
 
-export type Brand = "siam" | "nara" | "parich";
+export type Brand = "blue" | "green" | "parich";
 
 /** เพิ่มแบรนด์ใหม่ = เพิ่ม 1 บรรทัดตรงนี้ (หลังสร้างไฟล์ token แล้ว) */
-/* เรียกด้วยชื่อสี เพราะผู้ใช้จำสีได้ง่ายกว่าชื่อแบรนด์
-   id ยังเป็น siam/nara/parich เหมือนเดิม ไฟล์ token กับ data-brand จึงไม่ต้องแก้
-   labelEn ไว้ให้ตอนสลับเป็นภาษาอังกฤษ */
+/* blue กับ green เป็นชุดสีตัวอย่าง จึงเรียกด้วยชื่อสีตรง ๆ
+   ส่วน parich เป็นแบรนด์จริง จึงเรียกด้วยชื่อแบรนด์ ไม่ใช่ "ส้ม"
+   เพราะวันหนึ่งแบรนด์อาจเปลี่ยนสีหลัก แต่ชื่อแบรนด์ไม่เปลี่ยน */
 export const BRANDS: { id: Brand; label: string; labelEn: string }[] = [
-  { id: "siam", label: "น้ำเงิน", labelEn: "Blue" },
-  { id: "nara", label: "เขียว", labelEn: "Green" },
-  { id: "parich", label: "ส้ม", labelEn: "Orange" },
+  { id: "blue", label: "น้ำเงิน", labelEn: "Blue" },
+  { id: "green", label: "เขียว", labelEn: "Green" },
+  { id: "parich", label: "Parich", labelEn: "Parich" },
 ];
 
 type BrandContextValue = {
@@ -32,7 +32,7 @@ export function useBrand() {
 }
 
 function BrandProvider({ children }: { children: React.ReactNode }) {
-  const [brand, setBrand] = React.useState<Brand>("siam");
+  const [brand, setBrand] = React.useState<Brand>("blue");
 
   React.useEffect(() => {
     // สลับแบรนด์ = แค่เปลี่ยน data-brand บน <html>
