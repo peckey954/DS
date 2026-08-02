@@ -6,8 +6,14 @@
 ## มีอะไรบ้าง
 
 3 แบรนด์ × 2 โหมด × 2 รูปแบบ ทุกไฟล์มีเฉพาะ **สี** (43 ตัว)
-ส่วน `radius` และ `font-sans` อยู่คนละ collection ใน Figma จึงไม่ได้ใส่มาด้วย
-(ไฟล์ `radius-*.json` แยกไว้ต่างหากสำหรับ collection ของความโค้ง)
+ส่วน `radius` และ `font-sans` เป็นแกนสไตล์แยก ไม่ได้อยู่ในไฟล์แบรนด์แล้ว
+จึงออกมาเป็นไฟล์ของตัวเอง สำหรับ collection คนละอันใน Figma
+
+| ไฟล์ | จำนวน | ใส่ลง collection |
+|---|---|---|
+| `siam-light` … `parich-dark` | 6 | `mode` |
+| `radius-sharp` … `radius-pill` | 4 | ความโค้ง |
+| `font-ibm` `font-prompt` `font-sarabun` | 3 | ฟอนต์ (`family/sans`) |
 
 | นามสกุล | รูปแบบ | ใช้กับ |
 |---|---|---|

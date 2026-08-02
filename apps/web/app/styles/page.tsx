@@ -58,13 +58,19 @@ const DENSITY = [
 
 const TINT = [
   { id: "pure", label: "แยกสี", hint: "Pure · เทาแท้ ไม่ผสม" },
-  { id: "soft", label: "ผสมบาง", hint: "Soft · ผสมนิดเดียว" },
-  { id: "deep", label: "ผสมเข้ม", hint: "Deep · ผสมชัด" },
+  { id: "blend", label: "ผสมแบรนด์", hint: "Blend · ผสมสีแบรนด์" },
+] as const;
+
+const FONT = [
+  { id: "ibm", label: "IBM Plex Thai", hint: "ฟอนต์เดิมของ Siam" },
+  { id: "prompt", label: "Prompt", hint: "ฟอนต์เดิมของ Nara" },
+  { id: "sarabun", label: "Sarabun", hint: "ฟอนต์เดิมของ Parich" },
 ] as const;
 
 type Radius = (typeof RADIUS)[number]["id"];
 type Density = (typeof DENSITY)[number]["id"];
 type Tint = (typeof TINT)[number]["id"];
+type Font = (typeof FONT)[number]["id"];
 
 /** ปุ่มเลือกของแถบควบคุม — ตั้งใจไม่ใช้ token ขนาด จะได้ไม่ย่อขยายตามที่กำลังทดสอบ */
 function Choice({
@@ -98,7 +104,8 @@ function Choice({
 export default function StylesPreview() {
   const [radius, setRadius] = React.useState<Radius>("standard");
   const [density, setDensity] = React.useState<Density>("standard");
-  const [tint, setTint] = React.useState<Tint>("deep");
+  const [tint, setTint] = React.useState<Tint>("blend");
+  const [font, setFont] = React.useState<Font>("ibm");
   const [measured, setMeasured] = React.useState<Record<string, string>>({});
   const sampleRef = React.useRef<HTMLButtonElement>(null);
   const iconRef = React.useRef<HTMLButtonElement>(null);
@@ -107,7 +114,8 @@ export default function StylesPreview() {
     document.documentElement.dataset.radius = radius;
     document.documentElement.dataset.density = density;
     document.documentElement.dataset.tint = tint;
-  }, [radius, density, tint]);
+    document.documentElement.dataset.font = font;
+  }, [radius, density, tint, font]);
 
   // วัดค่าจริงหลังเรนเดอร์ เพื่อให้เห็นตัวเลขไม่ใช่แค่ความรู้สึก
   React.useEffect(() => {
@@ -126,7 +134,7 @@ export default function StylesPreview() {
       });
     });
     return () => cancelAnimationFrame(id);
-  }, [radius, density, tint]);
+  }, [radius, density, tint, font]);
 
   return (
     <div className="min-h-screen">
@@ -138,7 +146,7 @@ export default function StylesPreview() {
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <div>
               <h1 className="text-base font-semibold">
-                ทดลองสไตล์ — โทนสีพื้น × ความโค้ง × ความห่าง
+                ทดลองสไตล์ — โทนสีพื้น × ฟอนต์ × ความโค้ง × ความห่าง
               </h1>
               <p className="text-sm text-muted-foreground">
                 กดสลับแล้วดูว่า component เปลี่ยนยังไง สลับแบรนด์กับโหมดมืดได้ด้วย
@@ -150,20 +158,38 @@ export default function StylesPreview() {
             </div>
           </div>
 
-          <div className="mb-3">
-            <p className="mb-1.5 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-              โทนสีพื้น
-            </p>
-            <div className="flex gap-2">
-              {TINT.map((t) => (
-                <Choice
-                  key={t.id}
-                  active={tint === t.id}
-                  onClick={() => setTint(t.id)}
-                  label={t.label}
-                  hint={t.hint}
-                />
-              ))}
+          <div className="mb-3 grid gap-3 sm:grid-cols-2">
+            <div>
+              <p className="mb-1.5 text-xs font-medium tracking-wide text-muted-foreground uppercase">
+                โทนสีพื้น
+              </p>
+              <div className="flex gap-2">
+                {TINT.map((t) => (
+                  <Choice
+                    key={t.id}
+                    active={tint === t.id}
+                    onClick={() => setTint(t.id)}
+                    label={t.label}
+                    hint={t.hint}
+                  />
+                ))}
+              </div>
+            </div>
+            <div>
+              <p className="mb-1.5 text-xs font-medium tracking-wide text-muted-foreground uppercase">
+                ฟอนต์
+              </p>
+              <div className="flex gap-2">
+                {FONT.map((f) => (
+                  <Choice
+                    key={f.id}
+                    active={font === f.id}
+                    onClick={() => setFont(f.id)}
+                    label={f.label}
+                    hint={f.hint}
+                  />
+                ))}
+              </div>
             </div>
           </div>
 

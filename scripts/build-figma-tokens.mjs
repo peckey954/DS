@@ -253,6 +253,32 @@ console.log(
     .join(" · ")}`
 );
 
+/* --------------------- ไฟล์ฟอนต์ สำหรับ Figma ---------------------- */
+/* ฟอนต์ย้ายออกจากไฟล์แบรนด์มาเป็นแกน data-font แล้ว จึงต้องอ่านจาก styles.css
+   เหมือนที่ทำกับความโค้ง ไม่งั้น Figma จะไม่มี variable ฟอนต์เลย */
+const fontStyles = {};
+for (const m of stylesCss.matchAll(
+  /html\[data-font="([^"]+)"\]\s*\{[^}]*?--font-sans:\s*var\((--font-[a-z-]+)\)/g
+)) {
+  fontStyles[m[1]] = fontName(`--font-sans: var(${m[2]})`);
+}
+
+for (const [style, family] of Object.entries(fontStyles)) {
+  writeFileSync(
+    join(IMPORT_DIR, `font-${style}.dtcg.json`),
+    JSON.stringify({ "family/sans": { $type: "fontFamily", $value: family } }, null, 2) + "\n"
+  );
+  writeFileSync(
+    join(IMPORT_DIR, `font-${style}.flat.json`),
+    JSON.stringify({ "family/sans": family }, null, 2) + "\n"
+  );
+}
+console.log(
+  `ไฟล์ฟอนต์ ${Object.keys(fontStyles).length} แบบ: ${Object.entries(fontStyles)
+    .map(([k, v]) => `${k}(${v})`)
+    .join(" · ")}`
+);
+
 console.table(summary);
 console.log(`\nเขียนไฟล์ figma-tokens.json แล้ว — ${setOrder.length} ชุด: ${setOrder.join(", ")}`);
 

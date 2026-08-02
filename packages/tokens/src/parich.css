@@ -97,11 +97,6 @@
   --sidebar-accent-foreground: hsl(20 15% 12%);
   --sidebar-border: hsl(30 20% 89%);
   --sidebar-ring: hsl(24.6 95% 53.1%);
-
-  --radius: 0.5rem;
-
-  /* ฟอนต์ประจำแบรนด์ (ผูกกับ CSS var ที่ next/font สร้าง) */
-  --font-sans: var(--font-sarabun), ui-sans-serif, system-ui, sans-serif;
 }
 
 [data-brand="parich"].dark {

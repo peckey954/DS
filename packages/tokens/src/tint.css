@@ -4,11 +4,10 @@
    คุมว่า "สีกลาง" (พื้นหลัง การ์ด เส้นขอบ ตัวอักษร) จะผสมสีแบรนด์มากแค่ไหน
    ไม่แตะ --primary --destructive --chart-* เลย สีแบรนด์ยังเป็นสีแบรนด์เหมือนเดิม
 
-     pure   ไม่ผสมเลย เทาแท้ล้วน สีแบรนด์จึงเด่นแยกออกมาชัด
-     soft   ผสมบาง ๆ พอให้รู้สึกว่าเป็นชุดเดียวกัน
-     deep   ผสมชัด
+     pure    ไม่ผสมเลย เทาแท้ล้วน สีแบรนด์จึงเด่นแยกออกมาชัด
+     blend   ผสมสีแบรนด์ลงในสีกลาง พอให้ดูเป็นชุดเดียวกัน
 
-   ทั้งสามระดับคำนวณด้วยกฎเดียวกัน เรียงจากผสมน้อยไปมากจริง ทุกแบรนด์ทุกโหมด
+   ทั้งสองระดับใช้สเกลฐานเดียวกัน ต่างแค่สัดส่วนที่ผสม
 
    ── ไม่ใส่ attribute เลย = ค่าที่ไฟล์แบรนด์เขียนไว้เอง ──
    ค่าพวกนั้นเป็นค่าที่จูนด้วยมือตอนสร้างแต่ละแบรนด์ ไม่ได้อิงกฎร่วมกัน
@@ -28,7 +27,7 @@
      [data-brand="siam"].dark       = (0,2,0)
      html[data-tint="pure"].dark    = (0,2,1)  ชนะ
 
-   ── ทำไม soft ใช้ color-mix ──
+   ── ทำไม blend ใช้ color-mix ──
    เพราะ var(--primary) จะคลี่เป็นสีของแบรนด์ที่กำลังใช้อยู่ตอนนั้น
    กฎชุดเดียวจึงครอบคลุมทุกแบรนด์ เพิ่มแบรนด์ใหม่ก็ไม่ต้องมาแก้ไฟล์นี้
 
@@ -112,153 +111,78 @@ html[data-tint="pure"].dark {
   --danger-border: color-mix(in srgb, var(--destructive) 30%, var(--card));
 }
 
-/* ── โทน soft — ใช้สเกลเดียวกับ pure แต่ผสมสีแบรนด์บาง ๆ ─────────
+/* ── โทน blend — สเกลฐานเดียวกับ pure แต่ผสมสีแบรนด์ลงไป
    ยิ่งพื้นผิวยกสูงยิ่งผสมมากขึ้นทีละนิด เพื่อให้ไล่ระดับดูเป็นธรรมชาติ
-   พื้นใหญ่ 3% · พื้นยก 6% · เส้นขอบ 8% · ตัวอักษร 5%             */
-
-html[data-tint="soft"] {
-  --background: color-mix(in srgb, var(--primary) 3%, hsl(0 0% 100%));
-  --foreground: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 9%));
-
-  --card: hsl(0 0% 100%);
-  --card-foreground: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 9%));
-
-  --popover: hsl(0 0% 100%);
-  --popover-foreground: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 9%));
-
-  --secondary: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 96%));
-  --secondary-foreground: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 9%));
-  --secondary-hover: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 92%));
-
-  --muted: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 96%));
-  --muted-foreground: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 44%));
-
-  --accent: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 96%));
-  --accent-foreground: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 9%));
-  --accent-hover: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 92%));
-
-  --border: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 90%));
-  --input: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 90%));
-
-  --sidebar: color-mix(in srgb, var(--primary) 3%, hsl(0 0% 98%));
-  --sidebar-foreground: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 9%));
-  --sidebar-accent: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 96%));
-  --sidebar-accent-foreground: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 9%));
-  --sidebar-border: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 90%));
-
-  --brand: color-mix(in srgb, var(--primary) 5%, var(--card));
-  --danger: color-mix(in srgb, var(--destructive) 10%, var(--card));
-  --danger-border: color-mix(in srgb, var(--destructive) 30%, var(--card));
-}
-
-/* โหมดมืดผสมมากขึ้นเล็กน้อย เพราะบนพื้นเข้มสายตาจับสีได้ยากกว่า
-   พื้นใหญ่ 5% · พื้นยก 8% · เส้นขอบ 10% · ตัวอักษร 5% */
-html[data-tint="soft"].dark {
-  --background: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 7%));
-  --foreground: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 98%));
-
-  --card: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 10%));
-  --card-foreground: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 98%));
-
-  --popover: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 10%));
-  --popover-foreground: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 98%));
-
-  --secondary: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 16%));
-  --secondary-foreground: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 98%));
-  --secondary-hover: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 20%));
-
-  --muted: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 16%));
-  --muted-foreground: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 64%));
-
-  --accent: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 18%));
-  --accent-foreground: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 98%));
-  --accent-hover: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 22%));
-
-  --border: color-mix(in srgb, var(--primary) 10%, hsl(0 0% 20%));
-  --input: color-mix(in srgb, var(--primary) 10%, hsl(0 0% 20%));
-
-  --sidebar: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 10%));
-  --sidebar-foreground: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 98%));
-  --sidebar-accent: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 18%));
-  --sidebar-accent-foreground: color-mix(in srgb, var(--primary) 5%, hsl(0 0% 98%));
-  --sidebar-border: color-mix(in srgb, var(--primary) 10%, hsl(0 0% 20%));
-
-  --brand: color-mix(in srgb, var(--primary) 10%, var(--card));
-  --danger: color-mix(in srgb, var(--destructive) 10%, var(--card));
-  --danger-border: color-mix(in srgb, var(--destructive) 30%, var(--card));
-}
-
-/* ── โทน deep — สเกลฐานเดียวกับ pure/soft แต่ผสมเข้มขึ้นเท่าตัวของ soft
-   สว่าง  พื้นใหญ่ 6% · พื้นยก 12% · เส้นขอบ 16% · ตัวอักษร 8%
-   มืด    พื้นใหญ่ 12% · พื้นยก 16% · เส้นขอบ 20% · ตัวอักษร 8%
+   สว่าง  พื้นใหญ่ 4% · พื้นยก 8% · เส้นขอบ 11% · ตัวอักษร 6%
+   มืด    พื้นใหญ่ 7% · พื้นยก 11% · เส้นขอบ 14% · ตัวอักษร 6%
 
    --brand / --danger คงสัดส่วนเดิม (5% สว่าง · 10% มืด · danger 10/30)
-   เพราะมันคือพื้นผิวของ Alert ไม่ใช่สีกลาง ห้ามเลื่อนตามโทน           */
+   เพราะเป็นพื้นผิวของ Alert ไม่ใช่สีกลาง ห้ามเลื่อนตามโทน               */
 
-html[data-tint="deep"] {
-  --background: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 100%));
-  --foreground: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 9%));
+html[data-tint="blend"] {
+  --background: color-mix(in srgb, var(--primary) 4%, hsl(0 0% 100%));
+  --foreground: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 9%));
 
-  --card: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 100%));
-  --card-foreground: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 9%));
+  --card: color-mix(in srgb, var(--primary) 4%, hsl(0 0% 100%));
+  --card-foreground: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 9%));
 
-  --popover: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 100%));
-  --popover-foreground: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 9%));
+  --popover: color-mix(in srgb, var(--primary) 4%, hsl(0 0% 100%));
+  --popover-foreground: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 9%));
 
-  --secondary: color-mix(in srgb, var(--primary) 12%, hsl(0 0% 96%));
-  --secondary-foreground: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 9%));
-  --secondary-hover: color-mix(in srgb, var(--primary) 12%, hsl(0 0% 92%));
+  --secondary: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 96%));
+  --secondary-foreground: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 9%));
+  --secondary-hover: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 92%));
 
-  --muted: color-mix(in srgb, var(--primary) 12%, hsl(0 0% 96%));
-  --muted-foreground: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 44%));
+  --muted: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 96%));
+  --muted-foreground: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 44%));
 
-  --accent: color-mix(in srgb, var(--primary) 12%, hsl(0 0% 96%));
-  --accent-foreground: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 9%));
-  --accent-hover: color-mix(in srgb, var(--primary) 12%, hsl(0 0% 92%));
+  --accent: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 96%));
+  --accent-foreground: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 9%));
+  --accent-hover: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 92%));
 
-  --border: color-mix(in srgb, var(--primary) 16%, hsl(0 0% 90%));
-  --input: color-mix(in srgb, var(--primary) 16%, hsl(0 0% 90%));
+  --border: color-mix(in srgb, var(--primary) 11%, hsl(0 0% 90%));
+  --input: color-mix(in srgb, var(--primary) 11%, hsl(0 0% 90%));
 
-  --sidebar: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 98%));
-  --sidebar-foreground: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 9%));
-  --sidebar-accent: color-mix(in srgb, var(--primary) 12%, hsl(0 0% 96%));
-  --sidebar-accent-foreground: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 9%));
-  --sidebar-border: color-mix(in srgb, var(--primary) 16%, hsl(0 0% 90%));
+  --sidebar: color-mix(in srgb, var(--primary) 4%, hsl(0 0% 98%));
+  --sidebar-foreground: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 9%));
+  --sidebar-accent: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 96%));
+  --sidebar-accent-foreground: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 9%));
+  --sidebar-border: color-mix(in srgb, var(--primary) 11%, hsl(0 0% 90%));
 
   --brand: color-mix(in srgb, var(--primary) 5%, var(--card));
   --danger: color-mix(in srgb, var(--destructive) 10%, var(--card));
   --danger-border: color-mix(in srgb, var(--destructive) 30%, var(--card));
 }
 
-html[data-tint="deep"].dark {
-  --background: color-mix(in srgb, var(--primary) 12%, hsl(0 0% 7%));
-  --foreground: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 98%));
+html[data-tint="blend"].dark {
+  --background: color-mix(in srgb, var(--primary) 7%, hsl(0 0% 7%));
+  --foreground: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 98%));
 
-  --card: color-mix(in srgb, var(--primary) 12%, hsl(0 0% 10%));
-  --card-foreground: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 98%));
+  --card: color-mix(in srgb, var(--primary) 7%, hsl(0 0% 10%));
+  --card-foreground: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 98%));
 
-  --popover: color-mix(in srgb, var(--primary) 12%, hsl(0 0% 10%));
-  --popover-foreground: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 98%));
+  --popover: color-mix(in srgb, var(--primary) 7%, hsl(0 0% 10%));
+  --popover-foreground: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 98%));
 
-  --secondary: color-mix(in srgb, var(--primary) 16%, hsl(0 0% 16%));
-  --secondary-foreground: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 98%));
-  --secondary-hover: color-mix(in srgb, var(--primary) 16%, hsl(0 0% 20%));
+  --secondary: color-mix(in srgb, var(--primary) 11%, hsl(0 0% 16%));
+  --secondary-foreground: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 98%));
+  --secondary-hover: color-mix(in srgb, var(--primary) 11%, hsl(0 0% 20%));
 
-  --muted: color-mix(in srgb, var(--primary) 16%, hsl(0 0% 16%));
-  --muted-foreground: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 64%));
+  --muted: color-mix(in srgb, var(--primary) 11%, hsl(0 0% 16%));
+  --muted-foreground: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 64%));
 
-  --accent: color-mix(in srgb, var(--primary) 16%, hsl(0 0% 18%));
-  --accent-foreground: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 98%));
-  --accent-hover: color-mix(in srgb, var(--primary) 16%, hsl(0 0% 22%));
+  --accent: color-mix(in srgb, var(--primary) 11%, hsl(0 0% 18%));
+  --accent-foreground: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 98%));
+  --accent-hover: color-mix(in srgb, var(--primary) 11%, hsl(0 0% 22%));
 
-  --border: color-mix(in srgb, var(--primary) 20%, hsl(0 0% 20%));
-  --input: color-mix(in srgb, var(--primary) 20%, hsl(0 0% 20%));
+  --border: color-mix(in srgb, var(--primary) 14%, hsl(0 0% 20%));
+  --input: color-mix(in srgb, var(--primary) 14%, hsl(0 0% 20%));
 
-  --sidebar: color-mix(in srgb, var(--primary) 12%, hsl(0 0% 10%));
-  --sidebar-foreground: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 98%));
-  --sidebar-accent: color-mix(in srgb, var(--primary) 16%, hsl(0 0% 18%));
-  --sidebar-accent-foreground: color-mix(in srgb, var(--primary) 8%, hsl(0 0% 98%));
-  --sidebar-border: color-mix(in srgb, var(--primary) 20%, hsl(0 0% 20%));
+  --sidebar: color-mix(in srgb, var(--primary) 7%, hsl(0 0% 10%));
+  --sidebar-foreground: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 98%));
+  --sidebar-accent: color-mix(in srgb, var(--primary) 11%, hsl(0 0% 18%));
+  --sidebar-accent-foreground: color-mix(in srgb, var(--primary) 6%, hsl(0 0% 98%));
+  --sidebar-border: color-mix(in srgb, var(--primary) 14%, hsl(0 0% 20%));
 
   --brand: color-mix(in srgb, var(--primary) 10%, var(--card));
   --danger: color-mix(in srgb, var(--destructive) 10%, var(--card));

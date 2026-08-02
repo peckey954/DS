@@ -18,8 +18,8 @@ const COPY = defineCopy({
     densityAria: "เลือกความห่าง",
     tintAria: "เลือกโทนสีพื้น",
     tintPure: "แยกสี",
-    tintSoft: "ผสมบาง",
-    tintDeep: "ผสมเข้ม",
+    tintBlend: "ผสมแบรนด์",
+    fontAria: "เลือกฟอนต์",
     sharp: "ไม่โค้ง",
     standard: "โค้งปกติ",
     friendly: "โค้งมาก",
@@ -33,8 +33,8 @@ const COPY = defineCopy({
     densityAria: "Select density",
     tintAria: "Select neutral tone",
     tintPure: "Pure neutral",
-    tintSoft: "Soft tint",
-    tintDeep: "Deep tint",
+    tintBlend: "Brand tinted",
+    fontAria: "Select font",
     sharp: "Sharp",
     standard: "Standard",
     friendly: "Friendly",
@@ -47,7 +47,15 @@ const COPY = defineCopy({
 
 type Radius = "sharp" | "standard" | "friendly" | "pill";
 type Density = "compact" | "standard" | "comfortable";
-type Tint = "pure" | "soft" | "deep";
+type Tint = "pure" | "blend";
+type Font = "ibm" | "prompt" | "sarabun";
+
+/* ชื่อฟอนต์ไม่ต้องแปลภาษา เป็นชื่อเฉพาะ */
+const FONTS: { id: Font; label: string }[] = [
+  { id: "ibm", label: "IBM Plex Thai" },
+  { id: "prompt", label: "Prompt" },
+  { id: "sarabun", label: "Sarabun" },
+];
 
 /**
  * สลับแกนสไตล์ของทั้งหน้า — เขียน data-radius / data-density ลงบน <html>
@@ -57,8 +65,8 @@ export function StyleSwitcher() {
   const c = useCopy(COPY);
   const [radius, setRadius] = React.useState<Radius>("standard");
   const [density, setDensity] = React.useState<Density>("standard");
-  // เริ่มที่ deep เพราะใกล้เคียงหน้าตาเดิมของแต่ละแบรนด์มากที่สุด
-  const [tint, setTint] = React.useState<Tint>("deep");
+  const [tint, setTint] = React.useState<Tint>("blend");
+  const [font, setFont] = React.useState<Font>("ibm");
 
   React.useEffect(() => {
     document.documentElement.dataset.radius = radius;
@@ -72,6 +80,10 @@ export function StyleSwitcher() {
     document.documentElement.dataset.tint = tint;
   }, [tint]);
 
+  React.useEffect(() => {
+    document.documentElement.dataset.font = font;
+  }, [font]);
+
   return (
     <>
       <Select value={tint} onValueChange={(v) => setTint(v as Tint)}>
@@ -80,8 +92,20 @@ export function StyleSwitcher() {
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="pure">{c.tintPure}</SelectItem>
-          <SelectItem value="soft">{c.tintSoft}</SelectItem>
-          <SelectItem value="deep">{c.tintDeep}</SelectItem>
+          <SelectItem value="blend">{c.tintBlend}</SelectItem>
+        </SelectContent>
+      </Select>
+
+      <Select value={font} onValueChange={(v) => setFont(v as Font)}>
+        <SelectTrigger size="sm" className="w-36" aria-label={c.fontAria}>
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {FONTS.map((f) => (
+            <SelectItem key={f.id} value={f.id}>
+              {f.label}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
 

@@ -1,0 +1,6 @@
+{
+  "family/sans": {
+    "$type": "fontFamily",
+    "$value": "IBM Plex Sans Thai"
+  }
+}

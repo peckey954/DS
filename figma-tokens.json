@@ -171,14 +171,6 @@
     "sidebar-ring": {
       "value": "#10b77f",
       "type": "color"
-    },
-    "radius": {
-      "value": "14",
-      "type": "borderRadius"
-    },
-    "font-sans": {
-      "value": "Prompt",
-      "type": "fontFamilies"
     }
   },
   "nara-dark": {
@@ -527,14 +519,6 @@
     "sidebar-ring": {
       "value": "#f97316",
       "type": "color"
-    },
-    "radius": {
-      "value": "8",
-      "type": "borderRadius"
-    },
-    "font-sans": {
-      "value": "Sarabun",
-      "type": "fontFamilies"
     }
   },
   "parich-dark": {
@@ -883,14 +867,6 @@
     "sidebar-ring": {
       "value": "#2463eb",
       "type": "color"
-    },
-    "radius": {
-      "value": "10",
-      "type": "borderRadius"
-    },
-    "font-sans": {
-      "value": "IBM Plex Sans Thai",
-      "type": "fontFamilies"
     }
   },
   "siam-dark": {

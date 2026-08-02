@@ -60,3 +60,35 @@ html[data-density="standard"] {
 html[data-density="comfortable"] {
   --spacing: 0.3125rem; /* 5px  · ปุ่มสูง 45px · ไอคอน 20px */
 }
+
+/* ============================================================
+   ค่าเริ่มต้นของความโค้งและฟอนต์
+
+   เดิมสองค่านี้อยู่ในไฟล์แบรนด์ ทำให้ "เลือกสี" ไปเปลี่ยนความโค้งกับฟอนต์ด้วย
+   ทั้งที่มีดรอปดาวน์แยกอยู่แล้ว ย้ายออกมาไว้ที่เดียวเพื่อให้แบรนด์ = สีล้วน
+   :root มี specificity (0,1,0) แพ้ html[data-radius=...] (0,1,1) แกนจึงทับได้
+   ============================================================ */
+
+:root {
+  --radius: 0.625rem;
+  --font-sans: var(--font-ibm-thai), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ============================================================
+   แกนสไตล์: ฟอนต์ (data-font)
+
+   ตัวแปร --font-* มาจาก next/font ในแอปที่ใช้งาน ไม่ได้มาจากแพ็กเกจนี้
+   ถ้าโปรเจกต์ไหนไม่ได้ตั้งไว้ จะตกไปใช้ ui-sans-serif ตามลำดับในสแตก
+   ============================================================ */
+
+html[data-font="ibm"] {
+  --font-sans: var(--font-ibm-thai), ui-sans-serif, system-ui, sans-serif; /* IBM Plex Sans Thai */
+}
+
+html[data-font="prompt"] {
+  --font-sans: var(--font-prompt), ui-sans-serif, system-ui, sans-serif; /* Prompt */
+}
+
+html[data-font="sarabun"] {
+  --font-sans: var(--font-sarabun), ui-sans-serif, system-ui, sans-serif; /* Sarabun */
+}

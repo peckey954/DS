@@ -77,10 +77,6 @@
   --sidebar-accent-foreground: hsl(160 30% 12%);
   --sidebar-border: hsl(150 20% 88%);
   --sidebar-ring: hsl(160 84% 39%);
-
-  --radius: 0.9rem;
-
-  --font-sans: var(--font-prompt), ui-sans-serif, system-ui, sans-serif;
 }
 
 [data-brand="nara"].dark {

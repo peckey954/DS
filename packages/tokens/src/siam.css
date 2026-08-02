@@ -79,11 +79,6 @@
   --sidebar-accent-foreground: hsl(222 47% 11%);
   --sidebar-border: hsl(214 32% 91%);
   --sidebar-ring: hsl(221 83% 53%);
-
-  --radius: 0.625rem;
-
-  /* ฟอนต์ประจำแบรนด์ (ผูกกับ CSS var ที่ next/font สร้าง) */
-  --font-sans: var(--font-ibm-thai), ui-sans-serif, system-ui, sans-serif;
 }
 
 [data-brand="siam"].dark {
