@@ -17,9 +17,9 @@ const COPY = defineCopy({
     radiusAria: "เลือกความโค้ง",
     densityAria: "เลือกความห่าง",
     tintAria: "เลือกโทนสีพื้น",
-    tintBrand: "ตามแบรนด์",
-    tintSoft: "ผสมบาง",
     tintPure: "แยกสี",
+    tintSoft: "ผสมบาง",
+    tintDeep: "ผสมเข้ม",
     sharp: "ไม่โค้ง",
     standard: "โค้งปกติ",
     friendly: "โค้งมาก",
@@ -32,9 +32,9 @@ const COPY = defineCopy({
     radiusAria: "Select corner radius",
     densityAria: "Select density",
     tintAria: "Select neutral tone",
-    tintBrand: "Brand tinted",
-    tintSoft: "Soft tint",
     tintPure: "Pure neutral",
+    tintSoft: "Soft tint",
+    tintDeep: "Deep tint",
     sharp: "Sharp",
     standard: "Standard",
     friendly: "Friendly",
@@ -47,7 +47,7 @@ const COPY = defineCopy({
 
 type Radius = "sharp" | "standard" | "friendly" | "pill";
 type Density = "compact" | "standard" | "comfortable";
-type Tint = "brand" | "soft" | "pure";
+type Tint = "pure" | "soft" | "deep";
 
 /**
  * สลับแกนสไตล์ของทั้งหน้า — เขียน data-radius / data-density ลงบน <html>
@@ -57,7 +57,8 @@ export function StyleSwitcher() {
   const c = useCopy(COPY);
   const [radius, setRadius] = React.useState<Radius>("standard");
   const [density, setDensity] = React.useState<Density>("standard");
-  const [tint, setTint] = React.useState<Tint>("brand");
+  // เริ่มที่ deep เพราะใกล้เคียงหน้าตาเดิมของแต่ละแบรนด์มากที่สุด
+  const [tint, setTint] = React.useState<Tint>("deep");
 
   React.useEffect(() => {
     document.documentElement.dataset.radius = radius;
@@ -78,9 +79,9 @@ export function StyleSwitcher() {
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="brand">{c.tintBrand}</SelectItem>
-          <SelectItem value="soft">{c.tintSoft}</SelectItem>
           <SelectItem value="pure">{c.tintPure}</SelectItem>
+          <SelectItem value="soft">{c.tintSoft}</SelectItem>
+          <SelectItem value="deep">{c.tintDeep}</SelectItem>
         </SelectContent>
       </Select>
 

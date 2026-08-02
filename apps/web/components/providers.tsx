@@ -9,10 +9,13 @@ import { Toaster } from "@peckey954/ui/components/ui/sonner";
 export type Brand = "siam" | "nara" | "parich";
 
 /** เพิ่มแบรนด์ใหม่ = เพิ่ม 1 บรรทัดตรงนี้ (หลังสร้างไฟล์ token แล้ว) */
-export const BRANDS: { id: Brand; label: string }[] = [
-  { id: "siam", label: "Siam" },
-  { id: "nara", label: "Nara" },
-  { id: "parich", label: "Parich" },
+/* เรียกด้วยชื่อสี เพราะผู้ใช้จำสีได้ง่ายกว่าชื่อแบรนด์
+   id ยังเป็น siam/nara/parich เหมือนเดิม ไฟล์ token กับ data-brand จึงไม่ต้องแก้
+   labelEn ไว้ให้ตอนสลับเป็นภาษาอังกฤษ */
+export const BRANDS: { id: Brand; label: string; labelEn: string }[] = [
+  { id: "siam", label: "น้ำเงิน", labelEn: "Blue" },
+  { id: "nara", label: "เขียว", labelEn: "Green" },
+  { id: "parich", label: "ส้ม", labelEn: "Orange" },
 ];
 
 type BrandContextValue = {

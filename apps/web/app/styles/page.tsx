@@ -57,9 +57,9 @@ const DENSITY = [
 ] as const;
 
 const TINT = [
-  { id: "brand", label: "ตามแบรนด์", hint: "Brand · พื้นผสมสีแบรนด์ชัด" },
-  { id: "soft", label: "ผสมบาง", hint: "Soft · พื้นผสมนิดเดียว" },
-  { id: "pure", label: "แยกสี", hint: "Pure · พื้นเทาแท้ ไม่ผสม" },
+  { id: "pure", label: "แยกสี", hint: "Pure · เทาแท้ ไม่ผสม" },
+  { id: "soft", label: "ผสมบาง", hint: "Soft · ผสมนิดเดียว" },
+  { id: "deep", label: "ผสมเข้ม", hint: "Deep · ผสมชัด" },
 ] as const;
 
 type Radius = (typeof RADIUS)[number]["id"];
@@ -98,7 +98,7 @@ function Choice({
 export default function StylesPreview() {
   const [radius, setRadius] = React.useState<Radius>("standard");
   const [density, setDensity] = React.useState<Density>("standard");
-  const [tint, setTint] = React.useState<Tint>("brand");
+  const [tint, setTint] = React.useState<Tint>("deep");
   const [measured, setMeasured] = React.useState<Record<string, string>>({});
   const sampleRef = React.useRef<HTMLButtonElement>(null);
   const iconRef = React.useRef<HTMLButtonElement>(null);
