@@ -9,6 +9,7 @@ design system นี้เป็น **public** ใช้ได้ฟรีภา
 | ติดตั้ง DS ในโปรเจกต์ที่มีอยู่แล้ว | [ส่วน 1](#1-ติดตั้ง) |
 | ปรับสี/ฟอนต์เป็นแบรนด์ของโปรเจกต์นั้น | [ส่วน 2](#2-ปรับเป็นแบรนด์ของตัวเอง) |
 | ให้ AI สร้างโปรเจกต์ใหม่ให้ครบในรอบเดียว | [ส่วน 3](#3-prompt-สร้างโปรเจกต์ใหม่) |
+| ให้ AI ติดตั้ง DS ลง repo ที่มีอยู่แล้ว | [ส่วน 3.5](#35-prompt-ติดตั้งลง-repo-ที่มีอยู่แล้ว) |
 | ส่ง DS ต่อให้ Claude account อื่น / Cursor / Copilot | [ส่วน 4](#4-prompt-ส่งกฎต่อให้-agent-ตัวอื่น) |
 
 **กฎการเขียน UI ไม่ได้อยู่ในไฟล์นี้** — อยู่ที่ [AGENTS.md](AGENTS.md) ซึ่งเป็นตัวจริงตัวเดียว
@@ -340,6 +341,132 @@ https://raw.githubusercontent.com/peckey954/DS/main/AGENTS.md
 **ตั้งเป็น slash command ได้** — สร้าง `~/.claude/commands/new-ds-project.md`
 (อยู่ในเครื่องคุณ ไม่ได้อยู่ใน repo) ให้เนื้อหาสั่ง Claude Code ไปอ่านไฟล์นี้จาก GitHub
 แล้วทำตาม ข้อดีคือ **ไม่มีวันเก่า** พอแก้ไฟล์นี้แล้ว push คำสั่งก็ดึงของใหม่มาใช้เอง
+
+---
+
+# 3.5 Prompt ติดตั้งลง repo ที่มีอยู่แล้ว
+
+ต่างจากส่วน 3 ตรงที่ **ไม่สร้างโปรเจกต์ใหม่** และ **ไม่ต้องเขียนไฟล์สีเอง**
+เพราะแบรนด์ที่จะใช้มีอยู่ในแพ็กเกจแล้ว
+
+ตัวอย่างข้างล่างตั้งไว้สำหรับ **Parich WMS** (แบรนด์ `parich` · ฟอนต์ Sarabun)
+ถ้าจะใช้กับโปรเจกต์อื่น เปลี่ยน 3 อย่าง — ชื่อ repo · `parich.css` เป็นไฟล์แบรนด์ที่ต้องการ ·
+`data-brand` / `data-font` ให้ตรงกัน
+
+````text
+repo นี้คือ Parich WMS เป็นโปรเจกต์แรกที่ใช้ design system ของผม
+ติดตั้ง DS เข้ามาแล้วตั้งค่าให้ครบ
+
+อ่าน 2 ไฟล์นี้ก่อนเริ่ม แล้วทำตามทุกขั้น:
+- กฎการเขียน UI (บังคับ อ่านให้จบ):
+  https://raw.githubusercontent.com/peckey954/DS/main/AGENTS.md
+- วิธีติดตั้งและตั้งค่า:
+  https://raw.githubusercontent.com/peckey954/DS/main/USE-DS.md
+
+## สิ่งที่ต้องทำ
+
+1. ดูก่อนว่าใน repo มีอะไรอยู่แล้ว
+   - ถ้ายังว่าง: pnpm create next-app@latest . --ts --tailwind --app --no-src-dir --import-alias "@/*"
+   - ถ้ามี Next.js อยู่แล้ว: ใช้ของเดิม อย่าสร้างทับ ต้องเป็น Tailwind v4
+     ถ้ายังเป็น v3 ให้หยุดแล้วบอกผมก่อน อย่าอัปเกรดเอง
+
+2. pnpm add @peckey954/ui @peckey954/tokens tw-animate-css
+   เป็น public package ไม่ต้องมี token ไม่ต้องสร้าง .npmrc
+   ต้องได้เวอร์ชัน 0.2.0 ขึ้นไป เช็คด้วย: npm view @peckey954/ui version
+
+3. next.config ต้องมี transpilePackages: ["@peckey954/ui"]
+   ข้ามขั้นนี้จะ build ไม่ผ่าน เพราะ DS ship เป็น TypeScript source
+
+4. app/globals.css เขียนตามลำดับนี้เป๊ะ ๆ ลำดับสำคัญมาก
+
+   @import "tailwindcss";
+   @import "tw-animate-css";
+   @import "@peckey954/ui/globals.css";
+   @import "@peckey954/tokens/parich.css";
+   @import "@peckey954/tokens/tint.css";
+   @import "@peckey954/tokens/styles.css";
+   @source "../node_modules/@peckey954/ui/src";
+
+   - แบรนด์ parich มีอยู่ในแพ็กเกจแล้ว ห้ามสร้างไฟล์สีขึ้นมาเองซ้ำ
+   - styles.css ขาดไม่ได้ ในนั้นมีค่าเริ่มต้นของ --radius กับ --font-sans
+     และแกน data-radius / data-density / data-font
+     ถ้าลืม ทุกอย่างจะมุมเหลี่ยมหมด
+   - @source ขาดไม่ได้ ไม่งั้น component จะไม่มีสไตล์เลย
+
+5. app/layout.tsx โหลดฟอนต์ Sarabun
+
+   import { Sarabun } from "next/font/google";
+
+   const sarabun = Sarabun({
+     subsets: ["thai", "latin"],
+     weight: ["400", "500", "600", "700"],
+     variable: "--font-sarabun",
+     display: "swap",
+   });
+
+   ชื่อ variable ต้องเป็น "--font-sarabun" เป๊ะ ๆ ห้ามตั้งชื่ออื่น
+   เพราะ styles.css ของ DS มองหาชื่อนี้ตรง ๆ ถ้าไม่ตรงฟอนต์ไทยจะไม่ขึ้น
+
+   แล้วตั้งที่ <html>:
+     lang="th"
+     className={sarabun.variable}
+     data-brand="parich"
+     data-tint="pure"
+     data-font="sarabun"
+
+   body ใช้ class: min-h-screen bg-background text-foreground font-sans antialiased
+
+6. ติดตั้ง next-themes แล้วครอบ ThemeProvider แบบ attribute="class"
+   เพื่อให้สลับ light/dark ได้
+
+7. ทำหน้าแรกเป็นหน้าทดสอบที่ใช้ component จาก DS จริง อย่างน้อย:
+   button ทุก variant (รวม outline-primary), badge ทุก tone x appearance,
+   alert ทั้ง 4 variant, card, input, select, checkbox, radio-group,
+   dialog, table และปุ่มสลับ light/dark
+   import แบบ: import { Button } from "@peckey954/ui/components/ui/button";
+
+8. ตรวจก่อนบอกว่าเสร็จ ห้ามข้าม
+   - pnpm build ผ่าน
+   - pnpm dev แล้วเปิดหน้าเว็บจริง ยืนยันว่า
+     · สีหลักเป็นส้ม Parich ไม่ใช่น้ำเงิน
+     · ปุ่มมีมุมโค้ง ถ้าเหลี่ยมหมดแปลว่าลืม import styles.css
+     · ฟอนต์ไทยเป็น Sarabun ไม่ใช่ฟอนต์สำรอง
+     · สลับ dark mode แล้วสียังถูกต้อง
+
+## กฎที่ห้ามฝ่า
+
+- ใช้ component จาก @peckey954/ui/components/ui/* เสมอ มี 55 ตัว
+  ห้ามเขียน component เองถ้ามีอยู่แล้ว ถ้าไม่มีให้ประกอบจากของที่มีก่อน
+- ใช้ token เท่านั้น ห้าม #hex ห้าม bg-blue-500 ห้าม bg-[...] ห้าม style={{color}}
+- ต่อ className ด้วย cn() จาก @peckey954/ui/lib/utils
+- ห้ามเขียน dark: คู่กับสี token จัดการให้แล้ว
+- ห้ามกำหนดสีไอคอนเอง Lucide รับสีจากตัวอักษรมาเอง
+- ตารางใช้ <Table> จาก DS เสมอ ห้ามประกอบเองด้วย div เป็นคอลัมน์
+
+ทำเสร็จแล้ว git add + commit แต่อย่า push ให้ผมดูก่อน
+ติดตรงไหนหรือมีอะไรขัดกับกฎ ให้ถามก่อน อย่าตัดสินใจเอง
+````
+
+## ตัวเลือกที่ปรับได้
+
+| อยากได้ | เปลี่ยนอะไร |
+|---|---|
+| พื้นอมสีแบรนด์แทนเทาแท้ | `data-tint="blend"` |
+| หน้าจอแน่นขึ้น (ตารางเยอะ) | เพิ่ม `data-density="compact"` ปุ่มสูง 32px แทน 36px |
+| มุมโค้งมาก/น้อยกว่านี้ | เพิ่ม `data-radius="sharp"` หรือ `"friendly"` หรือ `"pill"` |
+
+## ถ้าจะให้แปลงหน้าจอจาก Figma ต่อเลย
+
+ต่อท้าย prompt ข้างบน
+
+```
+หน้าจอที่ออกแบบไว้อยู่ใน Figma: https://www.figma.com/design/WXmXTioYUjk0k4wgbRH66R/Parich-WMS
+อ่านผ่าน Figma MCP แล้วสร้างเป็นโค้ด แต่ใช้ component จาก DS เท่านั้น
+ห้าม hardcode สีที่อ่านได้จาก Figma
+```
+
+หน้าที่ออกแบบไว้แล้ว — ใบตรวจรับวัตถุดิบ · แผงแจ้งเตือน (desktop + mobile) ·
+ใบตรวจสอบสินค้าสำเร็จรูป (section `QC FG`)
 
 ---
 
