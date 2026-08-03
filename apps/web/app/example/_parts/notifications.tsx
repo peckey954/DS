@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import {
+  ArrowLeftIcon,
   BellIcon,
   CircleCheckIcon,
   CircleXIcon,
@@ -29,6 +30,7 @@ import { ScrollArea } from "@peckey954/ui/components/ui/scroll-area";
 import { Separator } from "@peckey954/ui/components/ui/separator";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetTitle,
   SheetTrigger,
@@ -195,28 +197,24 @@ function NotificationBody({
   items,
   onRead,
   onReadAll,
-  headerClassName,
+  leading,
 }: {
   items: Notification[];
   onRead: (id: string) => void;
   onReadAll: () => void;
-  /** เผื่อที่ให้ปุ่มปิดของ Sheet ที่ลอยอยู่มุมขวาบน */
-  headerClassName?: string;
+  /** ปุ่มย้อนกลับ ใส่เฉพาะตอนเปิดเต็มจอบนมือถือ */
+  leading?: React.ReactNode;
 }) {
   const unreadCount = items.filter((n) => n.unread).length;
 
   return (
     <div className="flex h-full flex-col">
-      <div
-        className={cn(
-          "flex items-center justify-between gap-3 px-4 py-4",
-          headerClassName
-        )}
-      >
-        <div className="flex items-baseline gap-2">
+      <div className="flex items-center justify-between gap-3 px-4 py-4">
+        <div className="flex min-w-0 items-center gap-2">
+          {leading}
           <h2 className="text-base font-semibold tracking-tight">การแจ้งเตือน</h2>
           {unreadCount > 0 ? (
-            <span className="text-xs text-muted-foreground">
+            <span className="shrink-0 text-xs text-muted-foreground">
               ยังไม่อ่าน {unreadCount} รายการ
             </span>
           ) : null}
@@ -265,12 +263,12 @@ export function NotificationBell() {
   const readAll = () =>
     setItems((list) => list.map((n) => ({ ...n, unread: false })));
 
-  const body = (headerClassName?: string) => (
+  const body = (leading?: React.ReactNode) => (
     <NotificationBody
       items={items}
       onRead={markRead}
       onReadAll={readAll}
-      headerClassName={headerClassName}
+      leading={leading}
     />
   );
 
@@ -305,12 +303,24 @@ export function NotificationBell() {
         </PopoverContent>
       </Popover>
 
-      {/* จอเล็ก — เลื่อนขึ้นจากด้านล่าง กดง่ายด้วยนิ้วโป้ง */}
+      {/* จอเล็ก — เต็มจอเหมือนเปิดอีกหน้าหนึ่ง
+          ปิดปุ่ม X มุมขวาบนของ Sheet แล้วใช้ปุ่มย้อนกลับด้านซ้ายแทน
+          เพราะเต็มจอแล้วผู้ใช้คาดหวังลูกศรย้อนกลับ ไม่ใช่กากบาทปิดกล่อง */}
       <Sheet>
         <SheetTrigger asChild>{trigger("md:hidden")}</SheetTrigger>
-        <SheetContent side="bottom" className="h-[85svh] p-0">
+        <SheetContent
+          side="bottom"
+          showCloseButton={false}
+          className="inset-0 h-svh w-full gap-0 border-0 p-0"
+        >
           <SheetTitle className="sr-only">การแจ้งเตือน</SheetTitle>
-          {body("pr-12")}
+          {body(
+            <SheetClose asChild>
+              <Button variant="ghost" size="icon-sm" aria-label="ย้อนกลับ" className="-ml-1">
+                <ArrowLeftIcon />
+              </Button>
+            </SheetClose>
+          )}
         </SheetContent>
       </Sheet>
     </>
