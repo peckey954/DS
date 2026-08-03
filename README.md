@@ -54,7 +54,7 @@ import { Card, CardHeader, CardTitle } from "@peckey954/ui/components/ui/card";
 | ทำอะไร | อ่านไฟล์ไหน |
 |---|---|
 | เขียนโค้ด UI | **[AGENTS.md](AGENTS.md)** |
-| ประกอบ component ใน Figma | **[FIGMA-PLAN.md](FIGMA-PLAN.md)** |
+| ประกอบ component ใน Figma | **[FIGMA.md](FIGMA.md)** |
 
 กฎบางข้อมีอยู่ทั้งสองไฟล์เพราะต้องทำให้เหมือนกันทั้งสองฝั่ง เช่น **ตาราง** —
 ทุกช่องในแถวเดียวกันต้องสูงเท่ากัน และช่องที่มี input ต้องเหลือช่องไฟบนล่างข้างละ 8px
@@ -105,10 +105,8 @@ pnpm add @peckey954/ui @peckey954/tokens tw-animate-css
 pnpm dlx shadcn@latest add https://ds-web-iota.vercel.app/r/button.json
 ```
 
-- [USING-IN-OTHER-PROJECTS.md](USING-IN-OTHER-PROJECTS.md) — วิธีติดตั้งทั้งสองแนวทาง
-  ปรับสี/ฟอนต์เป็นแบรนด์ของตัวเอง และตารางแก้ปัญหาที่เจอบ่อย
-- [NEW-PROJECT-PROMPT.md](NEW-PROJECT-PROMPT.md) — คำสั่งสำเร็จรูปสำหรับให้ AI
-  สร้างโปรเจกต์ใหม่ที่ใช้ DS ให้ครบในรอบเดียว
+- [USE-DS.md](USE-DS.md) — วิธีติดตั้งทั้งสองแนวทาง · ปรับสี/ฟอนต์เป็นแบรนด์ของตัวเอง ·
+  prompt สำเร็จรูปสำหรับให้ AI สร้างโปรเจกต์ใหม่หรือรับ DS ไปใช้ต่อ · ตารางแก้ปัญหา
 - [PUBLISHING.md](PUBLISHING.md) — สำหรับคนดูแล repo นี้: วิธี publish ขึ้น npm
   สร้าง registry และขึ้นเวอร์ชันใหม่
 

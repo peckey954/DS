@@ -117,7 +117,7 @@ component ที่ประกอบขึ้นเองก็ต้องว�
 
 > **ใน Figma ไม่ได้ฟรีแบบนี้** — ไอคอนที่ swap เข้าช่อง `Icon Leading` จะเอาสีของ
 > ตัวเองติดมาและกลายเป็นสีดำ ต้องผูก `strokes` กับตัวแปรสีของปุ่มเองทุกครั้ง
-> รายละเอียดอยู่ใน [FIGMA-PLAN.md](FIGMA-PLAN.md) หัวข้อ 3.5
+> รายละเอียดอยู่ใน [FIGMA.md](FIGMA.md) หัวข้อ 3.5
 
 #### checkbox / radio แบบมีกรอบครอบ (box)
 
@@ -571,7 +571,9 @@ pnpm lint
 
 ## ไฟล์อ้างอิง
 
-- [README.md](README.md) — ภาพรวมโปรเจกต์ + วิธี sync กับ Figma
+- [README.md](README.md) — ภาพรวมโปรเจกต์
+- [USE-DS.md](USE-DS.md) — เอา DS ไปใช้ในโปรเจกต์อื่น + prompt สำเร็จรูป
+- [FIGMA.md](FIGMA.md) — ฝั่ง Figma ทั้งหมด
 - [packages/ui/src/styles/globals.css](packages/ui/src/styles/globals.css) — รายชื่อ token กลางทั้งหมด
 - [packages/tokens/src/blue.css](packages/tokens/src/blue.css) — ตัวอย่างค่าจริงของแบรนด์
 - [apps/web/app/layout.tsx](apps/web/app/layout.tsx) — การโหลดฟอนต์ + `data-brand`
