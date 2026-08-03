@@ -124,6 +124,56 @@ const NOTIFICATIONS: Notification[] = [
     action: "ตรวจสอบ",
     unread: false,
   },
+  {
+    id: "n6",
+    tone: "warning",
+    icon: TriangleAlertIcon,
+    title: "ใกล้ถึงกำหนดส่งมอบ",
+    description: "PO260115/07 กำหนดรับ 18 ม.ค. เหลืออีก 2 วัน ยังไม่มีการนัดหมายรถ",
+    time: "2 วันที่แล้ว",
+    action: "นัดหมายรถ",
+    unread: false,
+  },
+  {
+    id: "n7",
+    tone: "success",
+    icon: CircleCheckIcon,
+    title: "ปิดงานผลิตเรียบร้อย",
+    description: "ไลน์ผสม 2 ปิดล็อต PD260510/11 จำนวน 1,200 กส ครบตามแผน",
+    time: "2 วันที่แล้ว",
+    action: "ดูสรุปล็อต",
+    unread: false,
+  },
+  {
+    id: "n8",
+    tone: "danger",
+    icon: CircleXIcon,
+    title: "วัตถุดิบไม่ผ่าน QC",
+    description: "20-8-8 ล็อต RM260114/03 ความชื้นเกินเกณฑ์ 2.1% รอตัดสินใจคืนของ",
+    time: "3 วันที่แล้ว",
+    action: "เปิดใบตรวจ",
+    unread: false,
+  },
+  {
+    id: "n9",
+    tone: "success",
+    icon: PackageIcon,
+    title: "โอนย้ายสต็อกสำเร็จ",
+    description: "ย้าย 15-15-15 จำนวน 300 กส จากโซน B02 ไป A07 เรียบร้อย",
+    time: "สัปดาห์ที่แล้ว",
+    action: "ดูใบโอน",
+    unread: false,
+  },
+  {
+    id: "n10",
+    tone: "brand",
+    icon: ClipboardCheckIcon,
+    title: "ครบกำหนดตรวจนับสต็อก",
+    description: "รอบตรวจนับประจำเดือนของคลัง A ครบกำหนดแล้ว ยังไม่เริ่มนับ",
+    time: "สัปดาห์ที่แล้ว",
+    action: "เริ่มตรวจนับ",
+    unread: false,
+  },
 ];
 
 /** แถวการแจ้งเตือนหนึ่งรายการ */
@@ -198,17 +248,20 @@ function NotificationBody({
   onRead,
   onReadAll,
   leading,
+  listClassName,
 }: {
   items: Notification[];
   onRead: (id: string) => void;
   onReadAll: () => void;
   /** ปุ่มย้อนกลับ ใส่เฉพาะตอนเปิดเต็มจอบนมือถือ */
   leading?: React.ReactNode;
+  /** ความสูงของพื้นที่รายการ ต้องเป็นค่าที่แน่นอนถึงจะเลื่อนได้ ดูหมายเหตุด้านล่าง */
+  listClassName?: string;
 }) {
   const unreadCount = items.filter((n) => n.unread).length;
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex min-h-0 flex-1 flex-col">
       <div className="flex items-center justify-between gap-3 px-4 py-4">
         <div className="flex min-w-0 items-center gap-2">
           {leading}
@@ -232,7 +285,14 @@ function NotificationBody({
 
       <Separator />
 
-      <ScrollArea className="min-h-0 flex-1">
+      {/* ScrollArea ของ shadcn ใช้ size-full กับ viewport ข้างใน ความสูงเป็นเปอร์เซ็นต์
+          จึงต้องมีความสูงที่แน่นอนจากพ่อแม่ถึงจะคำนวณได้ max-height ไม่นับ
+          เพราะกล่องยังสูงตามเนื้อหาอยู่แล้วแค่ถูกตัดทิ้ง ไม่ได้เลื่อน
+          มือถือได้ความสูงจาก h-svh ส่วนเดสก์ท็อปต้องกำหนดเองผ่าน listClassName */
+      }
+      {/* ต้อง "แทนที่" คลาส ไม่ใช่ต่อท้าย เพราะ flex-1 ตั้ง flex-basis: 0
+          ซึ่งลบล้างความสูงที่กำหนดไว้บนแกนหลักทิ้งหมด */}
+      <ScrollArea className={listClassName ?? "min-h-0 flex-1"}>
         <ItemGroup>
           {items.map((item, i) => (
             <React.Fragment key={item.id}>
@@ -263,14 +323,19 @@ export function NotificationBell() {
   const readAll = () =>
     setItems((list) => list.map((n) => ({ ...n, unread: false })));
 
-  const body = (leading?: React.ReactNode) => (
+  const body = (opts?: { leading?: React.ReactNode; listClassName?: string }) => (
     <NotificationBody
       items={items}
       onRead={markRead}
       onReadAll={readAll}
-      leading={leading}
+      leading={opts?.leading}
+      listClassName={opts?.listClassName}
     />
   );
+
+  /* รายการเยอะ = ตรึงความสูงไว้เพื่อให้เลื่อนได้
+     รายการน้อย = ปล่อยให้สูงตามเนื้อหา จะได้ไม่มีที่ว่างค้างท้ายแผง */
+  const desktopList = items.length > 4 ? "h-[26rem]" : "max-h-[26rem]";
 
   const trigger = (extraClass: string) => (
     <Button
@@ -299,7 +364,7 @@ export function NotificationBell() {
           align="end"
           className="w-[26rem] overflow-hidden p-0"
         >
-          <div className="max-h-[32rem]">{body()}</div>
+          <div className="flex flex-col">{body({ listClassName: desktopList })}</div>
         </PopoverContent>
       </Popover>
 
@@ -314,13 +379,20 @@ export function NotificationBell() {
           className="inset-0 h-svh w-full gap-0 border-0 p-0"
         >
           <SheetTitle className="sr-only">การแจ้งเตือน</SheetTitle>
-          {body(
-            <SheetClose asChild>
-              <Button variant="ghost" size="icon-sm" aria-label="ย้อนกลับ" className="-ml-1">
-                <ArrowLeftIcon />
-              </Button>
-            </SheetClose>
-          )}
+          {body({
+            leading: (
+              <SheetClose asChild>
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  aria-label="ย้อนกลับ"
+                  className="-ml-1"
+                >
+                  <ArrowLeftIcon />
+                </Button>
+              </SheetClose>
+            ),
+          })}
         </SheetContent>
       </Sheet>
     </>
