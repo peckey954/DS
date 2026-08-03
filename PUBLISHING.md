@@ -19,7 +19,9 @@ repo นี้คือ **ตัวกลาง** ของดีไซน์ท
 | แพ็กเกจ | เนื้อหา |
 |---|---|
 | `@peckey954/ui` | component ทั้ง 55 ตัว + `cn()` + คำศัพท์กลาง (`globals.css`) |
-| `@peckey954/tokens` | ค่าสี/ฟอนต์/radius ของแบรนด์ Blue และ Green |
+| `@peckey954/tokens` | สีของแบรนด์ Blue · Green · Parich + `styles.css` (radius/density/font) + `tint.css` |
+
+> เวอร์ชันล่าสุดที่ปล่อยแล้ว: **0.2.0** (3 ส.ค. 2569)
 
 > เรา ship เป็น **source code** (ไม่ได้ build เป็น JS ล่วงหน้า) โปรเจกต์ปลายทาง
 > จึงต้องตั้ง `transpilePackages` ใน `next.config`
@@ -49,8 +51,11 @@ npm whoami
 
 ขึ้น `peckey954` = พร้อม publish
 
-> ไม่ต้องสร้างไฟล์ `.npmrc` หรือ token ใด ๆ — `npm login` จัดการให้เอง
-> และ **ห้ามใส่ token ลงไฟล์ในโปรเจกต์** เด็ดขาด
+> **ห้ามใส่ token ลงไฟล์ในโปรเจกต์** เด็ดขาด ที่เดียวที่ใส่ได้คือ `~/.npmrc`
+> ซึ่งอยู่นอก repo
+
+**ถ้า `npm login` ใช้ไม่ได้ ให้ข้ามไปหัวข้อ [กู้สิทธิ์ publish](#กู้สิทธิ์-publish-เมื่อขึ้น-401--eneedauth)**
+ซึ่งไม่ต้องพึ่ง `npm login` เลย
 
 ## publish ครั้งแรก
 
@@ -73,9 +78,9 @@ npm ไม่ให้ publish ทับเวอร์ชันเดิม **�
 
 | แบบ | ใช้เมื่อ | ตัวอย่าง |
 |---|---|---|
-| `patch` | แก้บั๊ก แก้สี ปรับ spacing | 0.1.0 → 0.1.1 |
-| `minor` | เพิ่ม component ใหม่ เพิ่ม prop ใหม่ | 0.1.0 → 0.2.0 |
-| `major` | เปลี่ยนแล้วโปรเจกต์เดิมพัง เช่น ลบ prop เปลี่ยนชื่อ component | 0.1.0 → 1.0.0 |
+| `patch` | แก้บั๊ก แก้สี ปรับ spacing | 0.2.0 → 0.2.1 |
+| `minor` | เพิ่ม component ใหม่ เพิ่ม prop ใหม่ | 0.2.0 → 0.3.0 |
+| `major` | เปลี่ยนแล้วโปรเจกต์เดิมพัง เช่น ลบ prop เปลี่ยนชื่อ component | 0.2.0 → 1.0.0 |
 
 ```bash
 cd packages/ui
@@ -83,17 +88,108 @@ npm version patch --no-git-tag-version
 cd ../..
 
 git add -A
-git commit -m "chore: bump @peckey954/ui to 0.1.1"
+git commit -m "chore: bump @peckey954/ui to 0.2.1"
 git push
 
 pnpm --filter @peckey954/ui publish
 ```
 
+**ถ้าเปลี่ยน API ของ component ต้องกลับไปแก้ [USE-DS.md](USE-DS.md) ด้วย**
+เพราะ prompt ในนั้นเขียนกฎไว้ตายตัว (เช่น `Badge` ใช้ `tone` × `appearance`)
+ถ้า npm กับเอกสารไม่ตรงกัน คนที่รับ prompt ไปใช้จะเขียนโค้ดแล้วพัง
+
+## กู้สิทธิ์ publish เมื่อขึ้น 401 / ENEEDAUTH
+
+**อ่านตรงนี้ก่อนไปหาที่อื่น** — เจอบ่อยและแก้ได้ใน 5 นาที
+
+### ก่อนอื่น: token ที่ใช้อยู่หมดอายุเมื่อไหร่
+
+ตัวปัจจุบันเป็น **Granular Access Token อายุ 30 วัน สร้างเมื่อ 3 ส.ค. 2569
+จะหมดอายุราว 2 ก.ย. 2569** — npm ไม่ให้ตั้งแบบ "ไม่หมดอายุ" อีกแล้ว
+ตอนสร้างใหม่เลือกได้สูงสุด 90 วัน
+
+**token หมดอายุไม่ได้ทำให้แพ็กเกจหาย** ของที่ปล่อยไปแล้วอยู่บน npm ตลอดไป
+คนอื่นยัง `pnpm add` ได้ตามปกติ สิ่งเดียวที่ทำไม่ได้คือปล่อยเวอร์ชันใหม่
+
+### เช็คสถานะ
+
+```bash
+npm whoami
+```
+
+- ขึ้น `peckey954` → auth ปกติ ปัญหาอยู่ที่อื่น
+- ขึ้น `ENEEDAUTH` → token หมดอายุหรือหายไป ทำตามข้างล่าง
+
+### วิธีแก้ — สร้าง token ใหม่ (ไม่ต้องใช้ `npm login`)
+
+1. ล็อกอิน [npmjs.com](https://www.npmjs.com) ในเบราว์เซอร์
+2. ไปที่ [Access Tokens](https://www.npmjs.com/settings/peckey954/tokens) → ลบตัวเก่าทิ้ง
+3. **Generate New Token → Granular Access Token**
+   - Token name: `publish-ds`
+   - Expiration: 90 days
+   - Permissions: **Read and write**
+   - Select packages: `@peckey954/ui` และ `@peckey954/tokens`
+4. กด Generate แล้ว **ก๊อป token ทันที** (โชว์ครั้งเดียว)
+5. เปิดไฟล์ credentials
+
+   ```bash
+   touch ~/.npmrc && open -e ~/.npmrc
+   ```
+
+6. ใส่บรรทัดนี้ (พิมพ์เอง แล้ว **วาง** token ต่อท้าย `=` ไม่เว้นวรรค)
+
+   ```
+   //registry.npmjs.org/:_authToken=npm_xxxxxxxxxxxx
+   ```
+
+   เซฟแล้วปิด
+
+7. เช็ค
+
+   ```bash
+   npm whoami
+   ```
+
+   ต้องขึ้น `peckey954`
+
+8. กลับมา publish ต่อได้เลย แล้วอัปเดตวันหมดอายุที่หัวข้อนี้ด้วย
+
+### ถ้า publish แล้วขึ้น `EOTP`
+
+```
+npm error code EOTP
+npm error This operation requires a one-time password.
+npm error Open this URL in your browser to authenticate:
+npm error   https://www.npmjs.com/auth/cli/xxxxxxxx
+```
+
+**อันนี้ไม่ใช่ error จริง เป็นการขอยืนยัน 2FA** ทำสามขั้น
+
+1. Cmd+คลิกลิงก์ที่มันพิมพ์ (หรือก๊อปไปวางในเบราว์เซอร์ — **รีบ ลิงก์หมดอายุเร็ว**)
+2. กด **Confirm** ในหน้าเว็บ
+3. กลับมาพิมพ์ `npm publish` ซ้ำอีกครั้ง คราวนี้จะผ่าน
+
+ต้องทำแบบนี้ทีละแพ็กเกจ
+
+### ถ้า npm ไม่ส่ง OTP ทางอีเมลมาให้
+
+ปัญหานี้ทำให้ `npm login` ใช้ไม่ได้เลย (เจอมาแล้วตอนปล่อย 0.2.0)
+ให้ข้ามไปใช้วิธี Granular Access Token ข้างบนแทน ซึ่งไม่พึ่งอีเมล
+
+ทางแก้ถาวรคือเข้า **Account → Two-Factor Authentication** เปลี่ยนจากอีเมล
+เป็น **Authenticator app** (Google Authenticator / Authy / 1Password)
+เลขจะขึ้นในแอปทันที ไม่ต้องรอเมลและไม่ตกถังขยะ
+
+### ถ้าจะปล่อยเวอร์ชันบ่อย
+
+พิจารณาตั้ง **Trusted Publishing ผ่าน GitHub Actions** (OIDC) — npm ยืนยันตัวตน
+กับ GitHub โดยตรง ไม่ต้องเก็บ token ในเครื่อง ไม่มีวันหมดอายุ ตั้งครั้งเดียวจบ
+
 ## ตรวจก่อน publish
 
 ```bash
 pnpm --filter @peckey954/ui pack --pack-destination /tmp
-tar tzf /tmp/peckey954-ui-0.1.0.tgz
+tar tzf /tmp/peckey954-ui-0.2.0.tgz
 ```
 
 ควรเห็น `package/src/...` ครบทุก component พร้อม `package.json`, `README.md`, `LICENSE`
@@ -165,7 +261,10 @@ git add -A && git commit -m "chore: rebuild registry" && git push
 ## เช็คลิสต์ทุกครั้งที่ปล่อยของใหม่
 
 - [ ] `pnpm build` ผ่าน
+- [ ] `npm whoami` ขึ้น `peckey954` (ถ้าไม่ขึ้น → [กู้สิทธิ์ publish](#กู้สิทธิ์-publish-เมื่อขึ้น-401--eneedauth))
 - [ ] ขึ้นเวอร์ชันใน `packages/ui/package.json` (และ `tokens` ถ้าแก้ token)
 - [ ] `pnpm --filter @peckey954/ui publish`
+- [ ] เช็คว่าขึ้นจริง: `npm view @peckey954/ui version`
+- [ ] ถ้าเปลี่ยน API → อัปเดตกฎใน `AGENTS.md` และ prompt ใน `USE-DS.md` ให้ตรง
 - [ ] `REGISTRY_URL=<โดเมนจริง> pnpm registry` แล้ว commit ไฟล์ใน `apps/web/public/r`
 - [ ] push ขึ้น GitHub เพื่อให้ Vercel deploy registry เวอร์ชันใหม่
