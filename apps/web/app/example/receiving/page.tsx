@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { BellIcon, InfoIcon, MenuIcon, PlusIcon, Trash2Icon } from "lucide-react";
+import { InfoIcon, MenuIcon, PlusIcon, Trash2Icon } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@peckey954/ui/components/ui/avatar";
 import { Badge } from "@peckey954/ui/components/ui/badge";
@@ -34,6 +34,8 @@ import {
   TooltipTrigger,
 } from "@peckey954/ui/components/ui/tooltip";
 import { cn } from "@peckey954/ui/lib/utils";
+
+import { NotificationBell } from "../_parts/notifications";
 
 /* ============================================================
    หน้าตัวอย่าง: ใบตรวจสอบรับวัตถุดิบ (Parich WMS)
@@ -206,9 +208,7 @@ export default function ReceivingInspectionPage() {
             <span className="font-semibold">Parich WMS</span>
 
             <div className="ml-auto flex items-center gap-2">
-              <Button variant="ghost" size="icon-sm" aria-label="การแจ้งเตือน">
-                <BellIcon />
-              </Button>
+              <NotificationBell />
               <Avatar className="size-8">
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
