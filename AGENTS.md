@@ -103,6 +103,22 @@ component ที่ประกอบขึ้นเองก็ต้องว�
 
 ปุ่มไอคอนล้วน **ต้องมี `aria-label`** เพราะไม่มีข้อความให้ screen reader อ่าน
 
+**ห้ามกำหนดสีไอคอนเอง** — ไอคอน Lucide วาดด้วย `stroke="currentColor"` จึงรับสี
+จากตัวอักษรของปุ่มมาเองอยู่แล้ว เขียน `text-white` หรือ `stroke-black` ทับ
+เท่ากับตัดไอคอนออกจากระบบสี พอสลับ variant หรือเปลี่ยนแบรนด์แล้วจะไม่เปลี่ยนตาม
+
+```tsx
+// ✅ ไอคอนรับสีจากปุ่มเอง
+<Button variant="outline-primary"><PlusIcon />เพิ่มครั้ง</Button>
+
+// ❌ ล็อกสีไว้ พอเปลี่ยน variant แล้วไอคอนไม่ตาม
+<Button variant="outline-primary"><PlusIcon className="text-black" />เพิ่มครั้ง</Button>
+```
+
+> **ใน Figma ไม่ได้ฟรีแบบนี้** — ไอคอนที่ swap เข้าช่อง `Icon Leading` จะเอาสีของ
+> ตัวเองติดมาและกลายเป็นสีดำ ต้องผูก `strokes` กับตัวแปรสีของปุ่มเองทุกครั้ง
+> รายละเอียดอยู่ใน [FIGMA-PLAN.md](FIGMA-PLAN.md) หัวข้อ 3.5
+
 #### checkbox / radio แบบมีกรอบครอบ (box)
 
 ไม่มี component แยก — ประกอบด้วย `Field` + `FieldLabel` ที่มีอยู่แล้ว

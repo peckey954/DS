@@ -159,7 +159,38 @@ for (const stack of table.children) {
 |---|---|---|---|---|
 | Outline primary | `background` | `primary` | `primary` | พื้นเป็น `brand` |
 
-### 3.5 Checkbox / Radio แบบมีกรอบ
+### 3.5 ไอคอน — หลัง swap ต้องผูกสีเองทุกครั้ง
+
+**ไอคอน Lucide วาดด้วย `stroke` ไม่ใช่ `fill`** และเวลา swap ไอคอนเข้าช่อง
+`Icon Leading` / `Icon Trailing` ของปุ่ม **มันเอาการผูกสีของตัวไอคอนเองติดมาด้วย**
+ปุ่มคุมได้แค่สีตัวอักษร ไอคอนที่ swap เข้ามาใหม่จึงกลายเป็นสีดำ ไม่ตามสีปุ่ม
+
+ไม่ใช่ความผิดของ component — เป็นข้อจำกัดของการ swap ใน Figma
+ถ้าใช้ไอคอนที่ติดมากับปุ่มตั้งแต่แรกจะไม่เจอปัญหานี้
+
+**ห้ามแก้ด้วยการทาสีทับตรง ๆ** เพราะจะไม่เปลี่ยนตามเวลาสลับ variant หรือเปลี่ยน
+สีแบรนด์ ให้อ่านว่าตัวอักษรของปุ่มนั้นผูกกับตัวแปรอะไร แล้วเอาตัวแปรตัวเดียวกัน
+ไปผูกกับ `strokes` ของไอคอน
+
+```js
+const label = btn.findAllWithCriteria({ types: ["TEXT"] }).find((t) => t.visible);
+const varId = label.fills[0]?.boundVariables?.color?.id;
+const colorVar = await figma.variables.getVariableByIdAsync(varId);
+
+for (const vec of btn.findAllWithCriteria({ types: ["VECTOR"] })) {
+  if (!vec.strokes.length) continue;
+  vec.strokes = vec.strokes.map((s) =>
+    figma.variables.setBoundVariableForPaint(s, "color", colorVar)
+  );
+}
+```
+
+ทำแบบนี้แล้วไอคอนจะเปลี่ยนตามเองเมื่อสลับปุ่มจาก Outline เป็น Primary
+หรือเปลี่ยนสีแบรนด์ เพราะผูกกับตัวแปร ไม่ใช่ค่าสีตายตัว
+
+**เช็คเร็ว ๆ** — ถ้าไอคอนในปุ่มเป็นสีดำ แปลว่ายังไม่ได้ผูก
+
+### 3.6 Checkbox / Radio แบบมีกรอบ
 
 สถานะถูกเลือกต้องใช้ **พื้น `brand` + เส้นขอบ `primary`** ซึ่งเป็นชุดเดียวกับ Alert
 แบบ Brand และ Badge แบบ Brand outline **ถ้าแก้ที่ใดที่หนึ่งต้องแก้ทุกที่**
@@ -198,6 +229,7 @@ for (const stack of table.children) {
 - [ ] Alert แบบ Destructive เป็นแดงชัด (ไม่ใช่ม่วง/น้ำตาล) ในโหมดมืด
 - [ ] **ทุกช่องในแถวเดียวกันของตารางสูงเท่ากัน** เส้นคั่นลากตรงไม่หยัก
 - [ ] ช่องที่มี input เหลือช่องไฟบนล่างข้างละ 8px ไม่ชนขอบตาราง
+- [ ] **ไอคอนในปุ่มเป็นสีเดียวกับตัวอักษรของปุ่ม ไม่ใช่สีดำ** (ถ้าดำ = ยังไม่ได้ผูกหลัง swap)
 
 ---
 
