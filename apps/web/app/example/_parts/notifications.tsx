@@ -7,16 +7,13 @@ import {
   CircleXIcon,
   ClipboardCheckIcon,
   PackageIcon,
-  Trash2Icon,
   TriangleAlertIcon,
   type LucideIcon,
 } from "lucide-react";
 
-import { Badge } from "@peckey954/ui/components/ui/badge";
 import { Button } from "@peckey954/ui/components/ui/button";
 import {
   Item,
-  ItemActions,
   ItemContent,
   ItemDescription,
   ItemGroup,
@@ -36,7 +33,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@peckey954/ui/components/ui/sheet";
-import { Tabs, TabsList, TabsTrigger } from "@peckey954/ui/components/ui/tabs";
 import { cn } from "@peckey954/ui/lib/utils";
 
 /* ============================================================
@@ -132,11 +128,9 @@ const NOTIFICATIONS: Notification[] = [
 function NotificationRow({
   item,
   onRead,
-  onRemove,
 }: {
   item: Notification;
   onRead: (id: string) => void;
-  onRemove: (id: string) => void;
 }) {
   const Icon = item.icon;
   return (
@@ -171,41 +165,27 @@ function NotificationRow({
           {item.description}
         </ItemDescription>
 
-        <div className="mt-2 flex items-center gap-2">
+        <div className="mt-2 flex items-center justify-between gap-3">
+          {/* กดปุ่มหลัก = ถือว่าอ่านแล้ว */}
           <Button size="sm" onClick={() => onRead(item.id)}>
             {item.action}
           </Button>
+
+          {/* ป้ายบอกสถานะ ยังไม่อ่านจะเป็นสีและกดเพื่อทำเป็นอ่านแล้วได้
+              อ่านแล้วเป็นตัวหนังสือเทาเฉย ๆ กดไม่ได้ เพราะไม่มีอะไรให้ทำต่อ */}
           {item.unread ? (
-            <Button
-              variant="ghost"
-              size="sm"
+            <button
+              type="button"
               onClick={() => onRead(item.id)}
-              className="text-muted-foreground"
+              className="text-xs font-medium text-primary underline-offset-4 hover:underline"
             >
-              ทำเป็นอ่านแล้ว
-            </Button>
-          ) : null}
+              ยังไม่อ่าน
+            </button>
+          ) : (
+            <span className="text-xs text-muted-foreground">อ่านแล้ว</span>
+          )}
         </div>
       </ItemContent>
-
-      <ItemActions className="self-start">
-        {/* จุดสีบอกว่ายังไม่อ่าน — คนตาบอดสีแยกด้วยพื้นหลังไม่ได้ ต้องมีสัญญาณที่สอง */}
-        {item.unread ? (
-          <span
-            aria-label="ยังไม่อ่าน"
-            className="mt-2 size-2 shrink-0 rounded-full bg-primary"
-          />
-        ) : null}
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          aria-label={`ลบการแจ้งเตือน ${item.title}`}
-          onClick={() => onRemove(item.id)}
-          className="text-muted-foreground hover:text-destructive"
-        >
-          <Trash2Icon />
-        </Button>
-      </ItemActions>
     </Item>
   );
 }
@@ -213,34 +193,34 @@ function NotificationRow({
 /** เนื้อหาของแผง ใช้ร่วมกันทั้งจอใหญ่และจอเล็ก */
 function NotificationBody({
   items,
-  filter,
-  setFilter,
   onRead,
-  onRemove,
   onReadAll,
   headerClassName,
 }: {
   items: Notification[];
-  filter: "all" | "unread";
-  setFilter: (v: "all" | "unread") => void;
   onRead: (id: string) => void;
-  onRemove: (id: string) => void;
   onReadAll: () => void;
   /** เผื่อที่ให้ปุ่มปิดของ Sheet ที่ลอยอยู่มุมขวาบน */
   headerClassName?: string;
 }) {
-  const shown = filter === "unread" ? items.filter((n) => n.unread) : items;
   const unreadCount = items.filter((n) => n.unread).length;
 
   return (
     <div className="flex h-full flex-col">
       <div
         className={cn(
-          "flex items-center justify-between gap-3 px-4 pt-4",
+          "flex items-center justify-between gap-3 px-4 py-4",
           headerClassName
         )}
       >
-        <h2 className="text-base font-semibold tracking-tight">การแจ้งเตือน</h2>
+        <div className="flex items-baseline gap-2">
+          <h2 className="text-base font-semibold tracking-tight">การแจ้งเตือน</h2>
+          {unreadCount > 0 ? (
+            <span className="text-xs text-muted-foreground">
+              ยังไม่อ่าน {unreadCount} รายการ
+            </span>
+          ) : null}
+        </div>
         <Button
           variant="link"
           size="sm"
@@ -252,43 +232,17 @@ function NotificationBody({
         </Button>
       </div>
 
-      <div className="px-4 py-3">
-        <Tabs value={filter} onValueChange={(v) => setFilter(v as "all" | "unread")}>
-          <TabsList>
-            <TabsTrigger value="all">ทั้งหมด</TabsTrigger>
-            <TabsTrigger value="unread">
-              ยังไม่อ่าน
-              {unreadCount > 0 ? (
-                <Badge tone="brand" appearance="solid" className="ml-1.5">
-                  {unreadCount}
-                </Badge>
-              ) : null}
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
-      </div>
-
       <Separator />
 
       <ScrollArea className="min-h-0 flex-1">
-        {shown.length === 0 ? (
-          <p className="px-4 py-10 text-center text-sm text-muted-foreground">
-            ไม่มีรายการที่ยังไม่อ่าน
-          </p>
-        ) : (
-          <ItemGroup>
-            {shown.map((item, i) => (
-              <React.Fragment key={item.id}>
-                {i > 0 ? <Separator /> : null}
-                <NotificationRow
-                  item={item}
-                  onRead={onRead}
-                  onRemove={onRemove}
-                />
-              </React.Fragment>
-            ))}
-          </ItemGroup>
-        )}
+        <ItemGroup>
+          {items.map((item, i) => (
+            <React.Fragment key={item.id}>
+              {i > 0 ? <Separator /> : null}
+              <NotificationRow item={item} onRead={onRead} />
+            </React.Fragment>
+          ))}
+        </ItemGroup>
       </ScrollArea>
     </div>
   );
@@ -302,25 +256,19 @@ function NotificationBody({
  */
 export function NotificationBell() {
   const [items, setItems] = React.useState(NOTIFICATIONS);
-  const [filter, setFilter] = React.useState<"all" | "unread">("all");
 
   const unreadCount = items.filter((n) => n.unread).length;
   const markRead = (id: string) =>
     setItems((list) =>
       list.map((n) => (n.id === id ? { ...n, unread: false } : n))
     );
-  const remove = (id: string) =>
-    setItems((list) => list.filter((n) => n.id !== id));
   const readAll = () =>
     setItems((list) => list.map((n) => ({ ...n, unread: false })));
 
   const body = (headerClassName?: string) => (
     <NotificationBody
       items={items}
-      filter={filter}
-      setFilter={setFilter}
       onRead={markRead}
-      onRemove={remove}
       onReadAll={readAll}
       headerClassName={headerClassName}
     />
