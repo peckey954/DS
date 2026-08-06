@@ -202,14 +202,21 @@ workflow อยู่ที่ [.github/workflows/publish.yml](.github/workflows
 
    | ช่อง | ค่า |
    |---|---|
+   | ช่อง | ค่า |
+   |---|---|
+   | Publisher | `GitHub Actions` |
    | Organization or user | `peckey954` |
    | Repository | `DS` |
    | Workflow filename | `publish.yml` |
-   | Environment name | เว้นว่าง |
+   | Environment name | **เว้นว่าง** (workflow ไม่ได้ใช้ GitHub environment) |
 
-4. กด Save แล้วทำซ้ำอีกรอบกับ https://www.npmjs.com/package/@peckey954/tokens
+4. ที่ **Allowed actions** ติ๊ก ☑️ **Allow `npm publish`** อันเดียวพอ
+   (`npm stage publish` ไม่ต้องติ๊ก workflow ไม่ได้ใช้)
+   — ช่องนี้บังคับ ไม่ติ๊กแล้วกดปุ่มไม่ผ่าน
+5. กดปุ่ม **Set up connection** (ปุ่มไม่ได้ชื่อ Save)
+6. ทำซ้ำทั้งหมดอีกรอบกับ https://www.npmjs.com/package/@peckey954/tokens
 
-> npm **ไม่ตรวจค่าตอนกด Save** ถ้ากรอกผิดจะไปรู้ตอน publish แล้วพัง
+> npm **ไม่ตรวจค่าตอนกดยืนยัน** ถ้ากรอกผิดจะไปรู้ตอน publish แล้วพัง
 > ที่พลาดบ่อยคือใส่ `ds` ตัวเล็กทั้งที่ repo ชื่อ `DS`
 
 ### ปล่อยของ
