@@ -202,8 +202,6 @@ workflow อยู่ที่ [.github/workflows/publish.yml](.github/workflows
 
    | ช่อง | ค่า |
    |---|---|
-   | ช่อง | ค่า |
-   |---|---|
    | Publisher | `GitHub Actions` |
    | Organization or user | `peckey954` |
    | Repository | `DS` |
