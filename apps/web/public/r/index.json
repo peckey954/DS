@@ -179,6 +179,11 @@
       "url": "https://ds-web-iota.vercel.app/r/navigation-menu.json"
     },
     {
+      "name": "number-input",
+      "type": "registry:ui",
+      "url": "https://ds-web-iota.vercel.app/r/number-input.json"
+    },
+    {
       "name": "pagination",
       "type": "registry:ui",
       "url": "https://ds-web-iota.vercel.app/r/pagination.json"

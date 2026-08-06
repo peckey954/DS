@@ -7,12 +7,23 @@ import {
   MultiSelect,
   type MultiSelectOption,
 } from "@peckey954/ui/components/ui/multi-select";
+import { NumberInput } from "@peckey954/ui/components/ui/number-input";
 import { cn } from "@peckey954/ui/lib/utils";
 
 import { defineCopy, useCopy, useT } from "@/lib/i18n";
 
 const COPY = defineCopy({
   th: {
+    decrement: "ลดลง",
+    increment: "เพิ่มขึ้น",
+    trips: "เที่ยว",
+    numberHint: "ปุ่ม − / + · ทศนิยม 2 ตำแหน่ง",
+    unitHint: "หน่วยในช่อง ไม่มีปุ่ม",
+    bothHint: "มีทั้งปุ่มและหน่วย + จำกัดช่วง",
+    qtyLabel: "รับเข้า (ชิ้น)",
+    weightLabel: "น้ำหนักรวม",
+    truckLabel: "จำนวนเที่ยวรถ",
+    rangeNote: "จำกัดไว้ 0–10 เที่ยว ปุ่มจะหรี่เองเมื่อชนขอบ",
     tons: "ตัน",
     received: "รับ",
     days: "วัน",
@@ -39,6 +50,16 @@ const COPY = defineCopy({
     sni: "สุราษฎร์ธานี",
   },
   en: {
+    decrement: "Decrease",
+    increment: "Increase",
+    trips: "trips",
+    numberHint: "− / + buttons · 2 decimal places",
+    unitHint: "Unit inside the field, no buttons",
+    bothHint: "Buttons and unit together, with a range",
+    qtyLabel: "Received (pieces)",
+    weightLabel: "Total weight",
+    truckLabel: "Truck trips",
+    rangeNote: "Capped at 0–10 trips — buttons dim at the limits",
     tons: "t",
     received: "Due",
     days: "days",
@@ -84,6 +105,34 @@ const LOT_DATA = [
   { value: "lot-5", code: "PD260116/02-02", tons: 7, days: 60 },
 ];
 
+/** กล่อง demo หน้าตาเดียวกับที่ใช้อยู่เดิมในไฟล์นี้ */
+function DemoCard({
+  name,
+  hint,
+  wide,
+  children,
+}: {
+  name: string;
+  hint: string;
+  wide?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      className={cn(
+        "flex flex-col overflow-hidden rounded-lg border border-border bg-card text-card-foreground",
+        wide && "md:col-span-2"
+      )}
+    >
+      <div className="flex items-baseline justify-between gap-3 border-b border-border bg-muted/50 px-4 py-2.5">
+        <code className="text-xs font-medium">{name}</code>
+        <span className="text-xs text-muted-foreground">{hint}</span>
+      </div>
+      <div className="space-y-2 p-4">{children}</div>
+    </div>
+  );
+}
+
 export function SectionCustom() {
   const t = useT();
   const c = useCopy(COPY);
@@ -111,17 +160,54 @@ export function SectionCustom() {
   ];
 
   return (
-    <section id="multi-select" className="scroll-mt-24">
+    <section id="custom" className="scroll-mt-24">
       <div className="mb-4 border-b border-border pb-3">
         <h2 className="text-xl font-semibold tracking-tight">
-          {t("section.multiSelect")}
+          {t("section.custom")}
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          {t("section.multiSelect.desc")}
+          {t("section.custom.desc")}
         </p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
+        <DemoCard name="number-input" hint={c.numberHint}>
+          <Label htmlFor="qty">{c.qtyLabel}</Label>
+          <NumberInput
+            id="qty"
+            defaultValue={0}
+            precision={2}
+            step={0.5}
+            decrementLabel={c.decrement}
+            incrementLabel={c.increment}
+          />
+        </DemoCard>
+
+        <DemoCard name="number-input" hint={c.unitHint}>
+          <Label htmlFor="weight">{c.weightLabel}</Label>
+          <NumberInput
+            id="weight"
+            steppers={false}
+            unit={c.tons}
+            precision={2}
+            placeholder="0.00"
+          />
+        </DemoCard>
+
+        <DemoCard name="number-input" hint={c.bothHint} wide>
+          <Label htmlFor="trips">{c.truckLabel}</Label>
+          <NumberInput
+            id="trips"
+            defaultValue={2}
+            min={0}
+            max={10}
+            unit={c.trips}
+            decrementLabel={c.decrement}
+            incrementLabel={c.increment}
+          />
+          <p className="text-sm text-muted-foreground">{c.rangeNote}</p>
+        </DemoCard>
+
         <div className="flex flex-col overflow-hidden rounded-lg border border-border bg-card text-card-foreground md:col-span-2">
           <div className="flex items-baseline justify-between gap-3 border-b border-border bg-muted/50 px-4 py-2.5">
             <code className="text-xs font-medium">multi-select</code>

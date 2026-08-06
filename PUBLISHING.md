@@ -18,7 +18,7 @@ repo นี้คือ **ตัวกลาง** ของดีไซน์ท
 
 | แพ็กเกจ | เนื้อหา |
 |---|---|
-| `@peckey954/ui` | component ทั้ง 55 ตัว + `cn()` + คำศัพท์กลาง (`globals.css`) |
+| `@peckey954/ui` | component ทั้ง 56 ตัว + `cn()` + คำศัพท์กลาง (`globals.css`) |
 | `@peckey954/tokens` | สีของแบรนด์ Blue · Green · Parich + `styles.css` (radius/density/font) + `tint.css` |
 
 > เวอร์ชันล่าสุดที่ปล่อยแล้ว: `@peckey954/ui` **0.2.1** (6 ส.ค. 2569) ·

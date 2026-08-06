@@ -39,7 +39,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@peckey954/ui/componen
 ls packages/ui/src/components/ui
 ```
 
-ปัจจุบันมี **55 ตัว** — 54 ตัวจาก shadcn:
+ปัจจุบันมี **56 ตัว** — 54 ตัวจาก shadcn:
 accordion, alert, alert-dialog, aspect-ratio, avatar, badge, breadcrumb, button,
 button-group, calendar, card, carousel, chart, checkbox, collapsible, command,
 context-menu, dialog, drawer, dropdown-menu, empty, field, form, hover-card,
@@ -48,7 +48,7 @@ navigation-menu, pagination, popover, progress, radio-group, resizable,
 scroll-area, select, separator, sheet, sidebar, skeleton, slider, sonner,
 spinner, switch, table, tabs, textarea, toggle, toggle-group, tooltip
 
-และอีก 1 ตัวที่ประกอบขึ้นเองในโปรเจกต์นี้ (ไม่มีใน registry ของ shadcn):
+และอีก 2 ตัวที่ประกอบขึ้นเองในโปรเจกต์นี้ (ไม่มีใน registry ของ shadcn):
 **multi-select** — ดรอปดาวน์เลือกหลายรายการ พร้อมช่องค้นหา · แถวเลือกทั้งหมด · chip
 ของรายการที่เลือก ประกอบจาก popover + command + checkbox + badge
 
@@ -84,6 +84,48 @@ const options: MultiSelectOption[] = [
 
 ถ้าไม่มีจริง ๆ ให้ประกอบจากของที่มีก่อน (compose) แล้วค่อยพิจารณาสร้างใหม่
 component ที่ประกอบขึ้นเองก็ต้องวางไว้ที่ `packages/ui/src/components/ui/` และทำตามกฎทุกข้อเหมือนกัน
+
+**number-input** — ช่องกรอกตัวเลข ครอบสองหน้าตาด้วย component เดียว
+ปุ่ม − / + และหน่วยที่โชว์ในช่อง
+
+```tsx
+import { NumberInput } from "@peckey954/ui/components/ui/number-input";
+
+{/* มีปุ่ม − / + · ทศนิยม 2 ตำแหน่ง */}
+<NumberInput defaultValue={0} precision={2} step={0.5} />
+
+{/* มีหน่วยในช่อง ไม่มีปุ่ม */}
+<NumberInput unit="ตัน" steppers={false} precision={2} placeholder="0.00" />
+
+{/* มีทั้งสองอย่าง + จำกัดช่วง — ปุ่มหรี่เองเมื่อชนขอบ */}
+<NumberInput defaultValue={2} min={0} max={10} unit="เที่ยว" />
+
+{/* คุมค่าเอง */}
+<NumberInput value={qty} onValueChange={setQty} />
+```
+
+| prop | ทำอะไร |
+|---|---|
+| `value` / `defaultValue` / `onValueChange` | ค่าเป็น `number \| null` — ช่องว่างคือ `null` ไม่ใช่ `0` |
+| `min` `max` | จำกัดช่วง ปุ่มจะ disabled เองเมื่อชนขอบ |
+| `step` | ปุ่มบวกลบทีละเท่าไร (ค่าเริ่มต้น 1) |
+| `precision` | ทศนิยมกี่ตำแหน่ง จัดรูปให้ตอนออกจากช่อง |
+| `unit` | หน่วยที่โชว์ในช่อง |
+| `steppers` | ปิดปุ่ม − / + (ค่าเริ่มต้นเปิด) |
+| `align` | `center` เมื่อมีปุ่ม · `start` เมื่อไม่มี — สั่งทับได้ |
+
+ข้อควรรู้
+
+- ข้างในเป็น `type="text"` + `inputMode="decimal"` **ไม่ใช่ `type="number"`**
+  เพราะลูกกลิ้งเมาส์เลื่อนทับแล้วค่าเปลี่ยนเอง ปุ่มลูกศรของเบราว์เซอร์แต่งด้วย token
+  ไม่ได้ และบังคับทศนิยมคงที่แบบ `0.00` ไม่ได้
+- **ไม่ clamp ระหว่างพิมพ์** clamp ตอนออกจากช่องกับตอนกดปุ่มเท่านั้น
+  ถ้าดักตอนพิมพ์ ตั้ง `max={10}` แล้วจะพิมพ์ `12` ไม่ได้เลย เพราะพอพิมพ์ `1`
+  ต่อด้วย `2` มันจะถูกตัดเหลือ `10` ไปก่อน
+- ปุ่ม − / + ตั้ง `tabIndex={-1}` ไว้ คนใช้คีย์บอร์ดกด **ลูกศรขึ้น/ลง** ที่ช่องได้เลย
+  เร็วกว่าต้อง Tab ผ่านปุ่มสองอันทุกช่อง
+- ถ้าอยากได้แค่ prefix/suffix ที่ไม่ใช่หน่วยของตัวเลข (เช่น `@company.co.th`)
+  ใช้ `InputGroup` + `InputGroupAddon` แทน อันนั้นทำมาเพื่อกรณีนั้นอยู่แล้ว
 
 #### ปุ่มที่มีไอคอน / กำลังโหลด
 

@@ -21,7 +21,7 @@ const NAV: { href: string; key: TranslationKey }[] = [
   { href: "#feedback", key: "nav.feedback" },
   { href: "#data", key: "nav.data" },
   { href: "#charts", key: "nav.charts" },
-  { href: "#multi-select", key: "nav.multiSelect" },
+  { href: "#custom", key: "nav.custom" },
 ];
 
 export function GalleryHeader() {

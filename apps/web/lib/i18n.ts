@@ -15,7 +15,7 @@ const th = {
 
   "page.home": "หน้าแรก",
   "page.title": "แกลเลอรี component",
-  "page.subtitle": "ครบทั้ง 55 ตัวจาก @peckey954/ui",
+  "page.subtitle": "ครบทั้ง 56 ตัวจาก @peckey954/ui",
   "page.intro.before": "ทุกตัวอย่างในหน้านี้ใช้ component จาก",
   "page.intro.after":
     "และสีจาก token เท่านั้น — ลองสลับแบรนด์และโหมดสว่าง/มืดที่มุมขวาบน แล้วสังเกตว่าทั้งหน้าเปลี่ยนตามโดยไม่มีการแก้โค้ด component",
@@ -30,7 +30,7 @@ const th = {
   "nav.feedback": "สถานะ",
   "nav.data": "แสดงข้อมูล",
   "nav.charts": "กราฟ",
-  "nav.multiSelect": "multi-select",
+  "nav.custom": "ของเราเอง",
   "nav.styles": "ทดลองสไตล์",
 
   "section.layout": "โครงสร้าง & เลย์เอาต์",
@@ -41,9 +41,9 @@ const th = {
   "section.feedback": "สถานะ & การแจ้งเตือน",
   "section.data": "แสดงข้อมูล",
   "section.charts": "กราฟ & แผนภูมิ",
-  "section.multiSelect": "multi-select (component เสริมของเรา)",
-  "section.multiSelect.desc":
-    "ดรอปดาวน์เลือกหลายรายการ พร้อมช่องค้นหา · เลือกทั้งหมด · chip ของรายการที่เลือก — ประกอบจาก popover + command + checkbox + badge ของ shadcn ทั้งหมด",
+  "section.custom": "component เสริมของเรา",
+  "section.custom.desc":
+    "สองตัวที่ประกอบขึ้นเองในโปรเจกต์นี้ ไม่มีใน registry ของ shadcn — number-input ช่องกรอกตัวเลขที่มีปุ่ม − / + และหน่วยในช่อง · multi-select ดรอปดาวน์เลือกหลายรายการพร้อมช่องค้นหาและ chip",
 
   "home.eyebrow": "Design System · Multi-brand",
   "home.title": "สวัสดี นี่คือระบบดีไซน์กลาง",
@@ -52,7 +52,7 @@ const th = {
     "— สลับแบรนด์และโหมดดู สี/ฟอนต์เปลี่ยนทั้งหน้าโดยไม่แตะโค้ด component",
   "home.galleryTitle": "แกลเลอรี component ทั้งหมด",
   "home.galleryDesc":
-    "ดูตัวอย่างการใช้งาน component ทั้ง 55 ตัวใน @peckey954/ui จัดเป็นหมวด พร้อมสลับแบรนด์และโหมดสว่าง/มืดได้ทันที",
+    "ดูตัวอย่างการใช้งาน component ทั้ง 56 ตัวใน @peckey954/ui จัดเป็นหมวด พร้อมสลับแบรนด์และโหมดสว่าง/มืดได้ทันที",
   "home.openGallery": "เปิดแกลเลอรี",
   "home.swatches": "สีของแบรนด์ (tokens)",
   "home.buttons": "ปุ่ม",
@@ -67,7 +67,7 @@ const en: Record<TranslationKey, string> = {
 
   "page.home": "Home",
   "page.title": "Component gallery",
-  "page.subtitle": "All 55 components from @peckey954/ui",
+  "page.subtitle": "All 56 components from @peckey954/ui",
   "page.intro.before": "Every example on this page uses components from",
   "page.intro.after":
     "and colours from tokens only — switch brand and light/dark mode in the top right and watch the whole page follow, with no component code changed.",
@@ -82,7 +82,7 @@ const en: Record<TranslationKey, string> = {
   "nav.feedback": "Feedback",
   "nav.data": "Data display",
   "nav.charts": "Charts",
-  "nav.multiSelect": "multi-select",
+  "nav.custom": "Ours",
   "nav.styles": "Style playground",
 
   "section.layout": "Layout & structure",
@@ -93,9 +93,9 @@ const en: Record<TranslationKey, string> = {
   "section.feedback": "Status & notifications",
   "section.data": "Data display",
   "section.charts": "Charts",
-  "section.multiSelect": "multi-select (our own addition)",
-  "section.multiSelect.desc":
-    "A multi-select dropdown with search · select all · chips for the chosen items — composed entirely from shadcn's popover + command + checkbox + badge.",
+  "section.custom": "Our own components",
+  "section.custom.desc":
+    "Two components built in this project that shadcn's registry does not have — number-input, a numeric field with − / + buttons and an in-field unit · multi-select, a multi-select dropdown with search and chips.",
 
   "home.eyebrow": "Design System · Multi-brand",
   "home.title": "Hello, this is the shared design system",
@@ -104,7 +104,7 @@ const en: Record<TranslationKey, string> = {
     "— switch brand and mode, and colours/fonts change across the page without touching component code",
   "home.galleryTitle": "Full component gallery",
   "home.galleryDesc":
-    "Browse usage examples for all 55 components in @peckey954/ui, grouped by category, with instant brand and light/dark switching.",
+    "Browse usage examples for all 56 components in @peckey954/ui, grouped by category, with instant brand and light/dark switching.",
   "home.openGallery": "Open gallery",
   "home.swatches": "Brand colours (tokens)",
   "home.buttons": "Buttons",
