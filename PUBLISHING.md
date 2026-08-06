@@ -194,6 +194,26 @@ npm error   https://www.npmjs.com/auth/cli/xxxxxxxx
 workflow อยู่ที่ [.github/workflows/publish.yml](.github/workflows/publish.yml) แล้ว
 เหลือแค่ตั้งค่าฝั่ง npm **ครั้งเดียวต่อแพ็กเกจ**
 
+### ก่อนอื่น: บัญชีต้องมี 2FA จริงก่อน
+
+**ทำข้อนี้ให้เสร็จก่อน ไม่งั้นทำอะไรต่อไม่ได้เลย**
+
+ถ้ากด GitHub Actions แล้วเด้งไปหน้า Manage Two-Factor Authentication
+พร้อมแบนเนอร์แดง `Please configure 2FA to edit this package.` แปลว่าบัญชี
+**ยังไม่มี 2FA ที่ npm ยอมรับ** — 2FA ทางอีเมลไม่นับ npm เลิกรองรับไปแล้ว
+
+ไปตั้งที่ https://www.npmjs.com/settings/~/2fa เลือกทางใดทางหนึ่ง
+
+| ทาง | ทำยังไง | เหมาะกับ |
+|---|---|---|
+| **Security Key / Passkey** | Manage Security Keys → เพิ่ม → ใช้ Touch ID หรือ iCloud Keychain | อยู่บน Mac ไม่อยากลงแอปเพิ่ม |
+| **Authenticator App** | สแกน QR ด้วย Google Authenticator / Authy / 1Password | ใช้ได้ทุกเครื่อง |
+
+**เก็บ recovery codes ที่มันให้มาด้วยเสมอ** ทำเครื่องหายแล้วไม่มีโค้ดนี้ = เข้าบัญชีไม่ได้อีก
+
+> นี่คือเงื่อนไขเดียวกับที่ทำให้ `npm login` พังตอนปล่อย 0.2.0 จนต้องหนีไปใช้
+> Granular Access Token แทน ตั้ง 2FA จริงแล้วปัญหานั้นหายไปด้วย
+
 ### ตั้งค่าฝั่ง npm (ทำครั้งเดียว ต่อแพ็กเกจ)
 
 1. เข้า https://www.npmjs.com/package/@peckey954/ui → แท็บ **Settings**
@@ -213,6 +233,10 @@ workflow อยู่ที่ [.github/workflows/publish.yml](.github/workflows
    — ช่องนี้บังคับ ไม่ติ๊กแล้วกดปุ่มไม่ผ่าน
 5. กดปุ่ม **Set up connection** (ปุ่มไม่ได้ชื่อ Save)
 6. ทำซ้ำทั้งหมดอีกรอบกับ https://www.npmjs.com/package/@peckey954/tokens
+
+**เช็คว่าบันทึกจริงไหม:** กลับมาที่หน้า Settings แล้วดูช่อง Trusted Publisher
+ถ้ายังโชว์ปุ่มให้เลือก `GitHub Actions / GitLab CI/CD / CircleCI` อยู่ = **ยังไม่ได้บันทึก**
+ถ้าบันทึกสำเร็จมันจะโชว์ค่าที่ตั้งไว้แทน
 
 > npm **ไม่ตรวจค่าตอนกดยืนยัน** ถ้ากรอกผิดจะไปรู้ตอน publish แล้วพัง
 > ที่พลาดบ่อยคือใส่ `ds` ตัวเล็กทั้งที่ repo ชื่อ `DS`
