@@ -4,7 +4,9 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@peckey954/ui/lib/utils"
 
 const alertVariants = cva(
-  "relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 rounded-lg border px-4 py-3 text-sm has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
+  /* gap-y-1.5 ไม่ใช่ 0.5 — 2px ทำให้หัวข้อกับคำอธิบายติดกันจนอ่านเป็นก้อนเดียว
+     ค่านี้คูณกับ --spacing จึงขยับตามความห่างที่เลือกไว้ทั้งระบบ (4.5 / 6 / 7.5px) */
+  "relative grid w-full grid-cols-[0_1fr] items-start gap-y-1.5 rounded-lg border px-4 py-3 text-sm has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
   {
     variants: {
       variant: {
@@ -23,7 +25,21 @@ const alertVariants = cva(
            มันสว่างเกินไปเมื่อวางบนพื้นจาง ตัวอย่างของ shadcn เองก็ใช้สีเดียวกับหัวข้อ
 
            คำอธิบายไม่ใช้ text-muted-foreground เพราะบนพื้นจางเหลือ 4.08–4.35
-           ใช้สีเดียวกับหัวข้อแต่ลด opacity แทน ได้ทั้งลำดับสายตาและคอนทราสต์ */
+           ใช้สีเดียวกับหัวข้อแต่ลด opacity แทน ได้ทั้งลำดับสายตาและคอนทราสต์
+
+           ค่า opacity ของคำอธิบายเทียบมาจาก variant default เป็นหลัก — ที่นั่น
+           หัวข้อได้ 16.7:1 คำอธิบายได้ 4.76:1 คิดเป็นสัดส่วน 0.29 คำอธิบายจึงถอย
+           หลังชัด ของเดิมตั้ง /85 กับ /80 ไว้เท่ากันหมด สัดส่วนเลยขึ้นไปถึง
+           0.54–0.76 คือคำอธิบายเข้มพอ ๆ กับหัวข้อ อ่านแล้วตันและดูเบียด
+
+           ค่าปัจจุบันไล่ลงมาให้ต่ำที่สุดเท่าที่ยังไม่หลุด 4.5:1 (วัดด้วยการเรนเดอร์
+           จริงบนพื้นของแต่ละ variant) — warning /75 = 4.64:1 · brand /65 = 5.19:1 ·
+           danger /80 = 4.77:1 ลดกว่านี้ตัวอักษรจะอ่านไม่ออกตามเกณฑ์
+
+           ข้อจำกัดที่เหลือ: warning กับ danger ยังลงไม่ถึง 0.29 เท่า default เพราะ
+           ตัว "หัวข้อ" ของสองตัวนี้เองก็คอนทราสต์แค่ 8.9:1 กับ 6.9:1 (default ได้
+           16.7:1) เพดานบนต่ำกว่า ถ้าอยากให้เท่ากันจริงต้องทำหัวข้อเข้มขึ้น คือแก้
+           --warning-foreground / --danger-foreground ในไฟล์ token ไม่ใช่แก้ที่นี่ */
         /* ทั้งสามตัวใช้ token พื้นทึบของตัวเอง (ชุดเดียวกับ --card คือ พื้น + ตัวอักษร
            + เส้นขอบ) ไม่ใช่สีจางทับพื้นหลัง — เหตุผลสองข้อ
 
@@ -38,11 +54,11 @@ const alertVariants = cva(
            สีของ brand ต้องเท่ากับสถานะ "ถูกเลือก" ของกรอบ radio/checkbox
            ใน field.tsx เสมอ — ถ้าแก้ตรงนั้นต้องแก้ค่า --brand ด้วย */
         destructive:
-          "border-danger-border bg-danger text-danger-foreground *:data-[slot=alert-description]:text-danger-foreground/85",
+          "border-danger-border bg-danger text-danger-foreground *:data-[slot=alert-description]:text-danger-foreground/80",
         warning:
-          "border-warning-border bg-warning text-warning-foreground *:data-[slot=alert-description]:text-warning-foreground/85",
+          "border-warning-border bg-warning text-warning-foreground *:data-[slot=alert-description]:text-warning-foreground/75",
         brand:
-          "border-primary bg-brand text-foreground *:data-[slot=alert-description]:text-foreground/80",
+          "border-primary bg-brand text-foreground *:data-[slot=alert-description]:text-foreground/65",
       },
     },
     defaultVariants: {

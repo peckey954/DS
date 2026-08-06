@@ -1,7 +1,6 @@
 "use client";
 
 import { CheckIcon, FileTextIcon, ImageIcon, MusicIcon } from "lucide-react";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 import {
   Accordion,
@@ -25,14 +24,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@peckey954/ui/components/ui/carousel";
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from "@peckey954/ui/components/ui/chart";
 import {
   Item,
   ItemActions,
@@ -73,9 +64,6 @@ const COPY = defineCopy({
     cust1: "สมชาย ใจดี",
     cust2: "มานี รักเรียน",
     cust3: "ปิติ ยินดี",
-    chartHint: "recharts + สีจาก token chart-1…5",
-    chartWeb: "เว็บ",
-    chartApp: "แอป",
     accordionHint: "พับ / กางทีละหัวข้อ",
     q1: "เปลี่ยนสีของแบรนด์ยังไง?",
     a1: "แก้ค่าในไฟล์ packages/tokens/src/<brand>.css — ไม่ต้องแตะ component",
@@ -119,9 +107,6 @@ const COPY = defineCopy({
     cust1: "Somchai Jaidee",
     cust2: "Manee Rakrian",
     cust3: "Piti Yindee",
-    chartHint: "recharts with colours from chart-1…5 tokens",
-    chartWeb: "Web",
-    chartApp: "App",
     accordionHint: "Expand one section at a time",
     q1: "How do I change the brand colours?",
     a1: "Edit packages/tokens/src/<brand>.css — no component changes needed",
@@ -153,34 +138,12 @@ const COPY = defineCopy({
   },
 });
 
-const MONTHS = {
-  th: ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย."],
-  en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-};
-
-const CHART_VALUES = [
-  { web: 186, app: 80 },
-  { web: 305, app: 200 },
-  { web: 237, app: 120 },
-  { web: 273, app: 190 },
-  { web: 209, app: 130 },
-  { web: 314, app: 240 },
-];
-
 const FILE_ICONS = [FileTextIcon, ImageIcon, MusicIcon];
 
 export function SectionData() {
   const t = useT();
   const c = useCopy(COPY);
   const locale = useLocale();
-  const months = locale === "th-TH" ? MONTHS.th : MONTHS.en;
-
-  const chartData = CHART_VALUES.map((v, i) => ({ month: months[i], ...v }));
-  const chartConfig = {
-    web: { label: c.chartWeb, color: "var(--chart-1)" },
-    app: { label: c.chartApp, color: "var(--chart-2)" },
-  } satisfies ChartConfig;
-
   const invoices = [
     { id: "INV-001", customer: c.cust1, status: c.paid, amount: 12500 },
     { id: "INV-002", customer: c.cust2, status: c.pending, amount: 8300 },
@@ -197,7 +160,7 @@ export function SectionData() {
     <Section
       id="data"
       title={t("section.data")}
-      hint="table · chart · accordion · carousel · avatar · badge · item · kbd"
+      hint="table · accordion · carousel · avatar · badge · item · kbd"
     >
       <Demo name="table" hint={c.tableHint} wide>
         <Table>
@@ -247,24 +210,6 @@ export function SectionData() {
             </TableRow>
           </TableFooter>
         </Table>
-      </Demo>
-
-      <Demo name="chart" hint={c.chartHint} wide>
-        <ChartContainer config={chartConfig} className="h-64 w-full">
-          <BarChart data={chartData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-            />
-            <ChartTooltip content={<ChartTooltipContent />} />
-            <ChartLegend content={<ChartLegendContent />} />
-            <Bar dataKey="web" fill="var(--color-web)" radius={4} />
-            <Bar dataKey="app" fill="var(--color-app)" radius={4} />
-          </BarChart>
-        </ChartContainer>
       </Demo>
 
       <Demo name="accordion" hint={c.accordionHint}>

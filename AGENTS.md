@@ -539,6 +539,61 @@ pnpm dlx shadcn@latest add <name>
 
 ---
 
+## กราฟ (chart + recharts)
+
+ใช้ `ChartContainer` ครอบเสมอ สีมาจาก `--chart-1` … `--chart-5` เท่านั้น
+ตัวอย่างครบทุกแบบอยู่ที่ `/components` หมวด "กราฟ" —
+[apps/web/app/components/_parts/section-charts.tsx](apps/web/app/components/_parts/section-charts.tsx)
+
+```tsx
+const config = {
+  online: { label: "ออนไลน์", color: "var(--chart-1)" },
+  store:  { label: "หน้าร้าน", color: "var(--chart-2)" },
+} satisfies ChartConfig;
+
+<ChartContainer config={config} className="h-56 w-full">
+  <BarChart data={data}>
+    <Bar dataKey="online" fill="var(--color-online)" radius={4} />
+  </BarChart>
+</ChartContainer>
+```
+
+### 5 เรื่องที่พลาดกันบ่อย
+
+**1. `--color-<key>` ใช้ได้เฉพาะข้างใน `ChartContainer`**
+`ChartStyle` ประกาศตัวแปรไว้ใต้ `[data-chart=...]` อะไรที่อยู่นอกกล่อง (เช่น legend
+ที่วาดเอง) จะได้สีเปล่า ต้องหยิบจาก `config[key].color` ตรง ๆ แทน
+
+**2. recharts 3 สั่งลำดับ legend ของกราฟวงกลมไม่ได้**
+prop `payload` ถูก `Omit` ออกจาก type แล้ว ปล่อยไว้มันจะเรียงตามตัวอักษรของ key
+ไม่ตรงกับลำดับชิ้นในกราฟ — pie / donut / radial ต้องวาด legend เอง
+(line / area / bar / radar ใช้ `ChartLegendContent` ได้ตามปกติ)
+
+**3. ตัวอักษรบนกราฟใช้สีตัวอักษร ไม่ใช่สีของเส้น/แท่ง**
+`<LabelList>` กับ `label` ของ `<Pie>` จะรับสีของ series มาเองถ้าไม่สั่ง ต้องกำหนด
+`className="fill-muted-foreground"` หรือ `label={{ fill: "var(--muted-foreground)" }}`
+สีของ mark ทำหน้าที่บอก "เป็นใคร" อยู่แล้ว ตัวเลขไม่ต้องซ้ำ
+
+**4. อยากให้ hover ชิ้นแล้วขยาย ใช้ `activeShape`**
+recharts 3 ไม่มี `activeIndex` บน `<Pie>` แล้ว ใส่ `activeShape` อย่างเดียวพอ
+มันจับ hover ให้เอง (ต้องมี `<ChartTooltip>` อยู่ด้วย)
+
+**5. demo ที่โชว์ prop ของ tooltip ต้องใส่ `defaultIndex`**
+tooltip โผล่เฉพาะตอน hover ถ้าไม่ปักไว้ กดปุ่มสลับ prop แล้วจะไม่เห็นอะไรเลย
+
+```tsx
+<ChartTooltip defaultIndex={3} content={<ChartTooltipContent indicator="dashed" />} />
+```
+
+### เน้น / ค่าลบ
+
+- **เน้นบางแท่ง** → ลด `fillOpacity` ของแท่งที่เหลือ **ห้ามเปลี่ยนสี** —
+  สีต้องผูกกับ "มันคืออะไร" ไม่ใช่ "มันเด่นหรือเปล่า"
+- **ค่าบวก/ลบ** → ใช้คู่สีตรงข้ามจาก `--chart-*` (เช่น `--chart-2` กับ `--chart-5`)
+  **ห้ามใช้สีสถานะ** (`--success` / `--destructive`) เพราะสงวนไว้ให้ badge กับ alert
+
+---
+
 ## เช็คลิสต์ก่อนส่งงาน
 
 - [ ] ไม่มี `#hex`, `rgb(`, `hsl(` หรือสี Tailwind (`bg-blue-500`, `text-gray-700`) ในโค้ด component
@@ -546,6 +601,29 @@ pnpm dlx shadcn@latest add <name>
 - [ ] ทุก className ที่ต่อกันแบบมีเงื่อนไข ใช้ `cn()`
 - [ ] component ที่ใช้ import จาก `@peckey954/ui/components/ui/*` ไม่ใช่เขียนเอง
 - [ ] สลับ Blue ↔ Green และ light ↔ dark แล้วหน้าตายังถูกต้อง
+- [ ] **ถ้าแก้ไฟล์ใน `packages/ui/src/components/` → rebuild registry ด้วย** (ดูข้างล่าง)
+
+### แก้ component แล้วต้อง rebuild registry ด้วยเสมอ
+
+`apps/web/public/r/*.json` **ฝัง source ของ component ไว้ข้างใน** และถูก commit ลง git
+แก้ component แล้วไม่ rebuild = คนที่ติดตั้งผ่าน shadcn registry ยังได้โค้ดเก่า
+
+```bash
+REGISTRY_URL=https://ds-web-iota.vercel.app/r pnpm registry
+```
+
+> ⚠️ **ห้ามรัน `pnpm registry` เปล่า ๆ** — ค่า default คือ `http://localhost:3000/r`
+> มันจะเขียนทับ `registryDependencies` ของ **ทุกไฟล์** ให้ชี้ไป localhost
+> (เจอมาแล้ว: แก้ `alert.tsx` ไฟล์เดียว แต่ registry เปลี่ยน 16 ไฟล์)
+>
+> เช็คก่อน commit ทุกครั้ง — ต้องไม่มีผลลัพธ์:
+> ```bash
+> grep -l "localhost:3000" apps/web/public/r/*.json
+> ```
+> และ `git diff --stat apps/web/public/r/` ควรมีเฉพาะไฟล์ของ component ที่แก้จริง
+
+ถ้าจะปล่อยขึ้น npm ด้วย ต้องขึ้นเวอร์ชันใน `packages/ui/package.json` ก่อน —
+รายละเอียดทั้งหมดอยู่ใน [PUBLISHING.md](PUBLISHING.md)
 
 ตรวจเร็ว ๆ ด้วย:
 
@@ -565,9 +643,19 @@ grep -rnE "#[0-9a-fA-F]{3,8}\b|bg-(red|blue|green|gray|slate|zinc|neutral|stone|
 ```bash
 pnpm install
 pnpm dev      # http://localhost:3000
-pnpm build
-pnpm lint
+pnpm build    # ตัวนี้เช็ค type ให้ด้วย ใช้เป็นด่านหลักก่อนส่งงาน
 ```
+
+ตรวจ type อย่างเดียวแบบเร็ว ๆ:
+
+```bash
+cd apps/web && npx tsc --noEmit
+```
+
+> ⚠️ **`pnpm lint` ใช้ไม่ได้ตอนนี้** — repo ยังไม่มีไฟล์ config ของ ESLint
+> `next lint` เลยเด้งเข้าโหมดถาม-ตอบแล้วจบด้วย exit 1 ทุกครั้ง (ไม่ใช่เพราะโค้ดผิด)
+> ถ้าจะใช้จริงต้องตั้ง ESLint ก่อน: `cd apps/web && npx @next/codemod@canary next-lint-to-eslint-cli .`
+> ระหว่างนี้ใช้ `pnpm build` กับ `tsc --noEmit` เป็นด่านตรวจแทน
 
 ## ไฟล์อ้างอิง
 

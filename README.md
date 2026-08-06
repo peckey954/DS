@@ -157,7 +157,7 @@ git push -u origin main
 ├── packages/ui/               # component library กลาง
 │   ├── components.json        # ตั้งค่า shadcn CLI (ไลบรารี)
 │   └── src/
-│       ├── components/ui/     # 54 components
+│       ├── components/ui/     # 55 components (54 shadcn + multi-select)
 │       ├── hooks/             # use-mobile
 │       ├── lib/utils.ts       # cn()
 │       ├── styles/globals.css # แมป token -> Tailwind (@theme)

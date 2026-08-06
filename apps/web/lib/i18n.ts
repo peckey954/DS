@@ -29,6 +29,7 @@ const th = {
   "nav.overlays": "Overlay",
   "nav.feedback": "สถานะ",
   "nav.data": "แสดงข้อมูล",
+  "nav.charts": "กราฟ",
   "nav.multiSelect": "multi-select",
   "nav.styles": "ทดลองสไตล์",
 
@@ -39,6 +40,7 @@ const th = {
   "section.overlays": "Overlay & เมนู",
   "section.feedback": "สถานะ & การแจ้งเตือน",
   "section.data": "แสดงข้อมูล",
+  "section.charts": "กราฟ & แผนภูมิ",
   "section.multiSelect": "multi-select (component เสริมของเรา)",
   "section.multiSelect.desc":
     "ดรอปดาวน์เลือกหลายรายการ พร้อมช่องค้นหา · เลือกทั้งหมด · chip ของรายการที่เลือก — ประกอบจาก popover + command + checkbox + badge ของ shadcn ทั้งหมด",
@@ -79,6 +81,7 @@ const en: Record<TranslationKey, string> = {
   "nav.overlays": "Overlays",
   "nav.feedback": "Feedback",
   "nav.data": "Data display",
+  "nav.charts": "Charts",
   "nav.multiSelect": "multi-select",
   "nav.styles": "Style playground",
 
@@ -89,6 +92,7 @@ const en: Record<TranslationKey, string> = {
   "section.overlays": "Overlays & menus",
   "section.feedback": "Status & notifications",
   "section.data": "Data display",
+  "section.charts": "Charts",
   "section.multiSelect": "multi-select (our own addition)",
   "section.multiSelect.desc":
     "A multi-select dropdown with search · select all · chips for the chosen items — composed entirely from shadcn's popover + command + checkbox + badge.",
