@@ -6,7 +6,7 @@ import {
   GalleryIntro,
 } from "./_parts/gallery-chrome";
 import { SectionCharts } from "./_parts/section-charts";
-import { SectionCustom } from "./_parts/section-custom";
+import { SectionFields } from "./_parts/section-fields";
 import { SectionData } from "./_parts/section-data";
 import { SectionDate } from "./_parts/section-date";
 import { SectionFeedback } from "./_parts/section-feedback";
@@ -30,13 +30,13 @@ export default function ComponentsPage() {
 
         <SectionLayout />
         <SectionForms />
+        <SectionFields />
         <SectionDate />
         <SectionNavigation />
         <SectionOverlays />
         <SectionFeedback />
         <SectionData />
         <SectionCharts />
-        <SectionCustom />
 
         <GalleryFooter />
       </main>

@@ -1,6 +1,13 @@
 "use client";
 
-import { CheckIcon, FileTextIcon, ImageIcon, MusicIcon } from "lucide-react";
+import {
+  CheckIcon,
+  FileTextIcon,
+  ImageIcon,
+  MusicIcon,
+  PencilIcon,
+  XIcon,
+} from "lucide-react";
 
 import {
   Accordion,
@@ -15,7 +22,11 @@ import {
   AvatarGroup,
   AvatarGroupCount,
 } from "@peckey954/ui/components/ui/avatar";
-import { Badge } from "@peckey954/ui/components/ui/badge";
+import {
+  Badge,
+  BadgeAction,
+  BadgeButton,
+} from "@peckey954/ui/components/ui/badge";
 import { Button } from "@peckey954/ui/components/ui/button";
 import {
   Carousel,
@@ -73,7 +84,21 @@ const COPY = defineCopy({
     a3: "รัน pnpm dlx shadcn@latest add <name> ในโฟลเดอร์ apps/web",
     carouselHint: "เลื่อนดูทีละการ์ด",
     avatarHint: "รูปโปรไฟล์ / กลุ่ม / จุดสถานะ",
-    badgeHint: "5 สี x 3 แบบ",
+    badgeHint: "12 สี x 3 แบบ",
+    badgeChipHint: "มีปุ่มปิด / มีปุ่มกดในตัว",
+    toneInfo: "ข้อมูล",
+    toneTeal: "เขียวน้ำทะเล",
+    toneSky: "ฟ้า",
+    toneIndigo: "คราม",
+    tonePurple: "ม่วง",
+    tonePink: "ชมพู",
+    toneOrange: "ส้ม",
+    chipRemove: "เอาออก",
+    chipEdit: "แก้ไข",
+    chipLot: "Lot A-9M",
+    chipOwner: "ผู้ดูแล: อลิสา",
+    chipDecorativeNote:
+      "เจ็ดสีท้ายเป็นสีติดป้ายหมวดหมู่ ไม่ได้แปลว่าสถานะ — อย่าเอาไปใช้แทน สำเร็จ/เตือน/อันตราย",
     badgeSolid: "เข้ม",
     badgeSoft: "อ่อน",
     badgeOutline: "เส้นขอบ",
@@ -116,7 +141,21 @@ const COPY = defineCopy({
     a3: "Run pnpm dlx shadcn@latest add <name> inside apps/web",
     carouselHint: "Swipe through cards one at a time",
     avatarHint: "Avatar / group / status dot",
-    badgeHint: "5 tones x 3 appearances",
+    badgeHint: "12 tones x 3 appearances",
+    badgeChipHint: "With a close button / with an inline button",
+    toneInfo: "Info",
+    toneTeal: "Teal",
+    toneSky: "Sky",
+    toneIndigo: "Indigo",
+    tonePurple: "Purple",
+    tonePink: "Pink",
+    toneOrange: "Orange",
+    chipRemove: "Remove",
+    chipEdit: "Edit",
+    chipLot: "Lot A-9M",
+    chipOwner: "Owner: Alisa",
+    chipDecorativeNote:
+      "The last seven are decorative category colours, not statuses — never use them in place of success/warning/danger.",
     badgeSolid: "Solid",
     badgeSoft: "Soft",
     badgeOutline: "Outline",
@@ -300,6 +339,13 @@ export function SectionData() {
                   ["warning", c.toneWarning],
                   ["danger", c.toneDanger],
                   ["neutral", c.toneNeutral],
+                  ["info", c.toneInfo],
+                  ["teal", c.toneTeal],
+                  ["sky", c.toneSky],
+                  ["indigo", c.toneIndigo],
+                  ["purple", c.tonePurple],
+                  ["pink", c.tonePink],
+                  ["orange", c.toneOrange],
                 ] as const
               ).map(([tone, toneLabel]) => (
                 <Badge key={tone} tone={tone} appearance={appearance}>
@@ -308,6 +354,54 @@ export function SectionData() {
               ))}
             </div>
           ))}
+        </div>
+      </Demo>
+
+      <Demo name="badge — chip" hint={c.badgeChipHint} wide>
+        <div className="w-full space-y-3">
+          {/* ปุ่มปิด — chip ที่ลบออกได้ */}
+          <div className="flex flex-wrap items-center gap-2">
+            {(
+              [
+                ["brand", "solid"],
+                ["success", "soft"],
+                ["info", "soft"],
+                ["purple", "outline"],
+                ["neutral", "soft"],
+              ] as const
+            ).map(([tone, appearance]) => (
+              <Badge key={tone} tone={tone} appearance={appearance}>
+                {c.chipLot}
+                <BadgeButton aria-label={c.chipRemove}>
+                  <XIcon />
+                </BadgeButton>
+              </Badge>
+            ))}
+          </div>
+
+          {/* ปุ่มข้อความในตัว — มีเส้นคั่นซ้ายกันกลืนกับป้าย */}
+          <div className="flex flex-wrap items-center gap-2">
+            {(
+              [
+                ["teal", "soft"],
+                ["orange", "solid"],
+                ["pink", "soft"],
+                ["indigo", "outline"],
+              ] as const
+            ).map(([tone, appearance]) => (
+              <Badge key={tone} tone={tone} appearance={appearance}>
+                {c.chipOwner}
+                <BadgeAction>
+                  <PencilIcon />
+                  {c.chipEdit}
+                </BadgeAction>
+              </Badge>
+            ))}
+          </div>
+
+          <p className="text-sm text-muted-foreground">
+            {c.chipDecorativeNote}
+          </p>
         </div>
       </Demo>
 

@@ -480,6 +480,72 @@ token ที่เกี่ยวข้อง มีให้ทุกแบร�
 | `danger` | `--destructive` | `--danger` | เส้น `--danger-border` |
 | `neutral` | `--foreground` | `--secondary` | เส้น `--border` |
 
+สีติดป้ายหมวดหมู่ อีก 7 ตัว ค่าอยู่ใน `packages/tokens/src/styles.css` ใช้ร่วมทุกแบรนด์
+
+| | ที่มาของสี |
+|---|---|
+| `info` `teal` `sky` `indigo` `purple` `pink` `orange` | `--<ชื่อ>-solid` · `--<ชื่อ>` · `--<ชื่อ>-border` |
+
+> **ห้ามเอาเจ็ดตัวนี้ไปใช้แทนสีสถานะ** — `success` `warning` `danger` มีความหมายตายตัว
+> ถ้าเอา `teal` ไปใช้แทน "ผ่านแล้ว" คนอ่านจะแยกไม่ออกว่าสีไหนคือสถานะ สีไหนแค่หมวดหมู่
+> เจ็ดตัวนี้มีไว้ติดป้ายอย่าง "Lot A" "ฝ่ายจัดซื้อ" ที่ไม่มีลำดับความสำคัญ
+
+ทุก tone ผ่านคอนทราสต์ 4.5:1 แล้วทั้งสามคู่ (ขาวบนพื้นทึบ · ตัวอักษรบนพื้นอ่อน ·
+ตัวอักษรบนพื้นอ่อนโหมดมืด) **ถ้าจะแก้สีต้องวัดใหม่ทั้งสามคู่ อย่าปรับด้วยสายตา**
+
+#### Badge ที่มีปุ่ม
+
+```tsx
+import { Badge, BadgeButton, BadgeAction } from "@peckey954/ui/components/ui/badge";
+
+{/* ปุ่มปิด — chip ที่ลบออกได้ */}
+<Badge tone="info" appearance="soft">
+  Lot A-9M
+  <BadgeButton aria-label="เอาออก" onClick={remove}><XIcon /></BadgeButton>
+</Badge>
+
+{/* ปุ่มข้อความในตัว — มีเส้นคั่นซ้ายกันกลืนกับป้าย */}
+<Badge tone="teal" appearance="soft">
+  ผู้ดูแล: อลิสา
+  <BadgeAction onClick={edit}><PencilIcon />แก้ไข</BadgeAction>
+</Badge>
+```
+
+ทั้งสองตัวรับสีจากตัวอักษรของ badge เอง (`currentColor`) จึงเปลี่ยนตาม tone และ
+appearance ให้อัตโนมัติ **ห้ามส่งสีเข้าไปเอง** ไม่งั้นพอสลับ tone แล้วปุ่มจะไม่ตาม
+
+#### ช่องบังคับกรอก / ไม่บังคับ / คำใบ้ / ผิดพลาด
+
+**เลือกอย่างใดอย่างหนึ่งแล้วใช้ให้เหมือนกันทั้งฟอร์ม ห้ามผสม**
+
+- ฟอร์มที่ส่วนใหญ่บังคับ → ติด `(ไม่บังคับ)` เฉพาะตัวที่ไม่บังคับ
+- ฟอร์มที่ส่วนใหญ่ไม่บังคับ → ติด `*` เฉพาะตัวที่บังคับ
+
+ติดทั้งสองแบบพร้อมกันคนอ่านจะไล่ไม่ทันว่าต้องกรอกอะไรบ้าง
+
+```tsx
+{/* บังคับกรอก + คำใบ้ */}
+<Label htmlFor="doc">
+  เลขที่เอกสาร
+  <span aria-hidden className="ml-0.5 text-destructive">*</span>
+</Label>
+<Input id="doc" required aria-describedby="doc-hint" />
+<p id="doc-hint" className="text-sm text-muted-foreground">รูปแบบ PO ตามด้วยปีและเดือน</p>
+
+{/* ผิดพลาด — aria-invalid ทำให้กรอบแดงเอง ไม่ต้องใส่ border-destructive */}
+<Input id="tax" aria-invalid aria-describedby="tax-err" />
+<p id="tax-err" role="alert" className="text-sm text-destructive">ต้องเป็นตัวเลข 13 หลัก</p>
+```
+
+- คำใบ้กับข้อความผิดพลาด **ต้องผูกด้วย `aria-describedby` เสมอ** ไม่งั้น screen reader
+  อ่านแต่ชื่อช่อง คนใช้จะไม่รู้ว่าผิดตรงไหน
+- ข้อความผิดพลาดใส่ `role="alert"` ให้อ่านทันทีที่โผล่
+- `*` ใส่ `aria-hidden` เพราะมี `required` บอกอยู่แล้ว ไม่งั้นจะได้ยิน "ดอกจัน" ซ้ำ
+- `Select` กับ `MultiSelect` ใส่ `aria-invalid` ที่ตัว trigger ได้เหมือนกัน
+
+ตัวอย่างครบทุกสถานะอยู่ที่ `/components` หมวด **ช่องกรอกข้อมูล** —
+[apps/web/app/components/_parts/section-fields.tsx](apps/web/app/components/_parts/section-fields.tsx)
+
 **tone ตั้งค่าสีลงตัวแปร `--bdg-*` แล้ว appearance หยิบไปใช้** ไม่ได้เขียนคู่ผสม
 ทั้ง 15 แบบตรง ๆ เพราะถ้าเขียนแบบนั้น เพิ่มสีใหม่ทีต้องแก้ 3 ที่ทุกครั้ง
 วิธีนี้เพิ่ม tone ใหม่ = เพิ่มบรรทัดเดียว **tone ต้องตั้งให้ครบ 6 ตัวเสมอ**

@@ -30,7 +30,7 @@ const th = {
   "nav.feedback": "สถานะ",
   "nav.data": "แสดงข้อมูล",
   "nav.charts": "กราฟ",
-  "nav.custom": "ของเราเอง",
+  "nav.fields": "ช่องกรอก",
   "nav.styles": "ทดลองสไตล์",
 
   "section.layout": "โครงสร้าง & เลย์เอาต์",
@@ -41,9 +41,7 @@ const th = {
   "section.feedback": "สถานะ & การแจ้งเตือน",
   "section.data": "แสดงข้อมูล",
   "section.charts": "กราฟ & แผนภูมิ",
-  "section.custom": "component เสริมของเรา",
-  "section.custom.desc":
-    "สองตัวที่ประกอบขึ้นเองในโปรเจกต์นี้ ไม่มีใน registry ของ shadcn — number-input ช่องกรอกตัวเลขที่มีปุ่ม − / + และหน่วยในช่อง · multi-select ดรอปดาวน์เลือกหลายรายการพร้อมช่องค้นหาและ chip",
+  "section.fields": "ช่องกรอกข้อมูล",
 
   "home.eyebrow": "Design System · Multi-brand",
   "home.title": "สวัสดี นี่คือระบบดีไซน์กลาง",
@@ -82,7 +80,7 @@ const en: Record<TranslationKey, string> = {
   "nav.feedback": "Feedback",
   "nav.data": "Data display",
   "nav.charts": "Charts",
-  "nav.custom": "Ours",
+  "nav.fields": "Fields",
   "nav.styles": "Style playground",
 
   "section.layout": "Layout & structure",
@@ -93,9 +91,7 @@ const en: Record<TranslationKey, string> = {
   "section.feedback": "Status & notifications",
   "section.data": "Data display",
   "section.charts": "Charts",
-  "section.custom": "Our own components",
-  "section.custom.desc":
-    "Two components built in this project that shadcn's registry does not have — number-input, a numeric field with − / + buttons and an in-field unit · multi-select, a multi-select dropdown with search and chips.",
+  "section.fields": "Form fields",
 
   "home.eyebrow": "Design System · Multi-brand",
   "home.title": "Hello, this is the shared design system",

@@ -76,12 +76,12 @@
      ห้ามใช้ emerald-500 (#10B77F) เป็นสี success เด็ดขาด เพราะเป็นค่าเดียวกับ
      --primary ของแบรนด์เขียวเป๊ะ ป้าย success จะกลืนกับป้ายแบรนด์
      green-500 ห่างจากแบรนด์เขียว 18 องศาบนวงล้อสี จึงแยกออกจากกันได้ */
-  --success: hsl(141 78% 96%);
-  --success-foreground: hsl(145 66% 22%);
-  --success-border: hsl(141 60% 76%);
-  --success-solid: hsl(142 72% 31%);
-  --success-solid-foreground: hsl(0 0% 100%);
-  --success-solid-hover: hsl(142 72% 26%);
+  --success: #ecfdef;
+  --success-foreground: #068419;
+  --success-border: #a8f0b3;
+  --success-solid: #068919;
+  --success-solid-foreground: #ffffff;
+  --success-solid-hover: #057115;
 
   --warning-solid: hsl(43 100% 62%);
   --warning-solid-foreground: hsl(22 78% 20%);
@@ -164,16 +164,16 @@
   /* โหมดมืด — พื้นอ่อนกลายเป็นเข้ม ตัวอักษรกลายเป็นสว่าง
      สีทึบใช้เขียวสว่างขึ้นคู่กับตัวอักษรเข้ม ตรงกับที่ --primary ของทุกแบรนด์ทำอยู่แล้ว
      ส่วน amber ใช้ค่าเดียวกับโหมดสว่าง เพราะ Radix ตั้ง amber-9 ไว้เท่ากันทั้งสองโหมด */
-  --success: hsl(146 55% 10%);
-  --success-foreground: hsl(142 69% 74%);
-  --success-border: hsl(144 50% 24%);
+  --success: #0f3815;
+  --success-foreground: #47eb60;
+  --success-border: #1d7c2b;
   /* โหมดมืดใช้ค่าเดียวกับโหมดสว่าง และ hover ก็ "เข้มลง" เหมือนกัน
      ผิดจากกฎปกติที่โหมดมืดต้องสว่างขึ้น แต่จำเป็น เพราะตัวอักษรเป็นสีขาว
      ถ้าทำให้เขียวสว่างขึ้นตอน hover คอนทราสต์จะตกต่ำกว่าเกณฑ์ทันที
      (เป็นเหตุผลเดียวกับที่ --primary-hover ของแบรนด์ส้มกลับด้าน) */
-  --success-solid: hsl(142 72% 31%);
-  --success-solid-foreground: hsl(0 0% 100%);
-  --success-solid-hover: hsl(142 72% 26%);
+  --success-solid: #068919;
+  --success-solid-foreground: #ffffff;
+  --success-solid-hover: #057115;
 
   --warning-solid: hsl(43 100% 62%);
   --warning-solid-foreground: hsl(22 78% 20%);

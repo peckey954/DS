@@ -150,6 +150,16 @@ items.push({
       type: "registry:file",
       target: "styles/brand-green.css",
     },
+    /* styles.css ต้องส่งไปด้วยเสมอ — ตอนที่ย้าย --radius กับ --font-sans ออกจาก
+       ไฟล์แบรนด์มาไว้ที่นี่ ลืมเพิ่มตรงนี้ คนที่ติดตั้งผ่าน registry เลยไม่มี
+       --radius (มุมกลายเป็นเหลี่ยมหมด) และไม่มี --font-sans
+       ตอนนี้ยังมีสี badge กลุ่มติดป้ายหมวดหมู่อยู่ในไฟล์นี้อีกด้วย */
+    {
+      path: "styles/ds-axes.css",
+      content: readFileSync(join(TOKENS_SRC, "styles.css"), "utf8"),
+      type: "registry:file",
+      target: "styles/ds-axes.css",
+    },
   ],
 });
 

@@ -310,6 +310,9 @@ tar tzf /tmp/peckey954-ui-<เวอร์ชัน>.tgz
 2. **ไล่หา dependency เอง** จาก import จริงในไฟล์ พร้อมใส่เวอร์ชันให้ตรงกับที่เราใช้
 3. **ใส่ `registryDependencies` เป็น URL เต็ม** — ถ้าใส่แค่ชื่อ `"button"`
    shadcn จะไปดึง button จาก registry ทางการแทนของเรา ซึ่งไม่มี size `xs`/`icon-xs` ที่เราเพิ่ม
+4. **ส่งไฟล์ CSS ไปครบทั้ง 4** ใน `theme.json` — `globals.css` · `blue.css` · `green.css`
+   · `styles.css` ขาดตัวสุดท้ายเมื่อไหร่ปลายทางจะไม่มี `--radius` (มุมเหลี่ยมหมด)
+   ไม่มี `--font-sans` และไม่มีสี badge กลุ่มติดป้ายหมวดหมู่
 
 ## สร้าง registry
 

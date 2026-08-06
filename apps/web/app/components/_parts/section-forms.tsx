@@ -540,78 +540,6 @@ export function SectionForms() {
         </div>
       </Demo>
 
-      <Demo name="input + label" hint={c.inputHint}>
-        <div className="w-full space-y-3">
-          <div className="space-y-2">
-            <Label htmlFor="demo-email">{c.email}</Label>
-            <Input id="demo-email" type="email" placeholder="you@example.com" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="demo-disabled">{c.disabled}</Label>
-            <Input id="demo-disabled" placeholder={c.readonly} disabled />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="demo-invalid">{c.invalidState}</Label>
-            <Input id="demo-invalid" aria-invalid defaultValue={c.invalidValue} />
-          </div>
-        </div>
-      </Demo>
-
-      <Demo name="input-group" hint={c.inputGroupHint}>
-        <div className="w-full space-y-3">
-          <InputGroup>
-            <InputGroupAddon>
-              <SearchIcon />
-            </InputGroupAddon>
-            <InputGroupInput placeholder={c.searchComponents} />
-          </InputGroup>
-
-          <InputGroup>
-            <InputGroupAddon>
-              <MailIcon />
-            </InputGroupAddon>
-            <InputGroupInput placeholder={c.username} />
-            <InputGroupAddon align="inline-end">
-              <InputGroupText>@company.co.th</InputGroupText>
-            </InputGroupAddon>
-          </InputGroup>
-
-          {/* ปุ่มไอคอน: ghost — ไม่มีขอบ จึงไม่ตีเส้นซ้อนกับขอบของ InputGroup */}
-          <InputGroup>
-            <InputGroupInput
-              defaultValue="https://design.company.co.th"
-              readOnly
-            />
-            <InputGroupAddon align="inline-end">
-              <InputGroupButton size="icon-xs" aria-label={c.copyLink}>
-                <CopyIcon />
-              </InputGroupButton>
-            </InputGroupAddon>
-          </InputGroup>
-
-          {/* ปุ่มข้อความ: secondary + ขนาดเริ่มต้น (xs)
-              อย่าใส่ size="sm" — มันสูง 32px และใช้ rounded-md เท่ากับกรอบของ
-              InputGroup พอดี จะเห็นเป็นมุมโค้งซ้อนกัน */}
-          <InputGroup>
-            <InputGroupInput placeholder={c.promoCode} />
-            <InputGroupAddon align="inline-end">
-              <InputGroupButton variant="secondary">{c.applyCode}</InputGroupButton>
-            </InputGroupAddon>
-          </InputGroup>
-        </div>
-      </Demo>
-
-      <Demo name="textarea" hint={c.textareaHint}>
-        <div className="w-full space-y-2">
-          <Label htmlFor="demo-note">{c.note}</Label>
-          <Textarea
-            id="demo-note"
-            placeholder={c.notePlaceholder}
-            rows={4}
-          />
-        </div>
-      </Demo>
-
       <Demo name="checkbox" hint={c.checkboxHint} wide>
         <div className="grid w-full gap-6 sm:grid-cols-2">
           <div className="space-y-3">
@@ -806,46 +734,6 @@ export function SectionForms() {
               </FieldLabel>
             </RadioGroup>
           </div>
-        </div>
-      </Demo>
-
-      <Demo name="select" hint={c.selectHint}>
-        <div className="w-full space-y-2">
-          <Label htmlFor="demo-province">{c.province}</Label>
-          <Select>
-            <SelectTrigger id="demo-province" className="w-full">
-              <SelectValue placeholder={c.pickProvince} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>{c.regionCentral}</SelectLabel>
-                <SelectItem value="bkk">{c.bkk}</SelectItem>
-                <SelectItem value="ayu">{c.ayu}</SelectItem>
-              </SelectGroup>
-              <SelectSeparator />
-              <SelectGroup>
-                <SelectLabel>{c.regionNorth}</SelectLabel>
-                <SelectItem value="cnx">{c.cnx}</SelectItem>
-                <SelectItem value="cri">{c.cri}</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-      </Demo>
-
-      <Demo name="native-select" hint={c.nativeHint}>
-        <div className="w-full space-y-2">
-          <Label htmlFor="demo-native">{c.category}</Label>
-          <NativeSelect id="demo-native" defaultValue="ui">
-            <NativeSelectOptGroup label={c.grpDesign}>
-              <NativeSelectOption value="ui">{c.optUi}</NativeSelectOption>
-              <NativeSelectOption value="ux">{c.optUx}</NativeSelectOption>
-            </NativeSelectOptGroup>
-            <NativeSelectOptGroup label={c.grpDev}>
-              <NativeSelectOption value="fe">{c.optFe}</NativeSelectOption>
-              <NativeSelectOption value="be">{c.optBe}</NativeSelectOption>
-            </NativeSelectOptGroup>
-          </NativeSelect>
         </div>
       </Demo>
 

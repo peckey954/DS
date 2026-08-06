@@ -92,3 +92,84 @@ html[data-font="prompt"] {
 html[data-font="sarabun"] {
   --font-sans: var(--font-sarabun), ui-sans-serif, system-ui, sans-serif; /* Sarabun */
 }
+
+/* ============================================================
+   สีของ badge ที่ไม่ผูกกับความหมาย (decorative tones)
+
+   ต่างจาก success / warning / danger ที่อยู่ในไฟล์แบรนด์เพราะเป็น "สีสถานะ"
+   ชุดนี้เป็นสีสำหรับติดป้ายหมวดหมู่เฉย ๆ teal คือ teal ไม่ว่าแบรนด์ไหน
+   จึงอยู่ที่เดียวใช้ร่วมกันทั้งหมด ไม่ต้องก๊อปลงไฟล์แบรนด์ทั้งสาม
+
+   ทุกคู่ผ่านคอนทราสต์ 4.5:1 แล้ว (ตัวอักษรเล็กระดับ badge)
+     ขาวบนพื้นทึบ · ตัวอักษรบนพื้นอ่อน · ตัวอักษรบนพื้นอ่อนโหมดมืด
+   ถ้าจะแก้สี ต้องวัดใหม่ทั้งสามคู่ อย่าปรับด้วยสายตา
+   ============================================================ */
+
+:root {
+  --info: #ecf3fd;
+  --info-foreground: #0950c3;
+  --info-border: #a8c4f0;
+  --info-solid: #0b5ce0;
+  --info-solid-foreground: #ffffff;
+  --info-solid-hover: #0952c8;
+  --teal: #edfdfb;
+  --teal-foreground: #0e7c71;
+  --teal-border: #a8f0e9;
+  --teal-solid: #0e8175;
+  --teal-solid-foreground: #ffffff;
+  --teal-solid-hover: #0c6a60;
+  --sky: #ecf8fd;
+  --sky-foreground: #0a76a9;
+  --sky-border: #a8d9f0;
+  --sky-solid: #0a7db2;
+  --sky-solid-foreground: #ffffff;
+  --sky-solid-hover: #096c9a;
+  --indigo: #eeedfc;
+  --indigo-foreground: #2119b3;
+  --indigo-border: #aca8f0;
+  --indigo-solid: #261dcd;
+  --indigo-solid-foreground: #ffffff;
+  --indigo-solid-hover: #221ab7;
+  --purple: #f5edfd;
+  --purple-foreground: #6913b9;
+  --purple-border: #cda8f0;
+  --purple-solid: #7816d4;
+  --purple-solid-foreground: #ffffff;
+  --purple-solid-hover: #6b14bd;
+  --pink: #fdedf5;
+  --pink-foreground: #b91366;
+  --pink-border: #f0a8cc;
+  --pink-solid: #d41675;
+  --pink-solid-foreground: #ffffff;
+  --pink-solid-hover: #bd1469;
+  --orange: #fdf4ec;
+  --orange-foreground: #b45304;
+  --orange-border: #f0c8a8;
+  --orange-solid: #be5804;
+  --orange-solid-foreground: #ffffff;
+  --orange-solid-hover: #a54c03;
+}
+
+.dark {
+  --info: #101f38;
+  --info-foreground: #4786eb;
+  --info-border: #1e427b;
+  --teal: #143431;
+  --teal-foreground: #47ebda;
+  --teal-border: #26736b;
+  --sky: #102b37;
+  --sky-foreground: #47b7eb;
+  --sky-border: #1f5d7a;
+  --indigo: #151434;
+  --indigo-foreground: #7b75eb;
+  --indigo-border: #2e2a6f;
+  --purple: #241334;
+  --purple-foreground: #ab63ee;
+  --purple-border: #4e2574;
+  --pink: #341324;
+  --pink-foreground: #eb4799;
+  --pink-border: #74254d;
+  --orange: #39220e;
+  --orange-foreground: #eb9147;
+  --orange-border: #7f471a;
+}

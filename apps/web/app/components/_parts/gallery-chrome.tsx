@@ -15,13 +15,13 @@ import { useT, type TranslationKey } from "@/lib/i18n";
 const NAV: { href: string; key: TranslationKey }[] = [
   { href: "#layout", key: "nav.layout" },
   { href: "#forms", key: "nav.forms" },
+  { href: "#fields", key: "nav.fields" },
   { href: "#date", key: "nav.date" },
   { href: "#navigation", key: "nav.navigation" },
   { href: "#overlays", key: "nav.overlays" },
   { href: "#feedback", key: "nav.feedback" },
   { href: "#data", key: "nav.data" },
   { href: "#charts", key: "nav.charts" },
-  { href: "#custom", key: "nav.custom" },
 ];
 
 export function GalleryHeader() {

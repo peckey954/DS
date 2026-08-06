@@ -24,7 +24,7 @@ import { cn } from "@peckey954/ui/lib/utils"
  *   --bdg-border       เส้นขอบ
  */
 const badgeVariants = cva(
-  "inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3",
+  "inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-full border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3",
   {
     variants: {
       tone: {
@@ -43,6 +43,25 @@ const badgeVariants = cva(
            ถ้าใช้ --secondary ทั้งคู่ solid กับ soft จะหน้าตาเหมือนกัน */
         neutral:
           "[--bdg-solid:var(--foreground)] [--bdg-on-solid:var(--background)] [--bdg-solid-hover:var(--muted-foreground)] [--bdg-surface:var(--secondary)] [--bdg-text:var(--secondary-foreground)] [--bdg-border:var(--border)]",
+
+        /* ----- สีติดป้ายหมวดหมู่ ไม่ผูกกับความหมาย -----
+           ห้าเอาไปใช้แทนสีสถานะ (success/warning/danger) เด็ดขาด
+           คนอ่านจะแยกไม่ออกว่าสีไหนแปลว่า "ผ่าน" สีไหนแค่ "หมวด A"
+           ค่าอยู่ใน packages/tokens/src/styles.css ใช้ร่วมทุกแบรนด์ */
+        info:
+          "[--bdg-solid:var(--info-solid)] [--bdg-on-solid:var(--info-solid-foreground)] [--bdg-solid-hover:var(--info-solid-hover)] [--bdg-surface:var(--info)] [--bdg-text:var(--info-foreground)] [--bdg-border:var(--info-border)]",
+        teal:
+          "[--bdg-solid:var(--teal-solid)] [--bdg-on-solid:var(--teal-solid-foreground)] [--bdg-solid-hover:var(--teal-solid-hover)] [--bdg-surface:var(--teal)] [--bdg-text:var(--teal-foreground)] [--bdg-border:var(--teal-border)]",
+        sky:
+          "[--bdg-solid:var(--sky-solid)] [--bdg-on-solid:var(--sky-solid-foreground)] [--bdg-solid-hover:var(--sky-solid-hover)] [--bdg-surface:var(--sky)] [--bdg-text:var(--sky-foreground)] [--bdg-border:var(--sky-border)]",
+        indigo:
+          "[--bdg-solid:var(--indigo-solid)] [--bdg-on-solid:var(--indigo-solid-foreground)] [--bdg-solid-hover:var(--indigo-solid-hover)] [--bdg-surface:var(--indigo)] [--bdg-text:var(--indigo-foreground)] [--bdg-border:var(--indigo-border)]",
+        purple:
+          "[--bdg-solid:var(--purple-solid)] [--bdg-on-solid:var(--purple-solid-foreground)] [--bdg-solid-hover:var(--purple-solid-hover)] [--bdg-surface:var(--purple)] [--bdg-text:var(--purple-foreground)] [--bdg-border:var(--purple-border)]",
+        pink:
+          "[--bdg-solid:var(--pink-solid)] [--bdg-on-solid:var(--pink-solid-foreground)] [--bdg-solid-hover:var(--pink-solid-hover)] [--bdg-surface:var(--pink)] [--bdg-text:var(--pink-foreground)] [--bdg-border:var(--pink-border)]",
+        orange:
+          "[--bdg-solid:var(--orange-solid)] [--bdg-on-solid:var(--orange-solid-foreground)] [--bdg-solid-hover:var(--orange-solid-hover)] [--bdg-surface:var(--orange)] [--bdg-text:var(--orange-foreground)] [--bdg-border:var(--orange-border)]",
       },
       appearance: {
         solid:
@@ -77,4 +96,55 @@ function Badge({
   )
 }
 
-export { Badge, badgeVariants }
+/**
+ * ปุ่มปิดใน badge — ใช้กับ chip ที่ลบออกได้
+ *
+ * รับสีจากตัวอักษรของ badge เอง (`currentColor`) จึงเปลี่ยนตาม tone
+ * และ appearance ให้อัตโนมัติ ไม่ต้องส่งสีเข้ามา
+ *
+ *   <Badge tone="info" appearance="soft">
+ *     ลูกค้าใหม่
+ *     <BadgeButton aria-label="ลบ" onClick={remove}><XIcon /></BadgeButton>
+ *   </Badge>
+ */
+function BadgeButton({ className, ...props }: React.ComponentProps<"button">) {
+  return (
+    <button
+      type="button"
+      data-slot="badge-button"
+      className={cn(
+        "-mr-1 inline-flex size-4 shrink-0 items-center justify-center rounded-full text-current transition-[background-color,opacity]",
+        "opacity-70 hover:bg-current/20 hover:opacity-100",
+        "focus-visible:ring-[2px] focus-visible:ring-current/50 focus-visible:outline-none",
+        "disabled:pointer-events-none disabled:opacity-40",
+        "[&>svg]:size-3 [&>svg]:shrink-0",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+/**
+ * ปุ่มข้อความในตัว badge เช่น "แก้ไข" / "ดูรายละเอียด"
+ * ต่างจาก BadgeButton ตรงที่มีข้อความ จึงมีเส้นคั่นซ้ายกันไม่ให้กลืนกับป้าย
+ */
+function BadgeAction({ className, ...props }: React.ComponentProps<"button">) {
+  return (
+    <button
+      type="button"
+      data-slot="badge-action"
+      className={cn(
+        "-mr-1 ml-0.5 inline-flex shrink-0 items-center gap-1 rounded-full border-l border-current/25 pl-1.5 text-current transition-opacity",
+        "opacity-80 hover:opacity-100",
+        "focus-visible:ring-[2px] focus-visible:ring-current/50 focus-visible:outline-none",
+        "disabled:pointer-events-none disabled:opacity-40",
+        "[&>svg]:size-3 [&>svg]:shrink-0",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+export { Badge, BadgeButton, BadgeAction, badgeVariants }
