@@ -36,10 +36,14 @@ jobs:
 
       - uses: pnpm/action-setup@v4
 
+      # ⚠️ ห้ามใส่ registry-url ที่นี่
+      # setup-node จะสร้าง .npmrc ที่มี _authToken=${NODE_AUTH_TOKEN} ให้
+      # พอไม่มี token ตัวแปรมันว่าง npm เลยเอา token ว่างไปยิงแทนที่จะขอ OIDC
+      # แล้วโดนตอบ E404 (npm ใช้ 404 แทน 401 เวลา auth ไม่ผ่าน) — เจอมาแล้ว
+      # ไม่ใส่ registry-url npm ก็ใช้ registry.npmjs.org เป็นค่าเริ่มต้นอยู่แล้ว
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-          registry-url: https://registry.npmjs.org
           cache: pnpm
 
       # OIDC ต้องใช้ npm 11.5.1 ขึ้นไป Node 24 มาพร้อม npm 11 อยู่แล้ว
@@ -48,6 +52,22 @@ jobs:
         run: |
           npm install -g npm@latest
           npm --version
+
+      - name: เช็คว่า OIDC พร้อมใช้จริง
+        run: |
+          if [ -z "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
+            echo "::error::ไม่มี OIDC token — เช็คว่า permissions.id-token เป็น write หรือยัง"
+            exit 1
+          fi
+          echo "OIDC: พร้อม"
+          echo "registry: $(npm config get registry)"
+          UC=$(npm config get userconfig)
+          if [ -f "$UC" ]; then
+            echo "--- .npmrc ที่ npm เห็น (ซ่อนค่า) ---"
+            sed 's/=.*/=<ซ่อน>/' "$UC"
+          else
+            echo ".npmrc: ไม่มี (ถูกแล้ว OIDC ไม่ต้องใช้)"
+          fi
 
       - run: pnpm install --frozen-lockfile
 

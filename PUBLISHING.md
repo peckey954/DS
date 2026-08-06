@@ -237,6 +237,25 @@ workflow จะ `pnpm build` ให้ก่อน แล้วเช็คว�
 - **self-hosted runner ยังไม่รองรับ** ต้องเป็น runner ของ GitHub เท่านั้น
 - ตั้งอันนี้แล้ว **ยังปล่อยจากเครื่องได้เหมือนเดิม** ไม่ได้ปิดทางเก่า
 
+### ถ้า workflow พังด้วย `E404`
+
+```
+npm error code E404
+npm error 404 Not Found - PUT https://registry.npmjs.org/@peckey954%2fui - Not found
+```
+
+**ไม่ได้แปลว่าหาแพ็กเกจไม่เจอ** — npm ตอบ 404 แทน 401 เวลายืนยันตัวตนไม่ผ่าน
+(กันคนไล่เดาว่ามีแพ็กเกจอะไรอยู่บ้าง) แปลว่า publish ออกไปโดยไม่มีสิทธิ์
+
+ไล่เช็ค 2 อย่าง
+
+1. **`registry-url` ใน `actions/setup-node`** — ห้ามใส่เด็ดขาด
+   มันสร้าง `.npmrc` ที่มี `_authToken=${NODE_AUTH_TOKEN}` พอไม่มี token
+   ตัวแปรมันว่าง npm เลยเอา token ว่างไปยิงแทนที่จะขอ OIDC
+   สังเกตได้จาก log ที่ขึ้น `npm warn Unknown user config "always-auth"`
+2. **Trusted Publisher ฝั่ง npm** — ตั้งครบหรือยัง โดยเฉพาะ
+   **Allowed actions ต้องติ๊ก `Allow npm publish`**
+
 ## ตรวจก่อน publish
 
 ```bash
