@@ -1,0 +1,81 @@
+# ปล่อยแพ็กเกจขึ้น npm ด้วย Trusted Publishing (OIDC)
+#
+# GitHub คุยกับ npm ตรง ๆ ผ่าน OIDC — ไม่มี token เก็บไว้ที่ไหนเลย
+# ไม่มีวันหมดอายุ และไม่ต้องยืนยัน 2FA ทุกครั้งเหมือนตอน publish จากเครื่อง
+#
+# ⚠️ ชื่อไฟล์นี้ (publish.yml) ต้องตรงกับที่กรอกไว้ในหน้า Trusted Publisher
+#    บน npmjs.com เป๊ะ ๆ ถ้าเปลี่ยนชื่อไฟล์ต้องไปแก้ฝั่ง npm ด้วย
+#
+# วิธีใช้: GitHub → แท็บ Actions → publish → Run workflow → เลือกแพ็กเกจ
+# อย่าลืมขึ้นเวอร์ชันใน package.json แล้ว push ก่อน ไม่งั้น workflow จะหยุดให้เอง
+
+name: publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: แพ็กเกจที่จะปล่อย
+        required: true
+        default: ui
+        type: choice
+        options:
+          - ui
+          - tokens
+
+permissions:
+  id-token: write # จำเป็นสำหรับ OIDC — ขาดตัวนี้แล้ว publish ไม่ผ่าน
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          cache: pnpm
+
+      # OIDC ต้องใช้ npm 11.5.1 ขึ้นไป Node 24 มาพร้อม npm 11 อยู่แล้ว
+      # แต่ยึดให้ชัวร์ เพราะถ้าเก่ากว่านั้นมันจะไปหา token แทนแล้วพังแบบงง ๆ
+      - name: อัปเดต npm ให้รองรับ OIDC
+        run: |
+          npm install -g npm@latest
+          npm --version
+
+      - run: pnpm install --frozen-lockfile
+
+      # ด่านเดียวกับเช็คลิสต์ใน PUBLISHING.md — build ไม่ผ่าน ห้ามปล่อย
+      - run: pnpm build
+
+      - name: กันปล่อยทับเวอร์ชันเดิม
+        working-directory: packages/${{ inputs.package }}
+        run: |
+          NAME=$(node -p "require('./package.json').name")
+          VERSION=$(node -p "require('./package.json').version")
+          echo "กำลังจะปล่อย $NAME@$VERSION"
+          if npm view "$NAME@$VERSION" version > /dev/null 2>&1; then
+            echo "::error::$NAME@$VERSION มีบน npm อยู่แล้ว — ขึ้นเวอร์ชันใน packages/${{ inputs.package }}/package.json แล้ว push ก่อน"
+            exit 1
+          fi
+
+      - name: publish
+        working-directory: packages/${{ inputs.package }}
+        run: npm publish
+
+      - name: สรุป
+        working-directory: packages/${{ inputs.package }}
+        run: |
+          NAME=$(node -p "require('./package.json').name")
+          VERSION=$(node -p "require('./package.json').version")
+          echo "### ปล่อย \`$NAME@$VERSION\` แล้ว" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "https://www.npmjs.com/package/$NAME" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "อย่าลืมอัปเดตบรรทัด \"เวอร์ชันล่าสุดที่ปล่อยแล้ว\" ใน PUBLISHING.md" >> $GITHUB_STEP_SUMMARY

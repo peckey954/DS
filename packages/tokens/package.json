@@ -12,16 +12,16 @@
   ],
   "license": "MIT",
   "author": "peckey954",
-  "homepage": "https://github.com/peckey954/ds#readme",
+  "homepage": "https://github.com/peckey954/DS#readme",
   "bugs": {
-    "url": "https://github.com/peckey954/ds/issues"
+    "url": "https://github.com/peckey954/DS/issues"
   },
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/peckey954/ds.git",
+    "url": "https://github.com/peckey954/DS.git",
     "directory": "packages/tokens"
   },
   "files": [

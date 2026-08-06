@@ -184,10 +184,51 @@ npm error   https://www.npmjs.com/auth/cli/xxxxxxxx
 เป็น **Authenticator app** (Google Authenticator / Authy / 1Password)
 เลขจะขึ้นในแอปทันที ไม่ต้องรอเมลและไม่ตกถังขยะ
 
-### ถ้าจะปล่อยเวอร์ชันบ่อย
+---
 
-พิจารณาตั้ง **Trusted Publishing ผ่าน GitHub Actions** (OIDC) — npm ยืนยันตัวตน
-กับ GitHub โดยตรง ไม่ต้องเก็บ token ในเครื่อง ไม่มีวันหมดอายุ ตั้งครั้งเดียวจบ
+## ปล่อยผ่าน GitHub Actions แทน (Trusted Publishing / OIDC)
+
+**วิธีที่แนะนำ** — ไม่ต้องยืนยัน 2FA ทุกครั้ง ไม่มี token เก็บไว้ที่ไหนเลย
+และไม่มีวันหมดอายุ GitHub คุยกับ npm ตรง ๆ ผ่าน OIDC
+
+workflow อยู่ที่ [.github/workflows/publish.yml](.github/workflows/publish.yml) แล้ว
+เหลือแค่ตั้งค่าฝั่ง npm **ครั้งเดียวต่อแพ็กเกจ**
+
+### ตั้งค่าฝั่ง npm (ทำครั้งเดียว ต่อแพ็กเกจ)
+
+1. เข้า https://www.npmjs.com/package/@peckey954/ui → แท็บ **Settings**
+2. เลื่อนหา **Trusted Publisher** → เลือก **GitHub Actions**
+3. กรอกให้ตรงเป๊ะ (**ตัวพิมพ์ใหญ่เล็กมีผล**):
+
+   | ช่อง | ค่า |
+   |---|---|
+   | Organization or user | `peckey954` |
+   | Repository | `DS` |
+   | Workflow filename | `publish.yml` |
+   | Environment name | เว้นว่าง |
+
+4. กด Save แล้วทำซ้ำอีกรอบกับ https://www.npmjs.com/package/@peckey954/tokens
+
+> npm **ไม่ตรวจค่าตอนกด Save** ถ้ากรอกผิดจะไปรู้ตอน publish แล้วพัง
+> ที่พลาดบ่อยคือใส่ `ds` ตัวเล็กทั้งที่ repo ชื่อ `DS`
+
+### ปล่อยของ
+
+1. ขึ้นเวอร์ชันใน `packages/<ui|tokens>/package.json` แล้ว commit + push
+2. เข้า https://github.com/peckey954/DS/actions/workflows/publish.yml
+3. กด **Run workflow** → เลือกแพ็กเกจ (`ui` หรือ `tokens`) → **Run workflow**
+
+workflow จะ `pnpm build` ให้ก่อน แล้วเช็คว่าเวอร์ชันนี้ยังไม่มีบน npm
+ถ้ามีแล้วมันจะหยุดพร้อมบอกให้ไปขึ้นเวอร์ชันก่อน ไม่ปล่อยมั่ว
+
+### ข้อจำกัดที่ควรรู้
+
+- **1 แพ็กเกจตั้งได้ 1 trusted publisher** ถ้าจะย้าย workflow ต้องมาแก้ที่นี่ด้วย
+- **ชื่อไฟล์ workflow ต้องตรงกับที่กรอกไว้** เปลี่ยนชื่อไฟล์เมื่อไหร่ต้องไปแก้ฝั่ง npm
+- **`repository.url` ใน package.json ต้องตรงกับ repo จริง** ไม่งั้น provenance ไม่ผ่าน
+  (เคยเป็น `peckey954/ds` ตัวเล็ก แก้เป็น `peckey954/DS` แล้ว)
+- **self-hosted runner ยังไม่รองรับ** ต้องเป็น runner ของ GitHub เท่านั้น
+- ตั้งอันนี้แล้ว **ยังปล่อยจากเครื่องได้เหมือนเดิม** ไม่ได้ปิดทางเก่า
 
 ## ตรวจก่อน publish
 
@@ -267,7 +308,7 @@ git add -A && git commit -m "chore: rebuild registry" && git push
 - [ ] `pnpm build` ผ่าน
 - [ ] `npm whoami` ขึ้น `peckey954` (ถ้าไม่ขึ้น → [กู้สิทธิ์ publish](#กู้สิทธิ์-publish-เมื่อขึ้น-401--eneedauth))
 - [ ] ขึ้นเวอร์ชันใน `packages/ui/package.json` (และ `tokens` ถ้าแก้ token)
-- [ ] `pnpm --filter @peckey954/ui publish`
+- [ ] ปล่อยของ — ทางลัด: GitHub → Actions → publish → Run workflow (ดู [Trusted Publishing](#ปล่อยผ่าน-github-actions-แทน-trusted-publishing--oidc))<br>หรือจากเครื่อง: `pnpm --filter @peckey954/ui publish`
 - [ ] เช็คว่าขึ้นจริง: `npm view @peckey954/ui version`
 - [ ] ถ้าเปลี่ยน API → อัปเดตกฎใน `AGENTS.md` และ prompt ใน `USE-DS.md` ให้ตรง
 - [ ] `REGISTRY_URL=<โดเมนจริง> pnpm registry` แล้ว commit ไฟล์ใน `apps/web/public/r`
