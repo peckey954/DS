@@ -29,6 +29,11 @@
       "url": "https://ds-web-iota.vercel.app/r/aspect-ratio.json"
     },
     {
+      "name": "attachment",
+      "type": "registry:ui",
+      "url": "https://ds-web-iota.vercel.app/r/attachment.json"
+    },
+    {
       "name": "avatar",
       "type": "registry:ui",
       "url": "https://ds-web-iota.vercel.app/r/avatar.json"
@@ -119,6 +124,11 @@
       "url": "https://ds-web-iota.vercel.app/r/field.json"
     },
     {
+      "name": "file-upload",
+      "type": "registry:ui",
+      "url": "https://ds-web-iota.vercel.app/r/file-upload.json"
+    },
+    {
       "name": "form",
       "type": "registry:ui",
       "url": "https://ds-web-iota.vercel.app/r/form.json"
@@ -157,6 +167,11 @@
       "name": "label",
       "type": "registry:ui",
       "url": "https://ds-web-iota.vercel.app/r/label.json"
+    },
+    {
+      "name": "media-viewer",
+      "type": "registry:ui",
+      "url": "https://ds-web-iota.vercel.app/r/media-viewer.json"
     },
     {
       "name": "menubar",

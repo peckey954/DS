@@ -5,6 +5,7 @@ import {
   GalleryHeader,
   GalleryIntro,
 } from "./_parts/gallery-chrome";
+import { SectionAttachment } from "./_parts/section-attachment";
 import { SectionCharts } from "./_parts/section-charts";
 import { SectionFields } from "./_parts/section-fields";
 import { SectionData } from "./_parts/section-data";
@@ -31,6 +32,7 @@ export default function ComponentsPage() {
         <SectionLayout />
         <SectionForms />
         <SectionFields />
+        <SectionAttachment />
         <SectionDate />
         <SectionNavigation />
         <SectionOverlays />

@@ -16,6 +16,7 @@ const NAV: { href: string; key: TranslationKey }[] = [
   { href: "#layout", key: "nav.layout" },
   { href: "#forms", key: "nav.forms" },
   { href: "#fields", key: "nav.fields" },
+  { href: "#attachment", key: "nav.attachment" },
   { href: "#date", key: "nav.date" },
   { href: "#navigation", key: "nav.navigation" },
   { href: "#overlays", key: "nav.overlays" },

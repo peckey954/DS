@@ -39,7 +39,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@peckey954/ui/componen
 ls packages/ui/src/components/ui
 ```
 
-ปัจจุบันมี **56 ตัว** — 54 ตัวจาก shadcn:
+ปัจจุบันมี **59 ตัว** — 54 ตัวจาก shadcn:
 accordion, alert, alert-dialog, aspect-ratio, avatar, badge, breadcrumb, button,
 button-group, calendar, card, carousel, chart, checkbox, collapsible, command,
 context-menu, dialog, drawer, dropdown-menu, empty, field, form, hover-card,
@@ -48,7 +48,7 @@ navigation-menu, pagination, popover, progress, radio-group, resizable,
 scroll-area, select, separator, sheet, sidebar, skeleton, slider, sonner,
 spinner, switch, table, tabs, textarea, toggle, toggle-group, tooltip
 
-และอีก 2 ตัวที่ประกอบขึ้นเองในโปรเจกต์นี้ (ไม่มีใน registry ของ shadcn):
+และอีก 5 ตัวที่ประกอบขึ้นเองในโปรเจกต์นี้:
 **multi-select** — ดรอปดาวน์เลือกหลายรายการ พร้อมช่องค้นหา · แถวเลือกทั้งหมด · chip
 ของรายการที่เลือก ประกอบจาก popover + command + checkbox + badge
 
@@ -84,6 +84,84 @@ const options: MultiSelectOption[] = [
 
 ถ้าไม่มีจริง ๆ ให้ประกอบจากของที่มีก่อน (compose) แล้วค่อยพิจารณาสร้างใหม่
 component ที่ประกอบขึ้นเองก็ต้องวางไว้ที่ `packages/ui/src/components/ui/` และทำตามกฎทุกข้อเหมือนกัน
+
+**attachment · file-upload · media-viewer** — ชุดไฟล์แนบ
+
+`attachment` ตั้งชื่อ prop และ subcomponent ให้ตรงกับ Attachment ของ shadcn
+(ui.shadcn.com/docs/components/base/attachment) แต่**เขียนเอง ไม่ได้ดึงจาก registry**
+เพราะตัวของ shadcn อยู่ในชุด Base UI ส่วน DS นี้ใช้ radix-ui ดึงมาตรง ๆ จะได้
+dependency คนละตระกูลติดมา ตัว component เป็นงาน layout ล้วน เขียนเองคุ้มกว่า
+
+```tsx
+import {
+  Attachment, AttachmentMedia, AttachmentContent, AttachmentTitle,
+  AttachmentDescription, AttachmentProgress, AttachmentActions,
+  AttachmentAction, AttachmentGroup, AttachmentTrigger,
+} from "@peckey954/ui/components/ui/attachment";
+
+<Attachment state="uploading">
+  <AttachmentMedia><FileTextIcon /></AttachmentMedia>
+  <AttachmentContent>
+    <AttachmentTitle>ใบตรวจรับ.pdf</AttachmentTitle>
+    <AttachmentDescription>กำลังอัปโหลด 62%</AttachmentDescription>
+    <AttachmentProgress value={62} />
+  </AttachmentContent>
+  <AttachmentActions>
+    <AttachmentAction aria-label="เอาออก"><XIcon /></AttachmentAction>
+  </AttachmentActions>
+</Attachment>
+```
+
+| prop ของ `Attachment` | ค่า |
+|---|---|
+| `state` | `idle` · `uploading` · `processing` · `error` · `done` |
+| `size` | `default` (48px) · `sm` (40px) · `xs` (32px) |
+| `orientation` | `horizontal` (แถว) · `vertical` (การ์ดตั้ง ใช้กับกริดรูป) |
+
+- `state="uploading"` กับ `processing` จะขึ้น spinner ทับกล่องรูปให้เอง
+- `AttachmentProgress` โผล่เฉพาะตอน `state="uploading"` ไม่ต้องใส่เงื่อนไขเอง
+- `AttachmentTrigger` ทำให้ทั้งการ์ดกดได้ วาง `position: absolute` ทับแทนการครอบ
+  `<button>` รอบทุกอย่าง **ปุ่มใน `AttachmentActions` ต้องใส่ `relative z-10`**
+  ไม่งั้นจะโดน trigger คลุมจนกดไม่โดน
+
+```tsx
+import { FileUpload, FileUploadIcon, FileUploadLabel, FileUploadHint }
+  from "@peckey954/ui/components/ui/file-upload";
+
+<FileUpload
+  accept="image/*,.pdf" multiple maxSize={5 * 1024 * 1024}
+  onFilesAccepted={add} onFilesRejected={showWarning}
+>
+  <FileUploadIcon><UploadIcon /></FileUploadIcon>
+  <FileUploadLabel>ลากไฟล์มาวาง หรือกดเพื่อเลือก</FileUploadLabel>
+  <FileUploadHint>รูปภาพ · PDF ไม่เกิน 5 MB</FileUploadHint>
+</FileUpload>
+```
+
+- **ไม่เก็บรายการไฟล์ไว้เอง** ส่งออกทาง `onFilesAccepted` แล้วให้ฝั่งที่ใช้ถือ state
+  เพราะแต่ละหน้าจัดการไม่เหมือนกัน (บางที่อัปทันที บางที่รอกดบันทึก)
+  ถ้าเก็บไว้ในนี้จะกลายเป็นสอง source of truth
+- `onFilesRejected` คืน `{ file, reason }` โดย reason เป็น `too-large` หรือ `wrong-type`
+- `accept` รับได้ทั้ง `image/*` · `.pdf` · `application/pdf`
+
+```tsx
+import { MediaViewer, type MediaItem } from "@peckey954/ui/components/ui/media-viewer";
+
+<MediaViewer
+  items={[{ type: "image", src, title: "ใบชั่ง" }]}
+  open={open} onOpenChange={setOpen}
+  index={index} onIndexChange={setIndex}
+  labels={{ previous: "รูปก่อนหน้า", next: "รูปถัดไป", close: "ปิด" }}
+/>
+```
+
+- รองรับ `type: "image"` (ซูมได้ 100–400%) และ `"video"` (ตัวเล่นของเบราว์เซอร์)
+- คีย์บอร์ด: **ลูกศรซ้าย/ขวา** เลื่อนรูป · **`+` `-`** ซูม · **`0`** ขนาดเดิม · **Esc** ปิด
+- เกิน 1 รายการจะขึ้นปุ่มซ้าย/ขวา ตัวนับ และแถวรูปย่อให้เอง เลื่อนวนหัวท้าย
+- **ข้อความปุ่มส่งผ่าน `labels`** ตัว component ไม่รู้จักภาษาของแอป ค่าเริ่มต้นเป็นอังกฤษ
+
+ตัวอย่างครบทุกแบบอยู่ที่ `/components` หมวด **ไฟล์แนบ & รูปภาพ** —
+[apps/web/app/components/_parts/section-attachment.tsx](apps/web/app/components/_parts/section-attachment.tsx)
 
 **number-input** — ช่องกรอกตัวเลข ครอบสองหน้าตาด้วย component เดียว
 ปุ่ม − / + และหน่วยที่โชว์ในช่อง
