@@ -21,7 +21,11 @@ repo นี้คือ **ตัวกลาง** ของดีไซน์ท
 | `@peckey954/ui` | component ทั้ง 55 ตัว + `cn()` + คำศัพท์กลาง (`globals.css`) |
 | `@peckey954/tokens` | สีของแบรนด์ Blue · Green · Parich + `styles.css` (radius/density/font) + `tint.css` |
 
-> เวอร์ชันล่าสุดที่ปล่อยแล้ว: **0.2.0** (3 ส.ค. 2569)
+> เวอร์ชันล่าสุดที่ปล่อยแล้ว: `@peckey954/ui` **0.2.1** (6 ส.ค. 2569) ·
+> `@peckey954/tokens` **0.2.0** (3 ส.ค. 2569)
+>
+> สองแพ็กเกจนี้ขึ้นเวอร์ชันแยกกันได้ ไม่ต้องเท่ากัน — แก้เฉพาะ component
+> ก็ bump แค่ `ui` ไม่ต้องแตะ `tokens`
 
 > เรา ship เป็น **source code** (ไม่ได้ build เป็น JS ล่วงหน้า) โปรเจกต์ปลายทาง
 > จึงต้องตั้ง `transpilePackages` ใน `next.config`
@@ -189,7 +193,7 @@ npm error   https://www.npmjs.com/auth/cli/xxxxxxxx
 
 ```bash
 pnpm --filter @peckey954/ui pack --pack-destination /tmp
-tar tzf /tmp/peckey954-ui-0.2.0.tgz
+tar tzf /tmp/peckey954-ui-<เวอร์ชัน>.tgz
 ```
 
 ควรเห็น `package/src/...` ครบทุก component พร้อม `package.json`, `README.md`, `LICENSE`
