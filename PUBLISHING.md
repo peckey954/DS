@@ -39,7 +39,7 @@ repo นี้คือ **ตัวกลาง** ของดีไซน์ท
    จะเป็นของบัญชีที่ชื่อตรงกันเท่านั้น
    (ตรวจแล้วว่า scope นี้ยังว่างอยู่ ยังไม่มีใครใช้)
 3. ยืนยันอีเมล
-4. เปิด **2FA** ที่ https://www.npmjs.com/settings/~/profile — npm บังคับสำหรับคนที่ publish
+4. เปิด **2FA** ที่ https://www.npmjs.com/settings/peckey954/tfa — npm บังคับสำหรับคนที่ publish
 
 ### 2. ล็อกอินในเครื่อง
 
@@ -202,7 +202,10 @@ workflow อยู่ที่ [.github/workflows/publish.yml](.github/workflows
 พร้อมแบนเนอร์แดง `Please configure 2FA to edit this package.` แปลว่าบัญชี
 **ยังไม่มี 2FA ที่ npm ยอมรับ** — 2FA ทางอีเมลไม่นับ npm เลิกรองรับไปแล้ว
 
-ไปตั้งที่ https://www.npmjs.com/settings/~/2fa เลือกทางใดทางหนึ่ง
+ไปตั้งที่ https://www.npmjs.com/settings/peckey954/tfa เลือกทางใดทางหนึ่ง
+
+> path คือ tfa ไม่ใช่ 2fa และต้องใส่ชื่อผู้ใช้จริง ใช้ ~ แทนไม่ได้ จะเจอหน้า 404 wombat
+> ถ้าจำ URL ไม่ได้ กดรูปโปรไฟล์มุมขวาบน แล้วเลือก Account เลื่อนหา Two-Factor Authentication
 
 | ทาง | ทำยังไง | เหมาะกับ |
 |---|---|---|
