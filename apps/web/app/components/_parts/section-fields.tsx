@@ -58,6 +58,7 @@ const COPY = defineCopy({
     docNo: "เลขที่เอกสาร",
     docHint: "รูปแบบ PO ตามด้วยปีและเดือน เช่น PO260116",
     nickname: "ชื่อเล่น",
+    nicknamePlaceholder: "ระบุชื่อเล่น",
     nicknameHint: "ใช้แสดงในระบบแทนชื่อจริง",
     taxId: "เลขประจำตัวผู้เสียภาษี",
     taxIdError: "ต้องเป็นตัวเลข 13 หลัก ตอนนี้กรอกมา 9 หลัก",
@@ -123,6 +124,7 @@ const COPY = defineCopy({
     docNo: "Document number",
     docHint: "PO followed by year and month, e.g. PO260116",
     nickname: "Nickname",
+    nicknamePlaceholder: "Enter a nickname",
     nicknameHint: "Shown in the app instead of your legal name",
     taxId: "Tax ID",
     taxIdError: "Must be 13 digits — you entered 9",
@@ -178,17 +180,32 @@ const COPY = defineCopy({
    ถ้าฟอร์มไหนส่วนใหญ่ไม่บังคับ ให้ติด * เฉพาะตัวที่บังคับ
    ติดทั้งสองแบบพร้อมกันคนอ่านจะไล่ไม่ทันว่าต้องกรอกอะไรบ้าง */
 
-function RequiredMark() {
+function LabelText({
+  children,
+  required,
+  optional,
+}: {
+  children: React.ReactNode;
+  required?: boolean;
+  optional?: string;
+}) {
+  /* ต้องครอบเป็น span ก้อนเดียว — Label เป็น flex ที่มี gap-2 (8px)
+     ถ้าปล่อยดอกจันเป็นลูกแยก มันจะโดนดันออกไป 8px ก่อนแล้วค่อยบวก ml
+     ครอบแล้วระยะห่างมาจาก ml ล้วน ๆ คุมได้จริง */
   return (
-    <span aria-hidden className="ml-0.5 text-destructive">
-      *
+    <span>
+      {children}
+      {required ? (
+        <span aria-hidden className="ml-0.5 text-destructive">
+          *
+        </span>
+      ) : null}
+      {optional ? (
+        <span className="ml-1.5 font-normal text-muted-foreground">
+          ({optional})
+        </span>
+      ) : null}
     </span>
-  );
-}
-
-function OptionalMark({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="ml-1 font-normal text-muted-foreground">({children})</span>
   );
 }
 
@@ -239,8 +256,7 @@ export function SectionFields() {
         <div className="grid gap-5 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="f-doc">
-              {c.docNo}
-              <RequiredMark />
+              <LabelText required>{c.docNo}</LabelText>
             </Label>
             <Input
               id="f-doc"
@@ -253,12 +269,11 @@ export function SectionFields() {
 
           <div className="space-y-2">
             <Label htmlFor="f-nick">
-              {c.nickname}
-              <OptionalMark>{c.optional}</OptionalMark>
+              <LabelText optional={c.optional}>{c.nickname}</LabelText>
             </Label>
             <Input
               id="f-nick"
-              placeholder="—"
+              placeholder={c.nicknamePlaceholder}
               aria-describedby="f-nick-hint"
             />
             <FieldHint id="f-nick-hint">{c.nicknameHint}</FieldHint>
@@ -266,8 +281,7 @@ export function SectionFields() {
 
           <div className="space-y-2">
             <Label htmlFor="f-tax">
-              {c.taxId}
-              <RequiredMark />
+              <LabelText required>{c.taxId}</LabelText>
             </Label>
             <Input
               id="f-tax"
@@ -402,8 +416,7 @@ export function SectionFields() {
       <Demo name="select" hint={c.selectErrorHint}>
         <div className="w-full space-y-2">
           <Label htmlFor="f-province-err">
-            {c.province}
-            <RequiredMark />
+            <LabelText required>{c.province}</LabelText>
           </Label>
           <Select>
             {/* aria-invalid บน trigger — Select ของ shadcn อ่านค่านี้ไปตีกรอบแดงเอง */}
@@ -460,8 +473,7 @@ export function SectionFields() {
       <Demo name="multi-select" hint={c.multiErrorHint}>
         <div className="w-full space-y-2">
           <Label htmlFor="f-multi-err">
-            {c.deliverTo}
-            <RequiredMark />
+            <LabelText required>{c.deliverTo}</LabelText>
           </Label>
           <MultiSelect
             id="f-multi-err"

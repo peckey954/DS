@@ -5,7 +5,7 @@ import {
   FileTextIcon,
   ImageIcon,
   MusicIcon,
-  PencilIcon,
+  TagIcon,
   XIcon,
 } from "lucide-react";
 
@@ -22,11 +22,7 @@ import {
   AvatarGroup,
   AvatarGroupCount,
 } from "@peckey954/ui/components/ui/avatar";
-import {
-  Badge,
-  BadgeAction,
-  BadgeButton,
-} from "@peckey954/ui/components/ui/badge";
+import { Badge, BadgeButton } from "@peckey954/ui/components/ui/badge";
 import { Button } from "@peckey954/ui/components/ui/button";
 import {
   Carousel,
@@ -85,7 +81,7 @@ const COPY = defineCopy({
     carouselHint: "เลื่อนดูทีละการ์ด",
     avatarHint: "รูปโปรไฟล์ / กลุ่ม / จุดสถานะ",
     badgeHint: "12 สี x 3 แบบ",
-    badgeChipHint: "มีปุ่มปิด / มีปุ่มกดในตัว",
+    badgeChipHint: "ปุ่มปิด · ไอคอนหน้า-หลัง",
     toneInfo: "ข้อมูล",
     toneTeal: "เขียวน้ำทะเล",
     toneSky: "ฟ้า",
@@ -94,9 +90,8 @@ const COPY = defineCopy({
     tonePink: "ชมพู",
     toneOrange: "ส้ม",
     chipRemove: "เอาออก",
-    chipEdit: "แก้ไข",
     chipLot: "Lot A-9M",
-    chipOwner: "ผู้ดูแล: อลิสา",
+    chipOwner: "ฝ่ายจัดซื้อ",
     chipDecorativeNote:
       "เจ็ดสีท้ายเป็นสีติดป้ายหมวดหมู่ ไม่ได้แปลว่าสถานะ — อย่าเอาไปใช้แทน สำเร็จ/เตือน/อันตราย",
     badgeSolid: "เข้ม",
@@ -142,7 +137,7 @@ const COPY = defineCopy({
     carouselHint: "Swipe through cards one at a time",
     avatarHint: "Avatar / group / status dot",
     badgeHint: "12 tones x 3 appearances",
-    badgeChipHint: "With a close button / with an inline button",
+    badgeChipHint: "Close button · leading and trailing icons",
     toneInfo: "Info",
     toneTeal: "Teal",
     toneSky: "Sky",
@@ -151,9 +146,8 @@ const COPY = defineCopy({
     tonePink: "Pink",
     toneOrange: "Orange",
     chipRemove: "Remove",
-    chipEdit: "Edit",
     chipLot: "Lot A-9M",
-    chipOwner: "Owner: Alisa",
+    chipOwner: "Procurement",
     chipDecorativeNote:
       "The last seven are decorative category colours, not statuses — never use them in place of success/warning/danger.",
     badgeSolid: "Solid",
@@ -379,7 +373,9 @@ export function SectionData() {
             ))}
           </div>
 
-          {/* ปุ่มข้อความในตัว — มีเส้นคั่นซ้ายกันกลืนกับป้าย */}
+          {/* ไอคอนหน้า + ข้อความ + ไอคอนหลัง + ปุ่มปิด
+              Badge จัดขนาดไอคอน (size-3) และระยะห่าง (gap-1) ให้เอง
+              ไม่ต้องกำหนดขนาดไอคอนเอง */}
           <div className="flex flex-wrap items-center gap-2">
             {(
               [
@@ -390,11 +386,12 @@ export function SectionData() {
               ] as const
             ).map(([tone, appearance]) => (
               <Badge key={tone} tone={tone} appearance={appearance}>
+                <TagIcon />
                 {c.chipOwner}
-                <BadgeAction>
-                  <PencilIcon />
-                  {c.chipEdit}
-                </BadgeAction>
+                <CheckIcon />
+                <BadgeButton aria-label={c.chipRemove}>
+                  <XIcon />
+                </BadgeButton>
               </Badge>
             ))}
           </div>

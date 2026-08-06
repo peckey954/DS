@@ -125,26 +125,5 @@ function BadgeButton({ className, ...props }: React.ComponentProps<"button">) {
   )
 }
 
-/**
- * ปุ่มข้อความในตัว badge เช่น "แก้ไข" / "ดูรายละเอียด"
- * ต่างจาก BadgeButton ตรงที่มีข้อความ จึงมีเส้นคั่นซ้ายกันไม่ให้กลืนกับป้าย
- */
-function BadgeAction({ className, ...props }: React.ComponentProps<"button">) {
-  return (
-    <button
-      type="button"
-      data-slot="badge-action"
-      className={cn(
-        "-mr-1 ml-0.5 inline-flex shrink-0 items-center gap-1 rounded-full border-l border-current/25 pl-1.5 text-current transition-opacity",
-        "opacity-80 hover:opacity-100",
-        "focus-visible:ring-[2px] focus-visible:ring-current/50 focus-visible:outline-none",
-        "disabled:pointer-events-none disabled:opacity-40",
-        "[&>svg]:size-3 [&>svg]:shrink-0",
-        className
-      )}
-      {...props}
-    />
-  )
-}
 
-export { Badge, BadgeButton, BadgeAction, badgeVariants }
+export { Badge, BadgeButton, badgeVariants }

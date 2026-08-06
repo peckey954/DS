@@ -493,26 +493,24 @@ token ที่เกี่ยวข้อง มีให้ทุกแบร�
 ทุก tone ผ่านคอนทราสต์ 4.5:1 แล้วทั้งสามคู่ (ขาวบนพื้นทึบ · ตัวอักษรบนพื้นอ่อน ·
 ตัวอักษรบนพื้นอ่อนโหมดมืด) **ถ้าจะแก้สีต้องวัดใหม่ทั้งสามคู่ อย่าปรับด้วยสายตา**
 
-#### Badge ที่มีปุ่ม
+#### Badge ที่มีไอคอนและปุ่มปิด
 
 ```tsx
-import { Badge, BadgeButton, BadgeAction } from "@peckey954/ui/components/ui/badge";
+import { Badge, BadgeButton } from "@peckey954/ui/components/ui/badge";
 
-{/* ปุ่มปิด — chip ที่ลบออกได้ */}
-<Badge tone="info" appearance="soft">
-  Lot A-9M
-  <BadgeButton aria-label="เอาออก" onClick={remove}><XIcon /></BadgeButton>
-</Badge>
-
-{/* ปุ่มข้อความในตัว — มีเส้นคั่นซ้ายกันกลืนกับป้าย */}
+{/* ไอคอนหน้า + ข้อความ + ไอคอนหลัง + ปุ่มปิด */}
 <Badge tone="teal" appearance="soft">
-  ผู้ดูแล: อลิสา
-  <BadgeAction onClick={edit}><PencilIcon />แก้ไข</BadgeAction>
+  <TagIcon />
+  ฝ่ายจัดซื้อ
+  <CheckIcon />
+  <BadgeButton aria-label="เอาออก" onClick={remove}><XIcon /></BadgeButton>
 </Badge>
 ```
 
-ทั้งสองตัวรับสีจากตัวอักษรของ badge เอง (`currentColor`) จึงเปลี่ยนตาม tone และ
-appearance ให้อัตโนมัติ **ห้ามส่งสีเข้าไปเอง** ไม่งั้นพอสลับ tone แล้วปุ่มจะไม่ตาม
+- **ห้ามกำหนดขนาดไอคอนเอง** — `Badge` ตั้ง `size-3` และ `gap-1` ให้อยู่แล้ว
+- `BadgeButton` รับสีจากตัวอักษรของ badge (`currentColor`) จึงเปลี่ยนตาม tone และ
+  appearance ให้อัตโนมัติ **ห้ามส่งสีเข้าไปเอง** ไม่งั้นพอสลับ tone แล้วปุ่มจะไม่ตาม
+- ปุ่มปิด **ต้องมี `aria-label`** เสมอ เพราะข้างในมีแค่ไอคอน
 
 #### ช่องบังคับกรอก / ไม่บังคับ / คำใบ้ / ผิดพลาด
 
