@@ -7,7 +7,7 @@
 
 สรุปสั้น ๆ (รายละเอียดเต็มอยู่ใน AGENTS.md):
 
-1. ใช้ component จาก `@peckey954/ui/components/ui/*` เสมอ ห้ามเขียนเองถ้ามีอยู่แล้ว (มี 59 ตัว)
+1. ใช้ component จาก `@peckey954/ui/components/ui/*` เสมอ ห้ามเขียนเองถ้ามีอยู่แล้ว (มี 60 ตัว)
 2. ใช้ token เท่านั้น (`bg-primary`, `text-foreground`, `bg-muted`, `border-border`, `text-muted-foreground` …) — ห้าม hardcode สี เช่น `#hex`, `bg-blue-500`, `bg-[...]`
 3. ต่อ className ด้วย `cn()` จาก `@peckey954/ui/lib/utils`
 4. เปลี่ยนสี/ฟอนต์ แก้ที่ `packages/tokens/src/<brand>.css` เท่านั้น ไม่แก้ในตัว component

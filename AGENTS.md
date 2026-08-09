@@ -39,7 +39,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@peckey954/ui/componen
 ls packages/ui/src/components/ui
 ```
 
-ปัจจุบันมี **59 ตัว** — 54 ตัวจาก shadcn:
+ปัจจุบันมี **60 ตัว** — 54 ตัวจาก shadcn:
 accordion, alert, alert-dialog, aspect-ratio, avatar, badge, breadcrumb, button,
 button-group, calendar, card, carousel, chart, checkbox, collapsible, command,
 context-menu, dialog, drawer, dropdown-menu, empty, field, form, hover-card,
@@ -48,7 +48,7 @@ navigation-menu, pagination, popover, progress, radio-group, resizable,
 scroll-area, select, separator, sheet, sidebar, skeleton, slider, sonner,
 spinner, switch, table, tabs, textarea, toggle, toggle-group, tooltip
 
-และอีก 5 ตัวที่ประกอบขึ้นเองในโปรเจกต์นี้:
+และอีก 6 ตัวที่ประกอบขึ้นเองในโปรเจกต์นี้:
 **multi-select** — ดรอปดาวน์เลือกหลายรายการ พร้อมช่องค้นหา · แถวเลือกทั้งหมด · chip
 ของรายการที่เลือก ประกอบจาก popover + command + checkbox + badge
 
@@ -85,7 +85,7 @@ const options: MultiSelectOption[] = [
 ถ้าไม่มีจริง ๆ ให้ประกอบจากของที่มีก่อน (compose) แล้วค่อยพิจารณาสร้างใหม่
 component ที่ประกอบขึ้นเองก็ต้องวางไว้ที่ `packages/ui/src/components/ui/` และทำตามกฎทุกข้อเหมือนกัน
 
-**attachment · file-upload · media-viewer** — ชุดไฟล์แนบ
+**attachment · file-upload · media-viewer · file-preview** — ชุดไฟล์แนบ
 
 `attachment` ตั้งชื่อ prop และ subcomponent ให้ตรงกับ Attachment ของ shadcn
 (ui.shadcn.com/docs/components/base/attachment) แต่**เขียนเอง ไม่ได้ดึงจาก registry**
@@ -117,12 +117,62 @@ import {
 | `state` | `idle` · `uploading` · `processing` · `error` · `done` |
 | `size` | `default` (48px) · `sm` (40px) · `xs` (32px) |
 | `orientation` | `horizontal` (แถว) · `vertical` (การ์ดตั้ง ใช้กับกริดรูป) |
+| `variant` | `card` (มีขอบมีพื้น) · `tile` (รูปเต็มกรอบ ไม่มีขอบไม่มีระยะใน) |
 
-- `state="uploading"` กับ `processing` จะขึ้น spinner ทับกล่องรูปให้เอง
+**รูปกับวิดีโอ** — `AttachmentMedia` จัดขนาดรูปให้เองแล้ว เขียนแค่ `<img src alt />`
+ไม่ต้องใส่ `size-full object-cover` เอง
+
+```tsx
+{/* กริดรูป — orientation="vertical" ทำให้รูปกินเต็มความกว้างการ์ดเอง */}
+<AttachmentGroup layout="grid">
+  <Attachment orientation="vertical">
+    <AttachmentMedia variant="image">
+      <img src={src} alt="ใบชั่ง" />
+    </AttachmentMedia>
+    <AttachmentContent>
+      <AttachmentTitle>ใบชั่ง.jpg</AttachmentTitle>
+      <AttachmentDescription>JPG · 820 KB</AttachmentDescription>
+    </AttachmentContent>
+    <AttachmentActions className="absolute top-2 right-2">
+      <AttachmentAction aria-label="เอาออก" variant="secondary" className="rounded-full">
+        <XIcon />
+      </AttachmentAction>
+    </AttachmentActions>
+    <AttachmentTrigger aria-label="ดูเต็มจอ" onClick={openViewer} />
+  </Attachment>
+</AttachmentGroup>
+
+{/* วิดีโอ — ปุ่มเล่นวางกลางรูปให้เอง ไม่ต้องวาดเอง */}
+<AttachmentMedia variant="video" aspect="video">
+  <img src={poster} alt="" />
+</AttachmentMedia>
+```
+
+| prop ของ `AttachmentMedia` | ค่า |
+|---|---|
+| `variant` | `icon` (ไอคอนในกล่องพื้นเทา) · `image` · `video` (มีปุ่มเล่นกลางรูป) |
+| `aspect` | `square` (ค่าเริ่มต้น) · `video` · `auto` — ใช้เฉพาะตอนรูปกินเต็มความกว้าง |
+| `fill` | บังคับให้รูปกินเต็มความกว้าง ปกติดูจาก `orientation` ของ `Attachment` ให้เอง |
+
+- `state="uploading"` กับ `processing` จะ **แทนที่** ไอคอน/รูปในกล่องด้วย spinner ให้เอง
+  ไม่ได้วางซ้อนทับ เพราะซ้อนแล้วอ่านไม่ออกว่ากำลังโหลดอยู่หรือเป็นไฟล์อะไร
+- `variant="image"` ที่ยังไม่มีรูปจริง (ไม่ใส่ลูกข้างใน) จะขึ้นพื้นเรียบ + ไอคอนรูปตรงกลางให้เอง
+  ไม่ต้องหา placeholder มาใส่เอง — ได้ URL รูปมาเมื่อไหร่ค่อยใส่ `<img>` ลงไป
 - `AttachmentProgress` โผล่เฉพาะตอน `state="uploading"` ไม่ต้องใส่เงื่อนไขเอง
+  ถ้าอยากให้แถบเกาะขอบล่างของรูปแบบ `variant="tile"` ให้วางไว้นอก `AttachmentContent`
+  แล้วสั่ง `className="absolute inset-x-0 bottom-0 mt-0 rounded-none"`
+- `AttachmentGroup` รับ `layout` เป็น `list` (ค่าเริ่มต้น) หรือ `grid`
+  จำนวนคอลัมน์สั่งทับได้ด้วย `className="sm:grid-cols-4"`
 - `AttachmentTrigger` ทำให้ทั้งการ์ดกดได้ วาง `position: absolute` ทับแทนการครอบ
-  `<button>` รอบทุกอย่าง **ปุ่มใน `AttachmentActions` ต้องใส่ `relative z-10`**
-  ไม่งั้นจะโดน trigger คลุมจนกดไม่โดน
+  `<button>` รอบทุกอย่าง — `AttachmentActions` มี `relative z-10` มาให้แล้ว
+  ปุ่มลบจึงอยู่เหนือ trigger เอง ไม่ต้องใส่เพิ่ม
+- อยากให้ trigger เป็นแท็กอื่น (เช่น `<a>` เปิดไฟล์ในแท็บใหม่) ส่งผ่าน `render`
+
+```tsx
+<AttachmentTrigger
+  render={<a href={src} target="_blank" rel="noreferrer" aria-label="เปิดไฟล์" />}
+/>
+```
 
 ```tsx
 import { FileUpload, FileUploadIcon, FileUploadLabel, FileUploadHint }
@@ -156,9 +206,47 @@ import { MediaViewer, type MediaItem } from "@peckey954/ui/components/ui/media-v
 ```
 
 - รองรับ `type: "image"` (ซูมได้ 100–400%) และ `"video"` (ตัวเล่นของเบราว์เซอร์)
+- มีปุ่มดาวน์โหลดในหัวหน้าต่างให้แล้ว ตั้งชื่อไฟล์ด้วย `fileName` ของแต่ละรายการ
+  ปิดด้วย `showDownload={false}` เช่นรูปที่ห้ามเอาออกจากระบบ
 - คีย์บอร์ด: **ลูกศรซ้าย/ขวา** เลื่อนรูป · **`+` `-`** ซูม · **`0`** ขนาดเดิม · **Esc** ปิด
 - เกิน 1 รายการจะขึ้นปุ่มซ้าย/ขวา ตัวนับ และแถวรูปย่อให้เอง เลื่อนวนหัวท้าย
 - **ข้อความปุ่มส่งผ่าน `labels`** ตัว component ไม่รู้จักภาษาของแอป ค่าเริ่มต้นเป็นอังกฤษ
+
+```tsx
+import { FilePreview, type PreviewFile } from "@peckey954/ui/components/ui/file-preview";
+
+const [preview, setPreview] = useState<PreviewFile | null>(null);
+
+<FilePreview
+  file={preview}                      // { name, src, meta?, kind? }
+  open={preview !== null}
+  onOpenChange={(open) => { if (!open) setPreview(null) }}
+  labels={{ print: "พิมพ์", download: "ดาวน์โหลด", close: "ปิด" }}
+/>
+```
+
+- **เอกสารทีละไฟล์ที่ต้องสั่งพิมพ์ใช้ตัวนี้ · รูปที่ต้องซูมและเลื่อนดูทีละรูปใช้ `MediaViewer`**
+- `kind` เดาจากนามสกุลใน `name` ให้เอง: `pdf` · `image` · `text` เปิดดูได้ในหน้าต่าง
+  ที่เหลือขึ้นกล่อง "ดูตัวอย่างไม่ได้" พร้อมปุ่มดาวน์โหลด ไม่ปล่อยให้จอว่าง
+- ปุ่มพิมพ์สั่งผ่าน iframe ที่ซ่อนไว้ ไม่ใช่ `window.print()` ของหน้าเว็บ
+  ไม่งั้นจะได้กระดาษที่มีหน้าเว็บทั้งหน้าติดมาด้วย
+- **ไฟล์ต้องอยู่ origin เดียวกับหน้า** (blob URL หรือไฟล์ในโดเมนเดียวกัน) ถึงจะสั่งพิมพ์ได้
+  ไฟล์ข้าม origin เบราว์เซอร์จะห้ามแตะ ตัว component จะเปิดแท็บใหม่ให้แทน
+  ถ้าฝั่งแอปมี endpoint ทำ PDF สำหรับพิมพ์เอง ส่งมาทาง `onPrint`
+- ปุ่มดาวน์โหลดเป็น `<a download>` จริง ไม่ใช่ปุ่มที่ผูก `onClick` คนใช้จะได้คลิกขวา
+  คัดลอกลิงก์หรือเปิดแท็บใหม่ได้ตามปกติ
+- **ขีดมาร์ก (markup) ใช้ได้กับไฟล์รูป** — กดปุ่ม "ขีดมาร์ก" แล้วได้แถบเครื่องมือของ DS
+  เลือกสี 5 สี · หัวปากกา 3 ขนาด · ย้อนกลับ · ล้าง · บันทึกสำเนาเป็น PNG ที่รวมรอยขีดแล้ว
+  สั่งพิมพ์ตอนมีรอยขีดจะได้ฉบับที่รวมรอยขีดไปด้วย ปิดด้วย `showMarkup={false}`
+  **สีปากกาอ่านจาก token ตอนวาด** (canvas รับได้แต่ค่าสีจริง) จึงเปลี่ยนตามแบรนด์เอง
+  ห้ามเปลี่ยนไปฝังค่าสีตรง ๆ
+
+> **แถบเครื่องมือในตัวอ่าน pdf เป็นของเบราว์เซอร์ ไม่ใช่ของเรา** — อยู่คนละ browsing
+> context สไตล์ของ DS ไปไม่ถึง แก้สี/เลย์เอาต์ของมันไม่ได้ทุกกรณี ทำได้แค่เลือกว่า
+> จะเอาไว้หรือซ่อน: `nativeControls` (ค่าเริ่มต้น `true`) เก็บเครื่องมือของเบราว์เซอร์ไว้
+> (ขีดเขียน pdf เลือกหน้า) · `false` ซ่อนเหลือแต่เนื้อเอกสารให้เข้ากับ DS แต่เครื่องมือหายไปด้วย
+> ถ้าต้องการทั้งความเข้าชุดและการขีดเขียน ทางเดียวคือฝั่งแอปแปลง pdf เป็นรูปก่อน
+> แล้วใช้โหมดขีดมาร์กของ FilePreview
 
 ตัวอย่างครบทุกแบบอยู่ที่ `/components` หมวด **ไฟล์แนบ & รูปภาพ** —
 [apps/web/app/components/_parts/section-attachment.tsx](apps/web/app/components/_parts/section-attachment.tsx)

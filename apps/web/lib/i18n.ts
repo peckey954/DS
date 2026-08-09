@@ -15,7 +15,7 @@ const th = {
 
   "page.home": "หน้าแรก",
   "page.title": "แกลเลอรี component",
-  "page.subtitle": "ครบทั้ง 59 ตัวจาก @peckey954/ui",
+  "page.subtitle": "ครบทั้ง 60 ตัวจาก @peckey954/ui",
   "page.intro.before": "ทุกตัวอย่างในหน้านี้ใช้ component จาก",
   "page.intro.after":
     "และสีจาก token เท่านั้น — ลองสลับแบรนด์และโหมดสว่าง/มืดที่มุมขวาบน แล้วสังเกตว่าทั้งหน้าเปลี่ยนตามโดยไม่มีการแก้โค้ด component",
@@ -52,7 +52,7 @@ const th = {
     "— สลับแบรนด์และโหมดดู สี/ฟอนต์เปลี่ยนทั้งหน้าโดยไม่แตะโค้ด component",
   "home.galleryTitle": "แกลเลอรี component ทั้งหมด",
   "home.galleryDesc":
-    "ดูตัวอย่างการใช้งาน component ทั้ง 59 ตัวใน @peckey954/ui จัดเป็นหมวด พร้อมสลับแบรนด์และโหมดสว่าง/มืดได้ทันที",
+    "ดูตัวอย่างการใช้งาน component ทั้ง 60 ตัวใน @peckey954/ui จัดเป็นหมวด พร้อมสลับแบรนด์และโหมดสว่าง/มืดได้ทันที",
   "home.openGallery": "เปิดแกลเลอรี",
   "home.swatches": "สีของแบรนด์ (tokens)",
   "home.buttons": "ปุ่ม",
@@ -67,7 +67,7 @@ const en: Record<TranslationKey, string> = {
 
   "page.home": "Home",
   "page.title": "Component gallery",
-  "page.subtitle": "All 59 components from @peckey954/ui",
+  "page.subtitle": "All 60 components from @peckey954/ui",
   "page.intro.before": "Every example on this page uses components from",
   "page.intro.after":
     "and colours from tokens only — switch brand and light/dark mode in the top right and watch the whole page follow, with no component code changed.",
@@ -104,7 +104,7 @@ const en: Record<TranslationKey, string> = {
     "— switch brand and mode, and colours/fonts change across the page without touching component code",
   "home.galleryTitle": "Full component gallery",
   "home.galleryDesc":
-    "Browse usage examples for all 59 components in @peckey954/ui, grouped by category, with instant brand and light/dark switching.",
+    "Browse usage examples for all 60 components in @peckey954/ui, grouped by category, with instant brand and light/dark switching.",
   "home.openGallery": "Open gallery",
   "home.swatches": "Brand colours (tokens)",
   "home.buttons": "Buttons",

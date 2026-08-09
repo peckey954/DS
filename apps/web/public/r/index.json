@@ -124,6 +124,11 @@
       "url": "https://ds-web-iota.vercel.app/r/field.json"
     },
     {
+      "name": "file-preview",
+      "type": "registry:ui",
+      "url": "https://ds-web-iota.vercel.app/r/file-preview.json"
+    },
+    {
       "name": "file-upload",
       "type": "registry:ui",
       "url": "https://ds-web-iota.vercel.app/r/file-upload.json"

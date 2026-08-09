@@ -4,7 +4,9 @@ import * as React from "react"
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
+  DownloadIcon,
   RotateCcwIcon,
+  XIcon,
   ZoomInIcon,
   ZoomOutIcon,
 } from "lucide-react"
@@ -39,6 +41,8 @@ type MediaItem = {
   title?: string
   /** ภาพนิ่งของวิดีโอตอนยังไม่เล่น */
   poster?: string
+  /** ชื่อไฟล์ตอนกดดาวน์โหลด — ไม่ส่งมาเบราว์เซอร์จะตั้งชื่อเอง */
+  fileName?: string
 }
 
 const ZOOM_MIN = 1
@@ -53,6 +57,8 @@ type MediaViewerProps = {
   index?: number
   onIndexChange?: (index: number) => void
   defaultIndex?: number
+  /** ซ่อนปุ่มดาวน์โหลด เช่นรูปที่ห้ามเอาออกจากระบบ */
+  showDownload?: boolean
   /** ข้อความปุ่ม — เปลี่ยนตามภาษาของแอปได้ */
   labels?: Partial<{
     previous: string
@@ -60,6 +66,7 @@ type MediaViewerProps = {
     zoomIn: string
     zoomOut: string
     reset: string
+    download: string
     close: string
     counter: (current: number, total: number) => string
   }>
@@ -72,6 +79,7 @@ const DEFAULT_LABELS = {
   zoomIn: "Zoom in",
   zoomOut: "Zoom out",
   reset: "Reset zoom",
+  download: "Download",
   close: "Close",
   counter: (current: number, total: number) => `${current} / ${total}`,
 }
@@ -83,6 +91,7 @@ function MediaViewer({
   index: indexProp,
   onIndexChange,
   defaultIndex = 0,
+  showDownload = true,
   labels,
   className,
 }: MediaViewerProps) {
@@ -187,9 +196,25 @@ function MediaViewer({
                 </Button>
               </>
             ) : null}
+            {showDownload ? (
+              /* ดาวน์โหลดคือการไปที่ไฟล์ ต้องเป็น <a> ไม่ใช่ปุ่มที่ผูก onClick
+                 คนใช้จะได้คลิกขวาคัดลอกลิงก์หรือเปิดแท็บใหม่ได้ตามปกติ */
+              <Button asChild variant="ghost" size="icon-sm">
+                <a
+                  href={item.src}
+                  download={item.fileName ?? ""}
+                  aria-label={l.download}
+                >
+                  <DownloadIcon />
+                </a>
+              </Button>
+            ) : null}
+
             <DialogClose asChild>
-              <Button variant="ghost" size="sm">
-                {l.close}
+              {/* ปุ่มไอคอนล้วน — ปุ่มอื่นในแถวนี้เป็นไอคอนหมด ปุ่มข้อความปุ่มเดียว
+                  จะดูเป็นของแปลกปลอมและกินที่มากกว่าจำเป็น */}
+              <Button variant="ghost" size="icon-sm" aria-label={l.close}>
+                <XIcon />
               </Button>
             </DialogClose>
           </div>
