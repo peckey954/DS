@@ -435,7 +435,7 @@ repo นี้คือ Parich WMS เป็นโปรเจกต์แรก
 
 ## กฎที่ห้ามฝ่า
 
-- ใช้ component จาก @peckey954/ui/components/ui/* เสมอ มี 55 ตัว
+- ใช้ component จาก @peckey954/ui/components/ui/* เสมอ มี 60 ตัว
   ห้ามเขียน component เองถ้ามีอยู่แล้ว ถ้าไม่มีให้ประกอบจากของที่มีก่อน
 - ใช้ token เท่านั้น ห้าม #hex ห้าม bg-blue-500 ห้าม bg-[...] ห้าม style={{color}}
 - ต่อ className ด้วย cn() จาก @peckey954/ui/lib/utils
@@ -497,7 +497,7 @@ https://raw.githubusercontent.com/peckey954/DS/main/packages/ui/src/components/u
 (ดูรายชื่อทั้งหมดที่ https://github.com/peckey954/DS/tree/main/packages/ui/src/components/ui)
 
 สรุปสั้น ๆ ว่าต้องยึดอะไร:
-- import component จาก @peckey954/ui/components/ui/* เสมอ มี 55 ตัว ห้ามเขียนเองถ้ามีอยู่แล้ว
+- import component จาก @peckey954/ui/components/ui/* เสมอ มี 60 ตัว ห้ามเขียนเองถ้ามีอยู่แล้ว
 - ใช้ token เท่านั้น (bg-primary, text-foreground, bg-muted, border-border,
   text-muted-foreground …) ห้าม #hex ห้าม bg-blue-500 ห้าม bg-[...]
 - ต่อ className ด้วย cn() จาก @peckey954/ui/lib/utils
@@ -522,7 +522,7 @@ Next.js 15 · React 19 · Tailwind CSS v4 · shadcn (new-york) · Radix UI · ne
 
 ## กฎ 6 ข้อ
 
-1) ใช้ component จาก @peckey954/ui/components/ui/* เสมอ ห้ามเขียนเองถ้ามีอยู่แล้ว (มี 55 ตัว)
+1) ใช้ component จาก @peckey954/ui/components/ui/* เสมอ ห้ามเขียนเองถ้ามีอยู่แล้ว (มี 60 ตัว)
    accordion, alert, alert-dialog, aspect-ratio, avatar, badge, breadcrumb, button,
    button-group, calendar, card, carousel, chart, checkbox, collapsible, command,
    context-menu, dialog, drawer, dropdown-menu, empty, field, form, hover-card,
