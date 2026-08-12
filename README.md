@@ -1,6 +1,6 @@
 # Design System (shadcn-based, multi-brand)
 
-ระบบดีไซน์กลาง 1 ชุด ใช้ได้หลายแอป — ปรับ **สี / ฟอนต์ (รวมฟอนต์ไทย) / dark-light** ต่อแบรนด์ได้ง่าย โดยไม่ต้องแก้โค้ด component มี component ของ shadcn ครบ **54 ตัว**
+ระบบดีไซน์กลาง 1 ชุด ใช้ได้หลายแอป — ปรับ **สี / ฟอนต์ (รวมฟอนต์ไทย) / dark-light** ต่อแบรนด์ได้ง่าย โดยไม่ต้องแก้โค้ด component มี component ครบ **60 ตัว** (54 ตัวจาก shadcn + 6 ตัวประกอบเอง)
 
 ## แนวคิด: แยก "โครงสร้าง" ออกจาก "แบรนด์"
 
@@ -20,12 +20,9 @@ pnpm install
 pnpm dev        # http://localhost:3000
 ```
 
-## Component ที่มีให้ (55)
+## Component ที่มีให้ (60)
 
-54 ตัวจาก shadcn + `multi-select` ที่ประกอบขึ้นเองในโปรเจกต์นี้
-(ดรอปดาวน์เลือกหลายรายการ พร้อมค้นหา · เลือกทั้งหมด · chip — ดูตัวอย่างที่
-`/components#multi-select`)
-
+54 ตัวจาก shadcn:
 
 accordion, alert, alert-dialog, aspect-ratio, avatar, badge, breadcrumb, button,
 button-group, calendar, card, carousel, chart, checkbox, collapsible, command,
@@ -33,7 +30,18 @@ context-menu, dialog, drawer, dropdown-menu, empty, field, form, hover-card,
 input, input-group, input-otp, item, kbd, label, menubar, native-select,
 navigation-menu, pagination, popover, progress, radio-group, resizable,
 scroll-area, select, separator, sheet, sidebar, skeleton, slider, sonner,
-spinner, switch, table, tabs, textarea, toggle, toggle-group, tooltip, multi-select
+spinner, switch, table, tabs, textarea, toggle, toggle-group, tooltip
+
+และอีก 6 ตัวที่ประกอบขึ้นเองในโปรเจกต์นี้:
+
+- `multi-select` — ดรอปดาวน์เลือกหลายรายการ พร้อมค้นหา · เลือกทั้งหมด · chip
+- `number-input` — ช่องกรอกตัวเลข พร้อมปุ่ม −/+ และหน่วยในช่อง
+- `attachment` — แถว/การ์ดไฟล์แนบ (รูป · วิดีโอ · ไทล์ไฟล์)
+- `file-upload` — กล่อง/ปุ่มอัปโหลดไฟล์ แบบ dropzone และ tile
+- `media-viewer` — เปิดดูรูป/วิดีโอเต็มจอ ซูมและเลื่อนดูทีละรูป
+- `file-preview` — เปิดดูเอกสาร pdf/รูปทีละไฟล์ สั่งพิมพ์และขีดมาร์กได้
+
+ดูตัวอย่างการใช้งานครบทุกตัวที่ `/components`
 
 หน้าแกลเลอรีตัวอย่างการใช้งานครบทุกตัว: http://localhost:3000/components
 

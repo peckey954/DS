@@ -1,11 +1,11 @@
 # @peckey954/ui
 
 Multi-brand design system built on [shadcn/ui](https://ui.shadcn.com) and Tailwind CSS v4,
-with first-class Thai font support. 55 components. Swap colours and fonts per brand
-without touching component code.
+with first-class Thai font support. 60 components (54 from shadcn + 6 composed
+in-house). Swap colours and fonts per brand without touching component code.
 
 ระบบดีไซน์กลาง สร้างบน shadcn/ui + Tailwind v4 รองรับฟอนต์ไทยเต็มรูปแบบ
-มี component 55 ตัว เปลี่ยนสี/ฟอนต์ต่อแบรนด์ได้โดยไม่ต้องแก้โค้ด component
+มี component 60 ตัว (54 จาก shadcn + 6 ตัวประกอบเอง) เปลี่ยนสี/ฟอนต์ต่อแบรนด์ได้โดยไม่ต้องแก้โค้ด component
 
 ## ติดตั้ง
 
