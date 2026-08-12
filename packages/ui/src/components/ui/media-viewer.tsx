@@ -142,7 +142,7 @@ function MediaViewer({
       <DialogContent
         showCloseButton={false}
         className={cn(
-          "max-w-[min(96vw,72rem)] gap-0 overflow-hidden p-0",
+          "gap-0 overflow-hidden p-0 sm:max-w-[min(96vw,72rem)]",
           className
         )}
       >

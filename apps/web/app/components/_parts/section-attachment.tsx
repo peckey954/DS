@@ -6,6 +6,7 @@ import {
   EyeIcon,
   FileSpreadsheetIcon,
   FileTextIcon,
+  FileUpIcon,
   ImageIcon,
   RotateCwIcon,
   Trash2Icon,
@@ -19,6 +20,7 @@ import {
   AttachmentActions,
   AttachmentContent,
   AttachmentDescription,
+  AttachmentFileIcon,
   AttachmentGroup,
   AttachmentMedia,
   AttachmentProgress,
@@ -26,6 +28,8 @@ import {
   AttachmentTrigger,
 } from "@peckey954/ui/components/ui/attachment";
 import { Button, buttonVariants } from "@peckey954/ui/components/ui/button";
+import { Label } from "@peckey954/ui/components/ui/label";
+import { Textarea } from "@peckey954/ui/components/ui/textarea";
 import {
   FileUpload,
   FileUploadHint,
@@ -53,7 +57,7 @@ import {
 import { cn } from "@peckey954/ui/lib/utils";
 
 import { Demo, Section } from "./showcase";
-import { defineCopy, useCopy, useT } from "@/lib/i18n";
+import { defineCopy, useCopy, useLocale, useT } from "@/lib/i18n";
 
 const COPY = defineCopy({
   th: {
@@ -64,15 +68,24 @@ const COPY = defineCopy({
     videoHint: "วิดีโอ · ปุ่มเล่นอยู่กลางรูป",
     sheetFileHint: "แผงแนบไฟล์ · มีความคืบหน้า",
     sheetImageHint: "แผงแนบรูป · กริดรูปย่อ",
-    previewHint: "ดูตัวอย่างไฟล์ · ขีดมาร์ก · พิมพ์ · ดาวน์โหลด",
+    previewHint: "ดูตัวอย่างไฟล์ · ขีดมาร์ก · ซูม · พิมพ์ · ดาวน์โหลด",
+    tileHint: "ปุ่มอัปโหลดแบบไทล์ · การ์ดไฟล์เรียงต่อกัน",
+    claimTitle: "รูปภาพและเอกสารประกอบการเคลมสินค้า",
+    claimHint: "อัปโหลดไฟล์สูงสุด 5 ไฟล์ รองรับไฟล์ PDF, PNG และ JPG",
+    uploadTile: "อัปโหลดไฟล์",
+    claimDoc: "เอกสารเคลม",
+    note: "หมายเหตุ",
+    notePlaceholder: "ระบุหมายเหตุ",
+    full: "แนบครบ 5 ไฟล์แล้ว",
     preview: "ดูตัวอย่าง",
     print: "พิมพ์",
     markup: "ขีดมาร์ก",
     penColor: "สีปากกา",
     penSize: "ขนาดหัวปากกา",
-    undo: "ย้อนกลับ",
-    clearAll: "ล้างทั้งหมด",
-    saveMarkup: "บันทึกสำเนา",
+    undo: "เลิกทำ",
+    pen: "ปากกา",
+    eraser: "ยางลบ",
+    togglePages: "ซ่อน/แสดงแถบหน้า",
     noPreview: "ดูตัวอย่างไฟล์ชนิดนี้ไม่ได้",
     noPreviewHint: "ดาวน์โหลดไปเปิดด้วยโปรแกรมในเครื่อง",
 
@@ -90,6 +103,12 @@ const COPY = defineCopy({
     retry: "ลองใหม่",
     viewFull: "ดูเต็มจอ",
     openNewTab: "เปิดในแท็บใหม่",
+    back: "ย้อนกลับ",
+    prevPage: "หน้าก่อนหน้า",
+    nextPage: "หน้าถัดไป",
+    pageLabel: "หน้า",
+    pagesLabel: "หน้าเอกสาร",
+    loadingDoc: "กำลังเปิดเอกสาร…",
 
     stIdle: "รอส่ง",
     stUploading: "กำลังอัปโหลด 62%",
@@ -142,14 +161,23 @@ const COPY = defineCopy({
     sheetFileHint: "File sheet · with progress",
     sheetImageHint: "Photo sheet · thumbnail grid",
     previewHint: "File preview · markup · print · download",
+    tileHint: "Tile upload button · file cards in a row",
+    claimTitle: "Photos and documents for the claim",
+    claimHint: "Up to 5 files. PDF, PNG and JPG are supported",
+    uploadTile: "Upload file",
+    claimDoc: "Claim document",
+    note: "Note",
+    notePlaceholder: "Add a note",
+    full: "All 5 files attached",
     preview: "Preview",
     print: "Print",
     markup: "Markup",
     penColor: "Pen colour",
     penSize: "Pen size",
     undo: "Undo",
-    clearAll: "Clear all",
-    saveMarkup: "Save a copy",
+    pen: "Pen",
+    eraser: "Eraser",
+    togglePages: "Show or hide pages",
     noPreview: "No preview for this file type",
     noPreviewHint: "Download it to open with an app on your device",
 
@@ -167,6 +195,12 @@ const COPY = defineCopy({
     retry: "Retry",
     viewFull: "View full screen",
     openNewTab: "Open in a new tab",
+    back: "Back",
+    prevPage: "Previous page",
+    nextPage: "Next page",
+    pageLabel: "Page",
+    pagesLabel: "Pages",
+    loadingDoc: "Opening document…",
 
     stIdle: "Queued",
     stUploading: "Uploading 62%",
@@ -231,20 +265,33 @@ const PLACEHOLDER_SRC = `data:image/svg+xml;utf8,${encodeURIComponent(
    จึงประกอบ PDF ขึ้นตอนรันแล้วทำเป็น blob URL — ชี้ iframe ไปที่ data: URL
    จะกลายเป็นคนละ origin แล้วสั่งพิมพ์ผ่าน contentWindow ไม่ได้
    ข้อความในไฟล์เป็นอังกฤษล้วนเพราะฟอนต์มาตรฐานของ PDF ไม่มีสระไทย */
-function buildSamplePdf(lines: string[]) {
-  const content = [
-    "BT /F1 16 Tf 60 780 Td 24 TL",
-    ...lines.map((line) => `(${line.replace(/([()\\])/g, "\\$1")}) Tj T*`),
-    "ET",
-  ].join("\n");
+function buildSamplePdf(pages: string[][]) {
+  const objects: string[] = ["", ""]; // 1 = catalog, 2 = pages — เติมทีหลังเพราะต้องรู้ id ลูกก่อน
+  const fontId = 3;
+  objects.push("<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>");
 
-  const objects = [
-    "<</Type/Catalog/Pages 2 0 R>>",
-    "<</Type/Pages/Kids[3 0 R]/Count 1>>",
-    "<</Type/Page/Parent 2 0 R/MediaBox[0 0 595 842]/Contents 4 0 R/Resources<</Font<</F1 5 0 R>>>>>>",
-    `<</Length ${content.length}>>\nstream\n${content}\nendstream`,
-    "<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>",
-  ];
+  const pageIds: number[] = [];
+  pages.forEach((lines) => {
+    const content = [
+      "BT /F1 16 Tf 60 780 Td 24 TL",
+      ...lines.map((line) => `(${line.replace(/([()\\])/g, "\\$1")}) Tj T*`),
+      "ET",
+    ].join("\n");
+
+    const contentId = objects.length + 1;
+    objects.push(`<</Length ${content.length}>>\nstream\n${content}\nendstream`);
+    const pageId = objects.length + 1;
+    objects.push(
+      `<</Type/Page/Parent 2 0 R/MediaBox[0 0 595 842]/Contents ${contentId} 0 R` +
+        `/Resources<</Font<</F1 ${fontId} 0 R>>>>>>`
+    );
+    pageIds.push(pageId);
+  });
+
+  objects[0] = "<</Type/Catalog/Pages 2 0 R>>";
+  objects[1] =
+    `<</Type/Pages/Kids[${pageIds.map((id) => `${id} 0 R`).join(" ")}]` +
+    `/Count ${pageIds.length}>>`;
 
   /* xref ต้องบอกตำแหน่งไบต์ของทุก object — คิดจากความยาวที่สะสมมาระหว่างต่อสตริง
      (ตัวอักษรทั้งไฟล์เป็น ASCII ความยาวสตริงจึงเท่ากับจำนวนไบต์พอดี) */
@@ -296,6 +343,11 @@ function buildPlaceholderPng(): Promise<string> {
     canvas.toBlob((blob) => resolve(URL.createObjectURL(blob!)), "image/png");
   });
 }
+
+/** จำนวนไฟล์สูงสุดของแบบฟอร์มเคลม — ครบแล้วซ่อนไทล์อัปโหลดทิ้ง */
+const CLAIM_MAX = 5;
+
+type ClaimFile = { id: string; name: string; date: string; size: string };
 
 /* ---------------------------------------------------------------------- */
 /* รายการอัปโหลดจำลอง — ของจริงต้องเอา progress มาจาก XHR/fetch ของฝั่งแอป   */
@@ -395,6 +447,12 @@ export function SectionAttachment() {
   const [clipOpen, setClipOpen] = React.useState(false);
   const [sheetViewer, setSheetViewer] = React.useState<number | null>(null);
   const [preview, setPreview] = React.useState<PreviewFile | null>(null);
+  const locale = useLocale();
+  const [claim, setClaim] = React.useState<ClaimFile[]>([
+    { id: "c1", name: "claim-1.png", date: "2026-08-05", size: "6.6MB" },
+    { id: "c2", name: "claim-2.pdf", date: "2026-08-05", size: "6.6MB" },
+    { id: "c3", name: "claim-3.jpg", date: "2026-08-05", size: "6.6MB" },
+  ]);
 
   /* ไฟล์ตัวอย่างสร้างใน effect ไม่ใช่ระหว่างเรนเดอร์ เพราะ URL.createObjectURL
      ไม่มีบน server แล้วหน้านี้ถูก prerender ตอน build */
@@ -409,12 +467,29 @@ export function SectionAttachment() {
       new Blob(
         [
           buildSamplePdf([
-            "Receiving note PO260116",
-            "",
-            "Supplier   Siam Agri Co., Ltd.",
-            "Lot        PD260116/01-04",
-            "Net weight 80.00 tons",
-            "Checked by Somchai P.",
+            [
+              "Receiving note PO260116",
+              "",
+              "Supplier   Siam Agri Co., Ltd.",
+              "Lot        PD260116/01-04",
+              "Net weight 80.00 tons",
+              "Checked by Somchai P.",
+            ],
+            [
+              "Page 2 - Weighing detail",
+              "",
+              "Trip 1     20.00 tons",
+              "Trip 2     20.00 tons",
+              "Trip 3     20.00 tons",
+              "Trip 4     20.00 tons",
+            ],
+            [
+              "Page 3 - Remarks",
+              "",
+              "Moisture   13.2 %",
+              "Impurity   1.1 %",
+              "Approved by Warunee K.",
+            ],
           ]),
         ],
         { type: "application/pdf" }
@@ -447,16 +522,25 @@ export function SectionAttachment() {
   const previewLabels = {
     print: c.print,
     download: c.download,
-    close: c.close,
     openInNewTab: c.openNewTab,
+    back: c.back,
+    zoomIn: c.zoomIn,
+    zoomOut: c.zoomOut,
+    resetZoom: c.resetZoom,
+    previousPage: c.prevPage,
+    nextPage: c.nextPage,
+    page: c.pageLabel,
+    pages: c.pagesLabel,
+    loading: c.loadingDoc,
     unsupported: c.noPreview,
     unsupportedHint: c.noPreviewHint,
     markup: c.markup,
+    pen: c.pen,
+    eraser: c.eraser,
     penColor: c.penColor,
     penSize: c.penSize,
     undo: c.undo,
-    clear: c.clearAll,
-    saveMarkup: c.saveMarkup,
+    togglePages: c.togglePages,
   };
 
   const gallery: MediaItem[] = React.useMemo(
@@ -600,6 +684,88 @@ export function SectionAttachment() {
             </AttachmentGroup>
           </div>
         ) : null}
+      </Demo>
+
+      {/* ---------- ปุ่มอัปโหลดแบบไทล์ + การ์ดไฟล์ ---------- */}
+      <Demo name="file-upload" hint={c.tileHint} wide bodyClassName="block">
+        <div className="space-y-1.5">
+          <h3 className="text-base font-semibold">{c.claimTitle}</h3>
+          <p className="text-sm text-muted-foreground">{c.claimHint}</p>
+        </div>
+
+        {/* items-start = ไทล์อัปโหลดเป็นสี่เหลี่ยมจัตุรัส ไม่ยืดตามการ์ดไฟล์ที่สูงกว่า */}
+        <div className="mt-4 flex flex-wrap items-start gap-3">
+          {claim.length < CLAIM_MAX ? (
+            <FileUpload
+              variant="tile"
+              accept=".pdf,.png,.jpg,.jpeg"
+              multiple
+              onFilesAccepted={(files) =>
+                setClaim((prev) =>
+                  [
+                    ...prev,
+                    ...files.map((file) => ({
+                      id: `${file.name}-${prev.length}-${file.size}`,
+                      name: file.name,
+                      date: new Date().toISOString(),
+                      size: formatSize(file.size),
+                    })),
+                  ].slice(0, CLAIM_MAX)
+                )
+              }
+            >
+              <FileUploadIcon>
+                <FileUpIcon />
+              </FileUploadIcon>
+              <FileUploadLabel>{c.uploadTile}</FileUploadLabel>
+            </FileUpload>
+          ) : (
+            <p className="self-center text-sm text-muted-foreground">{c.full}</p>
+          )}
+
+          {claim.map((file) => (
+            <Attachment
+              key={file.id}
+              orientation="vertical"
+              size="sm"
+              className="w-28 items-center gap-1 bg-muted/50 text-center"
+            >
+              {/* variant="plain" = ไอคอนลอย ไม่มีกล่องพื้นเทาครอบอีกชั้น */}
+              <AttachmentMedia variant="plain">
+                <AttachmentFileIcon name={file.name} />
+              </AttachmentMedia>
+              <AttachmentContent className="w-full items-center gap-0">
+                <AttachmentTitle className="w-full text-xs">
+                  {c.claimDoc}
+                </AttachmentTitle>
+                <AttachmentDescription className="w-full">
+                  {new Date(file.date).toLocaleDateString(locale)}
+                </AttachmentDescription>
+                <AttachmentDescription className="w-full">
+                  {file.size}
+                </AttachmentDescription>
+              </AttachmentContent>
+              {/* ปุ่มลบคร่อมมุมการ์ด — วางนอกกรอบครึ่งดวงตามแบบ */}
+              <AttachmentActions className="absolute -top-2 -right-2">
+                <AttachmentAction
+                  aria-label={`${c.remove}: ${file.name}`}
+                  variant="secondary"
+                  className="rounded-full border border-border shadow-sm"
+                  onClick={() =>
+                    setClaim((prev) => prev.filter((it) => it.id !== file.id))
+                  }
+                >
+                  <XIcon />
+                </AttachmentAction>
+              </AttachmentActions>
+            </Attachment>
+          ))}
+        </div>
+
+        <div className="mt-4 space-y-2">
+          <Label htmlFor="claim-note">{c.note}</Label>
+          <Textarea id="claim-note" placeholder={c.notePlaceholder} rows={3} />
+        </div>
       </Demo>
 
       {/* ---------- แถวไฟล์ 5 สถานะ ---------- */}
@@ -803,7 +969,7 @@ export function SectionAttachment() {
       <Demo name="file-preview" hint={c.previewHint} wide bodyClassName="block">
         <AttachmentGroup>
           {[
-            { name: c.fileReport, src: sampleFiles?.pdf, meta: "PDF · 1 หน้า", icon: <FileTextIcon /> },
+            { name: c.fileReport, src: sampleFiles?.pdf, meta: "PDF · 3 หน้า", icon: <FileTextIcon /> },
             { name: c.fileSlip, src: sampleFiles?.png, meta: "JPG · 24 KB", icon: <ImageIcon /> },
             { name: c.fileSheet, src: sampleFiles?.xlsx, meta: "XLSX · 1.8 MB", icon: <FileSpreadsheetIcon /> },
           ].map((file) => (

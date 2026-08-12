@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@peckey954/ui/lib/utils"
 
@@ -16,7 +17,40 @@ import { cn } from "@peckey954/ui/lib/utils"
  *     <FileUploadLabel>ลากไฟล์มาวาง หรือกดเพื่อเลือก</FileUploadLabel>
  *     <FileUploadHint>PNG · JPG ไม่เกิน 5 MB</FileUploadHint>
  *   </FileUpload>
+ *
+ * variant="tile" = ปุ่มสี่เหลี่ยมเล็กขนาดเท่าการ์ดไฟล์ วางเป็นช่องแรกของแถว
+ * ไฟล์แนบ ใช้ตอนที่ลิสต์ไฟล์เป็นการ์ดเรียงกันอยู่แล้ว ไม่ต้องมีกล่องลากวางเต็มแถว
  */
+
+const uploadVariants = cva(
+  [
+    "flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg text-center transition-colors",
+    "focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none",
+    "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+  ],
+  {
+    variants: {
+      variant: {
+        dropzone: [
+          "w-full border border-dashed border-input bg-transparent px-6 py-8",
+          "hover:border-ring hover:bg-accent/40 focus-visible:border-ring",
+          "data-[dragging]:border-primary data-[dragging]:bg-brand",
+        ],
+        /* ไทล์ใช้พื้น --brand ไม่ใช่ขอบประ เพราะยืนอยู่ข้างการ์ดไฟล์ที่มีขอบอยู่แล้ว
+           ขอบประซ้อนขอบทึบในแถวเดียวกันจะอ่านเป็นสองระบบ */
+        tile: [
+          "size-28 shrink-0 gap-1.5 border border-transparent bg-brand p-3 text-primary",
+          "hover:bg-brand/70 data-[dragging]:border-primary",
+        ],
+      },
+    },
+    defaultVariants: { variant: "dropzone" },
+  }
+)
+
+type UploadVariant = NonNullable<VariantProps<typeof uploadVariants>["variant"]>
+
+const FileUploadContext = React.createContext<UploadVariant>("dropzone")
 
 type FileRejection = {
   file: File
@@ -37,7 +71,7 @@ type FileUploadProps = Omit<
   /** ไฟล์ที่ไม่ผ่านเงื่อนไข พร้อมเหตุผล — เอาไปขึ้นข้อความเตือนเอง */
   onFilesRejected?: (rejections: FileRejection[]) => void
   inputProps?: React.ComponentProps<"input">
-}
+} & VariantProps<typeof uploadVariants>
 
 /** เทียบกับค่าใน accept ได้ทั้ง image/* · .pdf · application/pdf */
 function matchesAccept(file: File, accept?: string) {
@@ -54,6 +88,7 @@ function matchesAccept(file: File, accept?: string) {
 function FileUpload({
   className,
   children,
+  variant = "dropzone",
   accept,
   multiple = false,
   maxSize,
@@ -98,21 +133,16 @@ function FileUpload({
   }
 
   return (
+    <FileUploadContext.Provider value={variant ?? "dropzone"}>
     <div
       data-slot="file-upload"
+      data-variant={variant}
       data-dragging={dragging || undefined}
       data-disabled={disabled || undefined}
       role="button"
       tabIndex={disabled ? -1 : 0}
       aria-disabled={disabled}
-      className={cn(
-        "flex w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-input bg-transparent px-6 py-8 text-center transition-colors",
-        "hover:border-ring hover:bg-accent/40",
-        "focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none",
-        "data-[dragging]:border-primary data-[dragging]:bg-brand",
-        "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-        className
-      )}
+      className={cn(uploadVariants({ variant }), className)}
       onClick={open}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
@@ -163,15 +193,21 @@ function FileUpload({
         {...inputProps}
       />
     </div>
+    </FileUploadContext.Provider>
   )
 }
 
 function FileUploadIcon({ className, ...props }: React.ComponentProps<"div">) {
+  const variant = React.useContext(FileUploadContext)
   return (
     <div
       data-slot="file-upload-icon"
       className={cn(
-        "flex size-10 items-center justify-center rounded-full bg-muted text-muted-foreground [&_svg]:size-5",
+        "flex items-center justify-center",
+        variant === "tile"
+          /* ไทล์เล็กเกินกว่าจะมีวงกลมพื้นหลังอีกชั้น ไอคอนรับสีจากตัวไทล์ไปเลย */
+          ? "[&_svg]:size-6"
+          : "size-10 rounded-full bg-muted text-muted-foreground [&_svg]:size-5",
         className
       )}
       {...props}
@@ -180,20 +216,30 @@ function FileUploadIcon({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 function FileUploadLabel({ className, ...props }: React.ComponentProps<"div">) {
+  const variant = React.useContext(FileUploadContext)
   return (
     <div
       data-slot="file-upload-label"
-      className={cn("text-sm font-medium", className)}
+      className={cn(
+        "font-medium",
+        variant === "tile" ? "text-xs leading-tight" : "text-sm",
+        className
+      )}
       {...props}
     />
   )
 }
 
 function FileUploadHint({ className, ...props }: React.ComponentProps<"p">) {
+  const variant = React.useContext(FileUploadContext)
   return (
     <p
       data-slot="file-upload-hint"
-      className={cn("text-xs text-muted-foreground", className)}
+      className={cn(
+        "text-muted-foreground",
+        variant === "tile" ? "text-[0.625rem] leading-tight" : "text-xs",
+        className
+      )}
       {...props}
     />
   )
@@ -201,6 +247,7 @@ function FileUploadHint({ className, ...props }: React.ComponentProps<"p">) {
 
 export {
   FileUpload,
+  uploadVariants,
   FileUploadHint,
   FileUploadIcon,
   FileUploadLabel,

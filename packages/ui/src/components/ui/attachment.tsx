@@ -112,13 +112,6 @@ const mediaVariants = cva(
   ],
   {
     variants: {
-      variant: {
-        icon: "border border-border bg-muted text-muted-foreground",
-        /* image/video ไม่มีพื้นทึบและไม่มีขอบ เพราะรูปเต็มกรอบอยู่แล้ว
-           ใส่ขอบไว้จะเห็นเป็นเส้นบาง ๆ โผล่ตอนรูปโหลดไม่ทัน */
-        image: "bg-muted text-muted-foreground",
-        video: "bg-muted text-muted-foreground",
-      },
       /* เจาะจง [&>svg] ไม่ใช่ [&_svg] เพราะกฎแบบลูกหลานจะไปคุมขนาดปุ่มเล่นวิดีโอ
          กับ spinner ที่ซ้อนอยู่ข้างในด้วย แล้วสั่งทับจากตัวมันเองไม่ได้ (specificity สูงกว่า) */
       size: {
@@ -136,10 +129,81 @@ const mediaVariants = cva(
         video: "aspect-video",
         auto: "",
       },
+      /* variant ประกาศไว้ท้ายสุดเพื่อให้ทับ size/fill ได้ — plain ต้องล้าง
+         ทั้งขนาดกล่องและขนาดไอคอนที่สองอันนั้นตั้งไว้ */
+      variant: {
+        icon: "border border-border bg-muted text-muted-foreground",
+        /* image/video ไม่มีพื้นทึบและไม่มีขอบ เพราะรูปเต็มกรอบอยู่แล้ว
+           ใส่ขอบไว้จะเห็นเป็นเส้นบาง ๆ โผล่ตอนรูปโหลดไม่ทัน */
+        image: "bg-muted text-muted-foreground",
+        video: "bg-muted text-muted-foreground",
+        /* plain = ไอคอนลอย ๆ ไม่มีกล่อง ใช้กับการ์ดไฟล์ที่ไอคอนคือตัวเอกของการ์ด */
+        plain: "size-auto text-muted-foreground [&>svg]:size-9",
+      },
     },
     defaultVariants: { variant: "icon", size: "default", fill: false },
   }
 )
+
+/**
+ * ไอคอนไฟล์พร้อมป้ายนามสกุล — PDF / PNG / XLSX ฯลฯ
+ * รับสีจากตัวอักษรรอบ ๆ ทั้งดวง ป้ายเป็นสีทึบแล้วเจาะตัวหนังสือเป็นสีพื้นหลัง
+ *
+ *   <AttachmentFileIcon name="ใบตรวจรับ.pdf" />
+ *   <AttachmentFileIcon ext="xlsx" />
+ */
+function AttachmentFileIcon({
+  name,
+  ext,
+  className,
+  ...props
+}: React.ComponentProps<"svg"> & { name?: string; ext?: string }) {
+  const label = (ext ?? name?.split(".").pop() ?? "")
+    .toUpperCase()
+    .slice(0, 4)
+  /* ป้ายกว้างเท่าเดิมเสมอ ตัวอักษรยาวขึ้นก็ย่อฟอนต์ลงแทนการดันป้ายให้ยาว
+     ไม่งั้นการ์ด PDF กับ XLSX ในแถวเดียวกันจะมีไอคอนคนละขนาด */
+  const fontSize = label.length >= 4 ? 4.4 : label.length === 3 ? 5.2 : 6
+
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      className={cn("shrink-0", className)}
+      {...props}
+    >
+      <path
+        d="M13.5 2.75H6.5A1.75 1.75 0 0 0 4.75 4.5v15A1.75 1.75 0 0 0 6.5 21.25h11a1.75 1.75 0 0 0 1.75-1.75V8.5L13.5 2.75Z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M13.25 3v4.25a1.5 1.5 0 0 0 1.5 1.5H19"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      {label ? (
+        <>
+          <rect x="3" y="12.25" width="18" height="6.5" rx="1.5" fill="currentColor" />
+          <text
+            x="12"
+            y="17"
+            textAnchor="middle"
+            fontSize={fontSize}
+            fontWeight="700"
+            letterSpacing="0.2"
+            className="fill-background"
+          >
+            {label}
+          </text>
+        </>
+      ) : null}
+    </svg>
+  )
+}
 
 function AttachmentMedia({
   className,
@@ -155,7 +219,8 @@ function AttachmentMedia({
   }) {
   const { size, state, orientation } = React.useContext(AttachmentContext)
   const busy = state === "uploading" || state === "processing"
-  const filled = fill ?? orientation === "vertical"
+  /* plain เป็นไอคอนลอย ไม่ใช่กล่องรูป จึงไม่กินเต็มความกว้างแม้การ์ดจะเป็นแนวตั้ง */
+  const filled = fill ?? (orientation === "vertical" && variant !== "plain")
   /* toArray ไม่ใช่ count — count นับ {cond ? <img/> : null} เป็น 1 ทั้งที่ว่างเปล่า */
   const empty = React.Children.toArray(children).length === 0
 
@@ -363,6 +428,7 @@ export {
   AttachmentActions,
   AttachmentContent,
   AttachmentDescription,
+  AttachmentFileIcon,
   AttachmentGroup,
   AttachmentMedia,
   AttachmentProgress,

@@ -36,7 +36,14 @@ function rewriteImports(code) {
 
 /** ดึงรายชื่อ module ที่ไฟล์นี้ import */
 function importsOf(code) {
-  const specifiers = [...code.matchAll(/from\s+"([^"]+)"/g)].map((m) => m[1]);
+  const specifiers = [
+    ...code.matchAll(/from\s+"([^"]+)"/g),
+    // dynamic import — ต้องจับด้วย ไม่งั้น dependency ที่โหลดแบบ lazy
+    // (เช่น pdfjs-dist ใน file-preview) จะหายไปจาก registry ทั้งที่จำเป็น
+    ...code.matchAll(/\bimport\(\s*"([^"]+)"/g),
+    // ไฟล์ asset ที่ bundler ต้องปล่อยออกมา เช่น worker ของ pdf.js
+    ...code.matchAll(/new URL\(\s*"([^"]+)"/g),
+  ].map((m) => m[1]);
   const internal = new Set();
   const external = new Set();
 
