@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
-import { ImageIcon, PlayIcon } from "lucide-react"
+import { ImageIcon, ImageOffIcon, PlayIcon } from "lucide-react"
 
 import { cn } from "@peckey954/ui/lib/utils"
 import { Button } from "@peckey954/ui/components/ui/button"
@@ -219,10 +219,15 @@ function AttachmentMedia({
   }) {
   const { size, state, orientation } = React.useContext(AttachmentContext)
   const busy = state === "uploading" || state === "processing"
+  const errored = state === "error"
   /* plain เป็นไอคอนลอย ไม่ใช่กล่องรูป จึงไม่กินเต็มความกว้างแม้การ์ดจะเป็นแนวตั้ง */
   const filled = fill ?? (orientation === "vertical" && variant !== "plain")
   /* toArray ไม่ใช่ count — count นับ {cond ? <img/> : null} เป็น 1 ทั้งที่ว่างเปล่า */
   const empty = React.Children.toArray(children).length === 0
+  /* error + ไม่มีรูป/วิดีโอจริงให้โชว์ (อัปโหลดพังตั้งแต่ต้น ไม่มีอะไรมาเรนเดอร์)
+     ถึงจะสลับเป็นไอคอนรูปกากบาท — ถ้ามีรูปจริงอยู่แล้วปล่อยรูปนั้นไว้ ไม่ทาสีทับ */
+  const showBrokenPlaceholder =
+    errored && empty && (variant === "image" || variant === "video")
 
   return (
     <div
@@ -230,6 +235,15 @@ function AttachmentMedia({
       data-variant={variant}
       className={cn(
         mediaVariants({ variant, size, fill: filled, aspect: filled ? aspect : "auto" }),
+        /* error สลับจากโทนเทา (muted) เป็นโทนแดง (danger) ทั้งพื้นและตัวอักษร —
+           ไม่งั้นเคส "พังจริง" กับเคส "ยังไม่มีรูปเฉย ๆ" จะหน้าตาเหมือนกันเป๊ะ
+           แยกไม่ออกว่าอันไหนคือ error อันไหนแค่ยังไม่มีข้อมูล
+           variant="plain" ไม่มีกล่องให้ทาสีพื้น จึงทาแค่สีไอคอน (ผ่าน currentColor) */
+        errored && variant === "icon" &&
+          "border-danger-border bg-danger text-danger-foreground",
+        errored && (variant === "image" || variant === "video") && empty &&
+          "bg-danger text-danger-foreground",
+        errored && variant === "plain" && "text-destructive",
         className
       )}
       {...props}
@@ -239,6 +253,10 @@ function AttachmentMedia({
            ซ้อนกันแล้วอ่านไม่ออกว่ากำลังโหลดหรือเป็นไฟล์อะไรกันแน่
            ไม่ต้องกำหนดขนาด spinner — กฎ [&>svg] ของกล่องคุมให้ตามขนาดการ์ดอยู่แล้ว */
         <Spinner />
+      ) : showBrokenPlaceholder ? (
+        /* ไอคอนรูปกากบาท (ไม่ใช่ ImageIcon ปกติ) — สื่อว่า "พัง" ไม่ใช่ "ยังไม่มีรูป"
+           ไม่โชว์ปุ่มเล่นทับด้วยแม้จะเป็น variant="video" เพราะไม่มีอะไรให้กดเล่น */
+        <ImageOffIcon />
       ) : (
         <>
           {/* variant="image" ที่ยังไม่มีรูปจริง = พื้นเรียบ + ไอคอนรูปตรงกลาง

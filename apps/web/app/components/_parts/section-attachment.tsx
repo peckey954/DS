@@ -62,14 +62,14 @@ import { defineCopy, useCopy, useLocale, useT } from "@/lib/i18n";
 const COPY = defineCopy({
   th: {
     listHint: "แถวไฟล์ · 5 สถานะ",
-    gridHint: "กริดรูป · กดเพื่อดูเต็มจอ",
+    gridHint: "กริดรูป · กดเพื่อดูเต็มจอ · มีเคสอัปโหลดพัง",
     uploadHint: "ลากมาวาง หรือกดเพื่อเลือก",
     sizeHint: "3 ขนาด · แนวตั้ง",
     videoHint: "วิดีโอ · ปุ่มเล่นอยู่กลางรูป",
     sheetFileHint: "แผงแนบไฟล์ · มีความคืบหน้า",
     sheetImageHint: "แผงแนบรูป · กริดรูปย่อ",
     previewHint: "ดูตัวอย่างไฟล์ · ขีดมาร์ก · ซูม · พิมพ์ · ดาวน์โหลด",
-    tileHint: "ปุ่มอัปโหลดแบบไทล์ · การ์ดไฟล์เรียงต่อกัน",
+    tileHint: "ปุ่มอัปโหลดแบบไทล์ · การ์ดไฟล์เรียงต่อกัน · มีเคส error",
     claimTitle: "รูปภาพและเอกสารประกอบการเคลมสินค้า",
     claimHint: "อัปโหลดไฟล์สูงสุด 5 ไฟล์ รองรับไฟล์ PDF, PNG และ JPG",
     uploadTile: "อัปโหลดไฟล์",
@@ -154,14 +154,14 @@ const COPY = defineCopy({
   },
   en: {
     listHint: "File rows · 5 states",
-    gridHint: "Image grid · click to open full screen",
+    gridHint: "Image grid · click to open full screen · includes a failed-upload case",
     uploadHint: "Drag and drop, or click to browse",
     sizeHint: "3 sizes · vertical",
     videoHint: "Video · play button centered on the frame",
     sheetFileHint: "File sheet · with progress",
     sheetImageHint: "Photo sheet · thumbnail grid",
     previewHint: "File preview · markup · print · download",
-    tileHint: "Tile upload button · file cards in a row",
+    tileHint: "Tile upload button · file cards in a row · includes an error case",
     claimTitle: "Photos and documents for the claim",
     claimHint: "Up to 5 files. PDF, PNG and JPG are supported",
     uploadTile: "Upload file",
@@ -347,7 +347,14 @@ function buildPlaceholderPng(): Promise<string> {
 /** จำนวนไฟล์สูงสุดของแบบฟอร์มเคลม — ครบแล้วซ่อนไทล์อัปโหลดทิ้ง */
 const CLAIM_MAX = 5;
 
-type ClaimFile = { id: string; name: string; date: string; size: string };
+type ClaimFile = {
+  id: string;
+  name: string;
+  date: string;
+  size: string;
+  /** ไม่มี = อัปโหลดสำเร็จ · "network" / "tooLarge" = พังตอนไหน เอาไว้เลือกข้อความ */
+  error?: "network" | "tooLarge";
+};
 
 /* ---------------------------------------------------------------------- */
 /* รายการอัปโหลดจำลอง — ของจริงต้องเอา progress มาจาก XHR/fetch ของฝั่งแอป   */
@@ -452,6 +459,8 @@ export function SectionAttachment() {
     { id: "c1", name: "claim-1.png", date: "2026-08-05", size: "6.6MB" },
     { id: "c2", name: "claim-2.pdf", date: "2026-08-05", size: "6.6MB" },
     { id: "c3", name: "claim-3.jpg", date: "2026-08-05", size: "6.6MB" },
+    /* เคส error ของการ์ดไฟล์แบบไทล์ — กดปุ่มลองใหม่แล้วเคลียร์ error ทิ้งได้จริง */
+    { id: "c4", name: "claim-4.jpg", date: "2026-08-05", size: "9.1MB", error: "tooLarge" },
   ]);
 
   /* ไฟล์ตัวอย่างสร้างใน effect ไม่ใช่ระหว่างเรนเดอร์ เพราะ URL.createObjectURL
@@ -728,9 +737,16 @@ export function SectionAttachment() {
               key={file.id}
               orientation="vertical"
               size="sm"
-              className="w-28 items-center gap-1 bg-muted/50 text-center"
+              state={file.error ? "error" : "done"}
+              /* พื้นเทาเป็นค่าเริ่มต้นของการ์ดปกติเท่านั้น — ตอน error ปล่อยให้
+                 state="error" ทาพื้นแดงจางของมันเอง ไม่งั้นเทาที่ตั้งทับจะกลบสีแดงหมด */
+              className={cn(
+                "w-28 items-center gap-1 text-center",
+                !file.error && "bg-muted/50"
+              )}
             >
-              {/* variant="plain" = ไอคอนลอย ไม่มีกล่องพื้นเทาครอบอีกชั้น */}
+              {/* variant="plain" = ไอคอนลอย ไม่มีกล่องพื้นเทาครอบอีกชั้น
+                  ตอน error ไอคอนสลับเป็นสีแดงเองผ่าน currentColor ไม่ต้องสั่งเพิ่ม */}
               <AttachmentMedia variant="plain">
                 <AttachmentFileIcon name={file.name} />
               </AttachmentMedia>
@@ -738,15 +754,39 @@ export function SectionAttachment() {
                 <AttachmentTitle className="w-full text-xs">
                   {c.claimDoc}
                 </AttachmentTitle>
-                <AttachmentDescription className="w-full">
-                  {new Date(file.date).toLocaleDateString(locale)}
-                </AttachmentDescription>
-                <AttachmentDescription className="w-full">
-                  {file.size}
-                </AttachmentDescription>
+                {file.error ? (
+                  <AttachmentDescription className="w-full">
+                    {file.error === "tooLarge" ? c.tooLarge : c.stError}
+                  </AttachmentDescription>
+                ) : (
+                  <>
+                    <AttachmentDescription className="w-full">
+                      {new Date(file.date).toLocaleDateString(locale)}
+                    </AttachmentDescription>
+                    <AttachmentDescription className="w-full">
+                      {file.size}
+                    </AttachmentDescription>
+                  </>
+                )}
               </AttachmentContent>
-              {/* ปุ่มลบคร่อมมุมการ์ด — วางนอกกรอบครึ่งดวงตามแบบ */}
-              <AttachmentActions className="absolute -top-2 -right-2">
+              {/* ปุ่มคร่อมมุมการ์ด — error มีทั้งลองใหม่และลบ ปกติมีแค่ลบ */}
+              <AttachmentActions className="absolute -top-2 -right-2 gap-1.5">
+                {file.error ? (
+                  <AttachmentAction
+                    aria-label={`${c.retry}: ${file.name}`}
+                    variant="secondary"
+                    className="rounded-full border border-border shadow-sm"
+                    onClick={() =>
+                      setClaim((prev) =>
+                        prev.map((it) =>
+                          it.id === file.id ? { ...it, error: undefined } : it
+                        )
+                      )
+                    }
+                  >
+                    <RotateCwIcon />
+                  </AttachmentAction>
+                ) : null}
                 <AttachmentAction
                   aria-label={`${c.remove}: ${file.name}`}
                   variant="secondary"
@@ -848,33 +888,61 @@ export function SectionAttachment() {
       {/* ---------- กริดรูป — การ์ดแนวตั้ง รูปเต็มความกว้าง ---------- */}
       <Demo name="attachment" hint={c.gridHint} wide bodyClassName="block">
         <AttachmentGroup layout="grid" className="sm:grid-cols-4">
-          {gallery.map((image, i) => (
-            <Attachment key={image.title} orientation="vertical">
-              {/* ไม่มีลูกข้างใน = ขึ้นพื้นเรียบ + ไอคอนรูปตรงกลางให้เอง
-                  ของจริงใส่ <img src={...} alt={...} /> ลงไปตรงนี้ */}
-              <AttachmentMedia variant="image" />
-              <AttachmentContent>
-                <AttachmentTitle>{image.title}</AttachmentTitle>
-                <AttachmentDescription>JPG · 820 KB</AttachmentDescription>
-              </AttachmentContent>
-              <AttachmentActions className="absolute top-2 right-2">
-                <AttachmentAction
-                  aria-label={`${c.remove}: ${image.title}`}
-                  variant="secondary"
-                  className="rounded-full shadow-sm"
-                >
-                  <XIcon />
-                </AttachmentAction>
-              </AttachmentActions>
-              <AttachmentTrigger
-                aria-label={`${c.viewFull}: ${image.title}`}
-                onClick={() => {
-                  setViewerIndex(i);
-                  setViewerOpen(true);
-                }}
-              />
-            </Attachment>
-          ))}
+          {gallery.map((image, i) => {
+            /* ปน 2 เคส error ไว้ในกริดเดียวกัน — เครือข่ายขาดหายกับไฟล์ใหญ่เกิน
+               ตัวไหนไม่ error ใส่ <img> จริงลงไป จะได้เห็นชัดว่าต่างจาก error ยังไง */
+            const errorText = i === 2 ? c.stError : i === 3 ? c.tooLarge : null;
+            return (
+              <Attachment
+                key={image.title}
+                orientation="vertical"
+                state={errorText ? "error" : "done"}
+              >
+                <AttachmentMedia variant="image">
+                  {/* error = ปล่อยว่าง ให้ AttachmentMedia ขึ้นไอคอนรูปกากบาท
+                      โทนแดงให้เอง · ของจริงใส่ <img src={...} alt={...} /> ตอนไม่ error */}
+                  {errorText ? null : (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={image.src} alt={image.title} />
+                  )}
+                </AttachmentMedia>
+                <AttachmentContent>
+                  <AttachmentTitle>{image.title}</AttachmentTitle>
+                  <AttachmentDescription>
+                    {errorText ?? "JPG · 820 KB"}
+                  </AttachmentDescription>
+                </AttachmentContent>
+                <AttachmentActions className="absolute top-2 right-2 gap-1.5">
+                  {errorText ? (
+                    <AttachmentAction
+                      aria-label={`${c.retry}: ${image.title}`}
+                      variant="secondary"
+                      className="rounded-full shadow-sm"
+                    >
+                      <RotateCwIcon />
+                    </AttachmentAction>
+                  ) : null}
+                  <AttachmentAction
+                    aria-label={`${c.remove}: ${image.title}`}
+                    variant="secondary"
+                    className="rounded-full shadow-sm"
+                  >
+                    <XIcon />
+                  </AttachmentAction>
+                </AttachmentActions>
+                {/* รูปที่อัปพังไม่มีอะไรให้ดูเต็มจอ — ไม่ใส่ trigger */}
+                {errorText ? null : (
+                  <AttachmentTrigger
+                    aria-label={`${c.viewFull}: ${image.title}`}
+                    onClick={() => {
+                      setViewerIndex(i);
+                      setViewerOpen(true);
+                    }}
+                  />
+                )}
+              </Attachment>
+            );
+          })}
         </AttachmentGroup>
 
         <MediaViewer
