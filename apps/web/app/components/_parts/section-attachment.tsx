@@ -73,6 +73,7 @@ const COPY = defineCopy({
     claimTitle: "รูปภาพและเอกสารประกอบการเคลมสินค้า",
     claimHint: "อัปโหลดไฟล์สูงสุด 5 ไฟล์ รองรับไฟล์ PDF, PNG และ JPG",
     uploadTile: "อัปโหลดไฟล์",
+    uploadTileHint: "อัปโหลด / ลากไฟล์มาวาง",
     claimDoc: "เอกสารเคลม",
     note: "หมายเหตุ",
     notePlaceholder: "ระบุหมายเหตุ",
@@ -95,6 +96,10 @@ const COPY = defineCopy({
     picked: "เลือกแล้ว",
     files: "ไฟล์",
     tooLarge: "ไฟล์ใหญ่เกิน 5 MB",
+    /* ข้อความสั้นสำหรับการ์ดไฟล์แบบไทล์ (กว้างแค่ 112px) — ข้อความเต็มด้านบน
+       ยาวเกินจะโดน truncate จนตัดคำสำคัญท้ายประโยคหายไป (เช่น "5 MB") */
+    claimErrTooLarge: "ไฟล์ใหญ่เกิน",
+    claimErrFailed: "อัปโหลดไม่สำเร็จ",
     wrongType: "ชนิดไฟล์ไม่รองรับ",
     clear: "ล้างรายการ",
 
@@ -165,6 +170,7 @@ const COPY = defineCopy({
     claimTitle: "Photos and documents for the claim",
     claimHint: "Up to 5 files. PDF, PNG and JPG are supported",
     uploadTile: "Upload file",
+    uploadTileHint: "Upload / drag files here",
     claimDoc: "Claim document",
     note: "Note",
     notePlaceholder: "Add a note",
@@ -187,6 +193,8 @@ const COPY = defineCopy({
     picked: "Selected",
     files: "files",
     tooLarge: "Larger than 5 MB",
+    claimErrTooLarge: "File too large",
+    claimErrFailed: "Upload failed",
     wrongType: "Unsupported file type",
     clear: "Clear list",
 
@@ -701,7 +709,7 @@ export function SectionAttachment() {
           <p className="text-sm text-muted-foreground">{c.claimHint}</p>
         </div>
 
-        {/* items-start = ไทล์อัปโหลดเป็นสี่เหลี่ยมจัตุรัส ไม่ยืดตามการ์ดไฟล์ที่สูงกว่า */}
+        {/* items-start = ไทล์อัปโหลดไม่ยืดสูงตามการ์ดไฟล์ที่อาจสูงกว่า */}
         <div className="mt-4 flex flex-wrap items-start gap-3">
           {claim.length < CLAIM_MAX ? (
             <FileUpload
@@ -725,7 +733,19 @@ export function SectionAttachment() {
               <FileUploadIcon>
                 <FileUpIcon />
               </FileUploadIcon>
-              <FileUploadLabel>{c.uploadTile}</FileUploadLabel>
+              <FileUploadLabel>{c.uploadTileHint}</FileUploadLabel>
+              {/* ปุ่มหลอกตา — กดที่ไหนของกล่องก็เปิดหน้าต่างเลือกไฟล์อยู่แล้ว
+                  จึงเป็น span ไม่ใช่ <button> ซ้อนใน role="button" อีกชั้น
+                  bg-background ให้ตัดกับพื้น --brand ของกล่อง อ่านเป็นปุ่มจริง ๆ */}
+              <span
+                aria-hidden
+                className={cn(
+                  buttonVariants({ variant: "outline-primary", size: "xs" }),
+                  "pointer-events-none mt-0.5 bg-background"
+                )}
+              >
+                {c.uploadTile}
+              </span>
             </FileUpload>
           ) : (
             <p className="self-center text-sm text-muted-foreground">{c.full}</p>
@@ -776,8 +796,8 @@ export function SectionAttachment() {
                 <AttachmentDescription className="w-full">
                   {file.error
                     ? file.error === "tooLarge"
-                      ? c.tooLarge
-                      : c.stError
+                      ? c.claimErrTooLarge
+                      : c.claimErrFailed
                     : file.size}
                 </AttachmentDescription>
               </AttachmentContent>

@@ -18,8 +18,8 @@ import { cn } from "@peckey954/ui/lib/utils"
  *     <FileUploadHint>PNG · JPG ไม่เกิน 5 MB</FileUploadHint>
  *   </FileUpload>
  *
- * variant="tile" = ปุ่มสี่เหลี่ยมเล็กขนาดเท่าการ์ดไฟล์ วางเป็นช่องแรกของแถว
- * ไฟล์แนบ ใช้ตอนที่ลิสต์ไฟล์เป็นการ์ดเรียงกันอยู่แล้ว ไม่ต้องมีกล่องลากวางเต็มแถว
+ * variant="tile" = กล่องอัปโหลดย่อส่วน วางเป็นช่องแรกของแถวไฟล์แนบ ใช้ตอนที่
+ * ลิสต์ไฟล์เป็นการ์ดเรียงกันอยู่แล้ว ไม่ต้องมีกล่องลากวางเต็มแถว
  */
 
 const uploadVariants = cva(
@@ -36,11 +36,14 @@ const uploadVariants = cva(
           "hover:border-ring hover:bg-accent/40 focus-visible:border-ring",
           "data-[dragging]:border-primary data-[dragging]:bg-brand",
         ],
-        /* ไทล์ใช้พื้น --brand ไม่ใช่ขอบประ เพราะยืนอยู่ข้างการ์ดไฟล์ที่มีขอบอยู่แล้ว
-           ขอบประซ้อนขอบทึบในแถวเดียวกันจะอ่านเป็นสองระบบ */
+        /* ขอบประสีแบรนด์ + พื้นอ่อน --brand เหมือนกล่อง dropzone แค่ย่อขนาดลงมา
+           ให้พอยืนแถวเดียวกับการ์ดไฟล์ได้ — ขอบประสีแบรนด์อ่านออกชัดว่าเป็นจุด
+           อัปโหลดอยู่แล้ว ไม่ปนกับการ์ดไฟล์ข้าง ๆ ที่ใช้ขอบทึบสีเทาคนละโทนกัน
+           กว้างกว่าการ์ดไฟล์เล็กน้อย (w-40) ความสูงปล่อยตามเนื้อหา ไม่ตายตัว
+           เผื่อที่ให้ label กับปุ่มข้างในสองบรรทัดขึ้นไป */
         tile: [
-          "size-28 shrink-0 gap-1.5 border border-transparent bg-brand p-3 text-primary",
-          "hover:bg-brand/70 data-[dragging]:border-primary",
+          "w-40 shrink-0 gap-1.5 border border-dashed border-primary/30 bg-brand p-3 text-primary",
+          "hover:border-primary/60 hover:bg-brand/70 data-[dragging]:border-primary data-[dragging]:bg-brand",
         ],
       },
     },
