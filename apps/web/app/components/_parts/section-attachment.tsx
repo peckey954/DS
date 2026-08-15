@@ -57,7 +57,7 @@ import {
 import { cn } from "@peckey954/ui/lib/utils";
 
 import { Demo, Section } from "./showcase";
-import { defineCopy, useCopy, useLocale, useT } from "@/lib/i18n";
+import { defineCopy, useCopy, useT } from "@/lib/i18n";
 
 const COPY = defineCopy({
   th: {
@@ -454,7 +454,6 @@ export function SectionAttachment() {
   const [clipOpen, setClipOpen] = React.useState(false);
   const [sheetViewer, setSheetViewer] = React.useState<number | null>(null);
   const [preview, setPreview] = React.useState<PreviewFile | null>(null);
-  const locale = useLocale();
   const [claim, setClaim] = React.useState<ClaimFile[]>([
     { id: "c1", name: "claim-1.png", date: "2026-08-05", size: "6.6MB" },
     { id: "c2", name: "claim-2.pdf", date: "2026-08-05", size: "6.6MB" },
@@ -746,36 +745,13 @@ export function SectionAttachment() {
               )}
             >
               {/* variant="plain" = ไอคอนลอย ไม่มีกล่องพื้นเทาครอบอีกชั้น
-                  ตอน error ไอคอนสลับเป็นสีแดงเองผ่าน currentColor ไม่ต้องสั่งเพิ่ม */}
+                  ตอน error สลับทั้งไอคอนและตัวไอคอนเองเป็นปุ่มลองใหม่ที่กดตรงนั้นได้เลย
+                  แทนที่จะเป็นไอคอนไฟล์เฉย ๆ + ปุ่มลองใหม่แยกอีกจุดที่มุมการ์ด */}
               <AttachmentMedia variant="plain">
-                <AttachmentFileIcon name={file.name} />
-              </AttachmentMedia>
-              <AttachmentContent className="w-full items-center gap-0">
-                <AttachmentTitle className="w-full text-xs">
-                  {c.claimDoc}
-                </AttachmentTitle>
                 {file.error ? (
-                  <AttachmentDescription className="w-full">
-                    {file.error === "tooLarge" ? c.tooLarge : c.stError}
-                  </AttachmentDescription>
-                ) : (
-                  <>
-                    <AttachmentDescription className="w-full">
-                      {new Date(file.date).toLocaleDateString(locale)}
-                    </AttachmentDescription>
-                    <AttachmentDescription className="w-full">
-                      {file.size}
-                    </AttachmentDescription>
-                  </>
-                )}
-              </AttachmentContent>
-              {/* ปุ่มคร่อมมุมการ์ด — error มีทั้งลองใหม่และลบ ปกติมีแค่ลบ */}
-              <AttachmentActions className="absolute -top-2 -right-2 gap-1.5">
-                {file.error ? (
-                  <AttachmentAction
+                  <button
+                    type="button"
                     aria-label={`${c.retry}: ${file.name}`}
-                    variant="secondary"
-                    className="rounded-full border border-border shadow-sm"
                     onClick={() =>
                       setClaim((prev) =>
                         prev.map((it) =>
@@ -783,10 +759,31 @@ export function SectionAttachment() {
                         )
                       )
                     }
+                    className="flex size-9 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-danger"
                   >
-                    <RotateCwIcon />
-                  </AttachmentAction>
-                ) : null}
+                    <RotateCwIcon className="size-6" />
+                  </button>
+                ) : (
+                  <AttachmentFileIcon name={file.name} />
+                )}
+              </AttachmentMedia>
+              <AttachmentContent className="w-full items-center gap-0">
+                <AttachmentTitle className="w-full text-xs">
+                  {c.claimDoc}
+                </AttachmentTitle>
+                {/* บรรทัดที่สองมีแค่บรรทัดเดียวเสมอ ไม่ว่าปกติหรือ error —
+                    การ์ดในแถวเดียวกันจะได้สูงเท่ากัน (เอาวันที่ออก เหลือแค่ขนาดไฟล์) */}
+                <AttachmentDescription className="w-full">
+                  {file.error
+                    ? file.error === "tooLarge"
+                      ? c.tooLarge
+                      : c.stError
+                    : file.size}
+                </AttachmentDescription>
+              </AttachmentContent>
+              {/* ปุ่มลบคร่อมมุมการ์ด — ลองใหม่ย้ายไปอยู่ที่ไอคอนไฟล์แล้ว
+                  มุมนี้เหลือแค่ปุ่มเดียวทั้ง error และปกติ */}
+              <AttachmentActions className="absolute -top-2 -right-2">
                 <AttachmentAction
                   aria-label={`${c.remove}: ${file.name}`}
                   variant="secondary"
