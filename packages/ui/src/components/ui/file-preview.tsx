@@ -511,6 +511,8 @@ const DEFAULT_LABELS = {
   resetZoom: "Reset zoom",
   previousPage: "Previous page",
   nextPage: "Next page",
+  previousFile: "Previous file",
+  nextFile: "Next file",
   page: "Page",
   pages: "Pages",
   loading: "Loading…",
@@ -529,6 +531,18 @@ type FilePreviewProps = {
   showThumbnails?: boolean
   /** สั่งพิมพ์เอง เช่นต้องเรียก endpoint ที่ทำ PDF สำหรับพิมพ์แยกต่างหาก */
   onPrint?: (file: PreviewFile) => void
+  /**
+   * เลื่อนไปไฟล์ก่อนหน้า/ถัดไป — ไม่ส่งมาสักตัว = ดูไฟล์เดียว ไม่โชว์ปุ่มเลื่อน
+   * component ไม่ถือรายการไฟล์เอง ฝั่งที่ใช้เป็นคนสลับ `file` prop เองตอนกด
+   * (เหมือน onFilesAccepted ของ FileUpload — กันไม่ให้มีสอง source of truth)
+   */
+  onPrevious?: () => void
+  onNext?: () => void
+  /** ปุ่มเลื่อนหรี่เองเมื่อชนขอบ — ไม่ส่งมาถือว่าเลื่อนได้เสมอ */
+  hasPrevious?: boolean
+  hasNext?: boolean
+  /** ข้อความนับไฟล์ เช่น "2 / 5" — โชว์ต่อท้าย meta ใต้ชื่อไฟล์ */
+  counter?: string
   /** ข้อความปุ่ม — เปลี่ยนตามภาษาของแอปได้ */
   labels?: Partial<typeof DEFAULT_LABELS>
   className?: string
@@ -549,6 +563,11 @@ function FilePreviewDialog({
   showMarkup = true,
   showThumbnails = true,
   onPrint,
+  onPrevious,
+  onNext,
+  hasPrevious = true,
+  hasNext = true,
+  counter,
   labels,
   className,
 }: FilePreviewProps & { file: PreviewFile }) {
@@ -611,6 +630,19 @@ function FilePreviewDialog({
   const canMarkup = showMarkup && (kind === "image" || pdfReady)
   const canZoom = kind === "image" || pdfReady
   const canPrint = showPrint && (previewable || onPrint !== undefined)
+  const canNavigate = onPrevious !== undefined || onNext !== undefined
+
+  /* ลูกศรซ้าย/ขวาเลื่อนไฟล์ — เหมือน MediaViewer ทุกอย่าง ยกเว้นไม่วนกลับหัวท้าย
+     เพราะที่นี่ปุ่มหรี่เองตอนชนขอบ (hasPrevious/hasNext) ไม่ได้วนลูปเสมอแบบนั้น */
+  React.useEffect(() => {
+    if (!open || !canNavigate) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft" && hasPrevious) onPrevious?.()
+      else if (e.key === "ArrowRight" && hasNext) onNext?.()
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [open, canNavigate, hasPrevious, hasNext, onPrevious, onNext])
 
   const getPenColor = React.useCallback(() => {
     const swatch = swatchRefs.current[colorIndex]
@@ -896,8 +928,12 @@ function FilePreviewDialog({
 
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium">{file.name}</p>
-            {file.meta ? (
-              <p className="truncate text-xs text-muted-foreground">{file.meta}</p>
+            {file.meta || counter ? (
+              <p className="truncate text-xs text-muted-foreground">
+                {file.meta}
+                {file.meta && counter ? " · " : null}
+                {counter}
+              </p>
             ) : null}
           </div>
 
@@ -1177,92 +1213,123 @@ function FilePreviewDialog({
             </aside>
           ) : null}
 
-          <div
-            ref={attachScroller}
-            className="flex flex-1 justify-center overflow-auto bg-muted/40 p-4"
-          >
-            {kind === "image" ? (
-              /* ซูมด้วยความกว้างจริง ไม่ใช่ transform: scale — พื้นที่เลื่อนจะได้โตตาม
-                 และ canvas ที่ทับอยู่รู้ขนาดใหม่เอง (รอยขีดเก็บเป็นสัดส่วนจึงไม่เพี้ยน) */
-              <div
-                className="relative h-fit w-full shrink-0"
-                style={{ width: `${zoom * 100}%`, maxWidth: `${48 * zoom}rem` }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  ref={imgRef}
-                  src={file.src}
-                  alt={file.name}
-                  className="block w-full rounded-md border border-border bg-background"
-                />
-                <MarkupLayer
-                  strokes={strokesOf(1)}
-                  onChange={setStrokesOf(1)}
-                  enabled={markup}
-                  tool={tool}
-                  getColor={getPenColor}
-                  penWidth={width}
-                />
-              </div>
-            ) : isPdf ? (
-              <div className="flex h-fit w-fit flex-col items-center gap-4">
-                {pdfState === "loading" ? (
-                  <div className="flex h-[50vh] items-center justify-center gap-2 text-sm text-muted-foreground">
-                    <Spinner />
-                    {l.loading}
-                  </div>
-                ) : null}
-                {Array.from({ length: pageCount }).map((_, i) => (
-                  <PdfPageView
-                    key={i + 1}
-                    doc={doc!}
-                    pageNumber={i + 1}
-                    zoom={zoom}
-                    active={activePages.includes(i + 1)}
-                    markup={markup}
+          {/* relative แยกจากกล่องเลื่อน (attachScroller) เอง — ปุ่มเลื่อนไฟล์ต้อง
+              ลอยนิ่งกับที่ตอนเลื่อนดูรูปซูม/หน้า pdf ไม่ใช่เลื่อนตามเนื้อหาไปด้วย */}
+          <div className="relative min-w-0 flex-1">
+            <div
+              ref={attachScroller}
+              className="flex size-full justify-center overflow-auto bg-muted/40 p-4"
+            >
+              {kind === "image" ? (
+                /* ซูมด้วยความกว้างจริง ไม่ใช่ transform: scale — พื้นที่เลื่อนจะได้โตตาม
+                   และ canvas ที่ทับอยู่รู้ขนาดใหม่เอง (รอยขีดเก็บเป็นสัดส่วนจึงไม่เพี้ยน) */
+                <div
+                  className="relative h-fit w-full shrink-0"
+                  style={{ width: `${zoom * 100}%`, maxWidth: `${48 * zoom}rem` }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    ref={imgRef}
+                    src={file.src}
+                    alt={file.name}
+                    className="block w-full rounded-md border border-border bg-background"
+                  />
+                  <MarkupLayer
+                    strokes={strokesOf(1)}
+                    onChange={setStrokesOf(1)}
+                    enabled={markup}
                     tool={tool}
                     getColor={getPenColor}
                     penWidth={width}
-                    strokes={strokesOf(i + 1)}
-                    onStrokes={setStrokesOf(i + 1)}
-                    register={registerPage(i + 1)}
-                    registerCanvas={registerCanvas(i + 1)}
                   />
-                ))}
-              </div>
-            ) : previewable ? (
-              /* pdf ที่ pdf.js เปิดไม่ได้ กับไฟล์ข้อความ — ฝากตัวอ่านของเบราว์เซอร์
-                 ครอบด้วยกรอบของ DS ให้กลืนกับที่เหลือเท่าที่ทำได้ */
-              <iframe
-                src={file.src}
-                title={file.name}
-                className="h-[72vh] w-full rounded-md border border-border bg-background"
-              />
-            ) : (
-              <div className="flex flex-col items-center justify-center gap-3 px-6 py-12 text-center">
-                <span className="flex size-12 items-center justify-center rounded-full bg-muted text-muted-foreground [&_svg]:size-5">
-                  <FileIcon />
-                </span>
-                <div className="space-y-1">
-                  <p className="text-sm font-medium">{l.unsupported}</p>
-                  <p className="text-xs text-muted-foreground">{l.unsupportedHint}</p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Button asChild>
-                    <a href={file.src} download={file.name}>
-                      <DownloadIcon />
-                      {l.download}
-                    </a>
-                  </Button>
-                  <Button asChild variant="outline">
-                    <a href={file.src} target="_blank" rel="noreferrer">
-                      <ExternalLinkIcon />
-                      {l.openInNewTab}
-                    </a>
-                  </Button>
+              ) : isPdf ? (
+                <div className="flex h-fit w-fit flex-col items-center gap-4">
+                  {pdfState === "loading" ? (
+                    <div className="flex h-[50vh] items-center justify-center gap-2 text-sm text-muted-foreground">
+                      <Spinner />
+                      {l.loading}
+                    </div>
+                  ) : null}
+                  {Array.from({ length: pageCount }).map((_, i) => (
+                    <PdfPageView
+                      key={i + 1}
+                      doc={doc!}
+                      pageNumber={i + 1}
+                      zoom={zoom}
+                      active={activePages.includes(i + 1)}
+                      markup={markup}
+                      tool={tool}
+                      getColor={getPenColor}
+                      penWidth={width}
+                      strokes={strokesOf(i + 1)}
+                      onStrokes={setStrokesOf(i + 1)}
+                      register={registerPage(i + 1)}
+                      registerCanvas={registerCanvas(i + 1)}
+                    />
+                  ))}
                 </div>
-              </div>
-            )}
+              ) : previewable ? (
+                /* pdf ที่ pdf.js เปิดไม่ได้ กับไฟล์ข้อความ — ฝากตัวอ่านของเบราว์เซอร์
+                   ครอบด้วยกรอบของ DS ให้กลืนกับที่เหลือเท่าที่ทำได้ */
+                <iframe
+                  src={file.src}
+                  title={file.name}
+                  className="h-[72vh] w-full rounded-md border border-border bg-background"
+                />
+              ) : (
+                <div className="flex flex-col items-center justify-center gap-3 px-6 py-12 text-center">
+                  <span className="flex size-12 items-center justify-center rounded-full bg-muted text-muted-foreground [&_svg]:size-5">
+                    <FileIcon />
+                  </span>
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium">{l.unsupported}</p>
+                    <p className="text-xs text-muted-foreground">{l.unsupportedHint}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Button asChild>
+                      <a href={file.src} download={file.name}>
+                        <DownloadIcon />
+                        {l.download}
+                      </a>
+                    </Button>
+                    <Button asChild variant="outline">
+                      <a href={file.src} target="_blank" rel="noreferrer">
+                        <ExternalLinkIcon />
+                        {l.openInNewTab}
+                      </a>
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* ปุ่มเลื่อนไฟล์ — คนละเรื่องกับปุ่มเลื่อนหน้า pdf ในแถบเครื่องมือด้านบน
+                อันนั้นเลื่อนหน้าในไฟล์เดียวกัน อันนี้เลื่อนข้ามไฟล์ทั้งใบ */}
+            {canNavigate ? (
+              <>
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  aria-label={l.previousFile}
+                  disabled={!hasPrevious}
+                  onClick={onPrevious}
+                  className="absolute top-1/2 left-3 -translate-y-1/2 rounded-full shadow-md"
+                >
+                  <ChevronLeftIcon />
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  aria-label={l.nextFile}
+                  disabled={!hasNext}
+                  onClick={onNext}
+                  className="absolute top-1/2 right-3 -translate-y-1/2 rounded-full shadow-md"
+                >
+                  <ChevronRightIcon />
+                </Button>
+              </>
+            ) : null}
           </div>
         </div>
       </DialogContent>

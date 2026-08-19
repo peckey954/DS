@@ -111,6 +111,8 @@ const COPY = defineCopy({
     back: "ย้อนกลับ",
     prevPage: "หน้าก่อนหน้า",
     nextPage: "หน้าถัดไป",
+    prevFile: "ไฟล์ก่อนหน้า",
+    nextFile: "ไฟล์ถัดไป",
     pageLabel: "หน้า",
     pagesLabel: "หน้าเอกสาร",
     loadingDoc: "กำลังเปิดเอกสาร…",
@@ -206,6 +208,8 @@ const COPY = defineCopy({
     back: "Back",
     prevPage: "Previous page",
     nextPage: "Next page",
+    prevFile: "Previous file",
+    nextFile: "Next file",
     pageLabel: "Page",
     pagesLabel: "Pages",
     loadingDoc: "Opening document…",
@@ -462,6 +466,11 @@ export function SectionAttachment() {
   const [clipOpen, setClipOpen] = React.useState(false);
   const [sheetViewer, setSheetViewer] = React.useState<number | null>(null);
   const [preview, setPreview] = React.useState<PreviewFile | null>(null);
+  /* ไม่ใช่ null เฉพาะตอนเปิดจากลิสต์ 3 ไฟล์ด้านล่างที่มีปุ่มเลื่อนไฟล์ — เปิดจาก
+     ที่อื่น (เช่นแผงแนบไฟล์) จะเป็น null เสมอ ไม่โชว์ปุ่มเลื่อน เพราะคนละรายการกัน */
+  const [previewListIndex, setPreviewListIndex] = React.useState<number | null>(
+    null
+  );
   const [claim, setClaim] = React.useState<ClaimFile[]>([
     { id: "c1", name: "claim-1.png", date: "2026-08-05", size: "6.6MB" },
     { id: "c2", name: "claim-2.pdf", date: "2026-08-05", size: "6.6MB" },
@@ -545,6 +554,8 @@ export function SectionAttachment() {
     resetZoom: c.resetZoom,
     previousPage: c.prevPage,
     nextPage: c.nextPage,
+    previousFile: c.prevFile,
+    nextFile: c.nextFile,
     page: c.pageLabel,
     pages: c.pagesLabel,
     loading: c.loadingDoc,
@@ -557,6 +568,32 @@ export function SectionAttachment() {
     penSize: c.penSize,
     undo: c.undo,
     togglePages: c.togglePages,
+  };
+
+  /* 3 ไฟล์ตัวอย่างของหมวด "ดูตัวอย่างไฟล์ + สั่งพิมพ์" — แยกออกมาเป็น memo
+     เพราะต้องใช้ทั้งตอนเรนเดอร์ลิสต์และตอนคำนวณปุ่มเลื่อนก่อน/ถัดไป */
+  const previewFiles = React.useMemo(
+    () => [
+      { name: c.fileReport, src: sampleFiles?.pdf, meta: "PDF · 3 หน้า", icon: <FileTextIcon /> },
+      { name: c.fileSlip, src: sampleFiles?.png, meta: "JPG · 24 KB", icon: <ImageIcon /> },
+      { name: c.fileSheet, src: sampleFiles?.xlsx, meta: "XLSX · 1.8 MB", icon: <FileSpreadsheetIcon /> },
+    ],
+    [c, sampleFiles]
+  );
+
+  /* เปิดไฟล์เดียวจากที่ไหนก็ได้ (เช่นแผงแนบไฟล์) — ไม่มีปุ่มเลื่อน
+     เพราะที่นั่นไม่ได้ผูกกับ previewFiles */
+  const openPreview = (f: PreviewFile) => {
+    setPreview(f);
+    setPreviewListIndex(null);
+  };
+
+  /* เปิดจากลิสต์ 3 ไฟล์ตัวอย่าง — ผูก index ไว้ด้วย ปุ่มเลื่อนถึงจะรู้ว่าอยู่ไฟล์ไหน */
+  const openPreviewFromList = (i: number) => {
+    const f = previewFiles[i];
+    if (!f?.src) return;
+    setPreview({ name: f.name, src: f.src, meta: f.meta });
+    setPreviewListIndex(i);
   };
 
   const gallery: MediaItem[] = React.useMemo(
@@ -1050,14 +1087,10 @@ export function SectionAttachment() {
         </div>
       </Demo>
 
-      {/* ---------- ดูตัวอย่างไฟล์ + สั่งพิมพ์ ---------- */}
+      {/* ---------- ดูตัวอย่างไฟล์ + สั่งพิมพ์ + เลื่อนดูหลายไฟล์ ---------- */}
       <Demo name="file-preview" hint={c.previewHint} wide bodyClassName="block">
         <AttachmentGroup>
-          {[
-            { name: c.fileReport, src: sampleFiles?.pdf, meta: "PDF · 3 หน้า", icon: <FileTextIcon /> },
-            { name: c.fileSlip, src: sampleFiles?.png, meta: "JPG · 24 KB", icon: <ImageIcon /> },
-            { name: c.fileSheet, src: sampleFiles?.xlsx, meta: "XLSX · 1.8 MB", icon: <FileSpreadsheetIcon /> },
-          ].map((file) => (
+          {previewFiles.map((file, i) => (
             <Attachment key={file.name}>
               <AttachmentMedia>{file.icon}</AttachmentMedia>
               <AttachmentContent>
@@ -1068,10 +1101,7 @@ export function SectionAttachment() {
                 <AttachmentAction
                   aria-label={`${c.preview}: ${file.name}`}
                   disabled={!file.src}
-                  onClick={() =>
-                    file.src &&
-                    setPreview({ name: file.name, src: file.src, meta: file.meta })
-                  }
+                  onClick={() => openPreviewFromList(i)}
                 >
                   <EyeIcon />
                 </AttachmentAction>
@@ -1079,9 +1109,7 @@ export function SectionAttachment() {
               {file.src ? (
                 <AttachmentTrigger
                   aria-label={`${c.preview}: ${file.name}`}
-                  onClick={() =>
-                    setPreview({ name: file.name, src: file.src!, meta: file.meta })
-                  }
+                  onClick={() => openPreviewFromList(i)}
                 />
               ) : null}
             </Attachment>
@@ -1154,7 +1182,7 @@ export function SectionAttachment() {
                             <AttachmentAction
                               aria-label={`${c.preview}: ${it.name}`}
                               onClick={() =>
-                                setPreview({
+                                openPreview({
                                   name: it.name,
                                   src: it.src!,
                                   meta: it.meta,
@@ -1304,13 +1332,36 @@ export function SectionAttachment() {
       </Demo>
 
       {/* หน้าต่างดูตัวอย่างใช้ตัวเดียวร่วมกันทั้งหมวด — เปิดจากแถวไหนก็ได้
-          ไม่ต้องมี dialog ซ้อนอยู่ในทุกแถว */}
+          ไม่ต้องมี dialog ซ้อนอยู่ในทุกแถว ปุ่มเลื่อนไฟล์โผล่เฉพาะตอนเปิดจาก
+          ลิสต์ 3 ไฟล์ตัวอย่าง (previewListIndex ไม่เป็น null) */}
       <FilePreview
         file={preview}
         open={preview !== null}
         onOpenChange={(open) => {
-          if (!open) setPreview(null);
+          if (!open) {
+            setPreview(null);
+            setPreviewListIndex(null);
+          }
         }}
+        onPrevious={
+          previewListIndex !== null
+            ? () => openPreviewFromList(previewListIndex - 1)
+            : undefined
+        }
+        onNext={
+          previewListIndex !== null
+            ? () => openPreviewFromList(previewListIndex + 1)
+            : undefined
+        }
+        hasPrevious={previewListIndex !== null && previewListIndex > 0}
+        hasNext={
+          previewListIndex !== null && previewListIndex < previewFiles.length - 1
+        }
+        counter={
+          previewListIndex !== null
+            ? `${previewListIndex + 1} / ${previewFiles.length}`
+            : undefined
+        }
         labels={previewLabels}
       />
     </Section>
