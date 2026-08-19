@@ -595,7 +595,14 @@ function FilePreviewDialog({
   /* ยางลบเป็น "เครื่องมือ" ไม่ใช่ปุ่มล้างทั้งหมด — ต้องลากทับเส้นถึงจะลบ
      เหมือนยางลบจริง กดทีเดียวหายทั้งหน้าเป็นพฤติกรรมที่กู้คืนยาก */
   const [tool, setTool] = React.useState<"pen" | "eraser">("pen")
-  const [railOpen, setRailOpen] = React.useState(true)
+  /* ปิดแถบรูปย่อไว้ก่อนบนจอแคบ — ตัวแถบกว้างตายตัว 128px กินพื้นที่เกิน 1 ใน 3
+     ของ dialog บนมือถือจนเนื้อหาเอกสารเหลือน้อยจนอ่านไม่ออก เปิดเองได้ทีหลังผ่าน
+     ปุ่มสลับ ค่าเริ่มต้นเช็คแค่ตอน mount ไม่ผูก event เพราะไม่ต้องตามหน้าจอหมุน
+     (FilePreview ไม่ได้ mount ค้างไว้ตั้งแต่ SSR — เปิดจากคลิกฝั่ง client เท่านั้น
+     จึงไม่มีปัญหา hydration mismatch จากการเช็ค window ตรงนี้) */
+  const [railOpen, setRailOpen] = React.useState(
+    () => typeof window !== "undefined" && window.innerWidth >= 640
+  )
   const [colorIndex, setColorIndex] = React.useState(0)
   const [width, setWidth] = React.useState<number>(PEN_SIZES[1]!)
   const [zoom, setZoom] = React.useState(1)
@@ -1130,7 +1137,10 @@ function FilePreviewDialog({
             ) : null}
 
             {canZoom ? (
-              <div className="ml-auto flex items-center gap-1">
+              /* ml-auto ตั้งแต่ sm: ขึ้นไปเท่านั้น — บนจอแคบที่แถบเครื่องมือ
+                 ล้นจนต้องตัดขึ้นบรรทัดใหม่ ถ้ายังดัน ml-auto จะไปลอยชิดขวา
+                 บรรทัดใหม่เดี่ยว ๆ ดูเพี้ยน ปล่อยให้ไหลชิดซ้ายต่อจากกลุ่มอื่นแทน */
+              <div className="flex items-center gap-1 sm:ml-auto">
                 <Button
                   variant="ghost"
                   size="icon-sm"
